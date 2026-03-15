@@ -582,6 +582,11 @@ body {
   gap: 16px;
   margin-bottom: 24px;
 }
+.modal-row {
+  display: flex;
+  gap: 12px;
+}
+.modal-row .modal-field { flex: 1; }
 .modal-field label {
   display: block;
   font-size: 0.88rem;
@@ -654,6 +659,10 @@ body {
 .booking-info-tag.cancel-date {
   background: rgba(232,93,58,0.1);
   color: var(--lava);
+}
+.booking-info-tag.dates {
+  background: rgba(42,122,181,0.1);
+  color: var(--ocean);
 }
 
 /* ─── RESPONSIVE ─── */
@@ -1104,6 +1113,16 @@ body {
     <h3 class="modal-title">📋 Confirmar Reserva</h3>
     <p class="modal-hotel-name" id="modalHotelName"></p>
     <div class="modal-form">
+      <div class="modal-row">
+        <div class="modal-field">
+          <label for="bookingCheckin">Check-in</label>
+          <input type="date" id="bookingCheckin" required>
+        </div>
+        <div class="modal-field">
+          <label for="bookingCheckout">Check-out</label>
+          <input type="date" id="bookingCheckout" required>
+        </div>
+      </div>
       <div class="modal-field">
         <label for="bookingPin">PIN de confirmação <span class="field-optional">(opcional)</span></label>
         <input type="text" id="bookingPin" placeholder="Ex: 1234" maxlength="20" autocomplete="off">
@@ -1131,12 +1150,25 @@ body {
 // ─── BOOKING SYSTEM ───
 function getBookings() {
   try {
-    return JSON.parse(localStorage.getItem('cr2026_bookings') || '{}');
+    const raw = JSON.parse(localStorage.getItem('cr2026_bookings') || '{}');
+    // Migrate old format (single object) to new format (array)
+    for (const loc in raw) {
+      if (raw[loc] && !Array.isArray(raw[loc])) {
+        raw[loc] = [raw[loc]];
+      }
+    }
+    return raw;
   } catch { return {}; }
 }
 
 function saveBookings(bookings) {
   localStorage.setItem('cr2026_bookings', JSON.stringify(bookings));
+}
+
+function fmtDate(iso) {
+  if (!iso) return '';
+  const p = iso.split('-');
+  return p[2] + '/' + p[1];
 }
 
 // ─── MODAL STATE ───
@@ -1147,10 +1179,13 @@ function toggleBooking(btn) {
   const location = card.dataset.location;
   const hotel = JSON.parse(card.dataset.hotel);
   const bookings = getBookings();
+  const arr = bookings[location] || [];
+  const hasBooking = arr.some(b => b.name === hotel.name);
 
-  if (bookings[location] && bookings[location].name === hotel.name) {
-    // Unbook
-    delete bookings[location];
+  if (hasBooking) {
+    // Unbook — remove all entries for this hotel
+    bookings[location] = arr.filter(b => b.name !== hotel.name);
+    if (!bookings[location].length) delete bookings[location];
     saveBookings(bookings);
     refreshBookingUI();
   } else {
@@ -1158,6 +1193,8 @@ function toggleBooking(btn) {
     pendingBookingBtn = btn;
     const hotelName = hotel.name.replace(/&amp;/g, '&');
     document.getElementById('modalHotelName').textContent = hotelName;
+    document.getElementById('bookingCheckin').value = '';
+    document.getElementById('bookingCheckout').value = '';
     document.getElementById('bookingPin').value = '';
     document.getElementById('bookingCancelDate').value = '';
     document.getElementById('bookingOverlay').classList.add('active');
@@ -1171,13 +1208,33 @@ function confirmBooking() {
   const hotel = JSON.parse(card.dataset.hotel);
   const bookings = getBookings();
 
+  const checkin = document.getElementById('bookingCheckin').value;
+  const checkout = document.getElementById('bookingCheckout').value;
+
+  if (!checkin || !checkout) {
+    document.getElementById('bookingCheckin').focus();
+    return;
+  }
+  if (checkout <= checkin) {
+    document.getElementById('bookingCheckout').focus();
+    return;
+  }
+
   const pin = document.getElementById('bookingPin').value.trim();
   const cancelDate = document.getElementById('bookingCancelDate').value;
 
-  hotel.pin = pin || null;
-  hotel.cancelDate = cancelDate || null;
+  const entry = {
+    name: hotel.name,
+    desc: hotel.desc,
+    price: hotel.price,
+    checkin: checkin,
+    checkout: checkout,
+    pin: pin || null,
+    cancelDate: cancelDate || null
+  };
 
-  bookings[location] = hotel;
+  if (!bookings[location]) bookings[location] = [];
+  bookings[location].push(entry);
   saveBookings(bookings);
   closeBookingModal();
   refreshBookingUI();
@@ -1196,8 +1253,9 @@ function refreshBookingUI() {
     const location = card.dataset.location;
     const hotel = JSON.parse(card.dataset.hotel);
     const btn = card.querySelector('.btn-reservar');
-    const booked = bookings[location];
-    const isBooked = booked && booked.name === hotel.name;
+    const arr = bookings[location] || [];
+    const entries = arr.filter(b => b.name === hotel.name);
+    const isBooked = entries.length > 0;
 
     card.classList.toggle('booked', isBooked);
     btn.classList.toggle('is-booked', isBooked);
@@ -1205,19 +1263,22 @@ function refreshBookingUI() {
 
     // Show/remove booking info tags
     let infoEl = card.querySelector('.booking-info');
-    if (isBooked && (booked.pin || booked.cancelDate)) {
+    if (isBooked) {
       if (!infoEl) {
         infoEl = document.createElement('div');
         infoEl.className = 'booking-info';
         card.querySelector('.hotel-footer').after(infoEl);
       }
       let html = '';
-      if (booked.pin) html += '<span class="booking-info-tag">🔑 PIN: ' + booked.pin + '</span>';
-      if (booked.cancelDate) {
-        const parts = booked.cancelDate.split('-');
-        const formatted = parts[2] + '/' + parts[1] + '/' + parts[0];
-        html += '<span class="booking-info-tag cancel-date">📅 Cancelar até: ' + formatted + '</span>';
-      }
+      entries.forEach(b => {
+        if (b.checkin && b.checkout) {
+          html += '<span class="booking-info-tag dates">🗓 ' + fmtDate(b.checkin) + ' → ' + fmtDate(b.checkout) + '</span>';
+        }
+        if (b.pin) html += '<span class="booking-info-tag">🔑 PIN: ' + b.pin + '</span>';
+        if (b.cancelDate) {
+          html += '<span class="booking-info-tag cancel-date">📅 Cancelar até: ' + fmtDate(b.cancelDate) + '</span>';
+        }
+      });
       infoEl.innerHTML = html;
     } else if (infoEl) {
       infoEl.remove();

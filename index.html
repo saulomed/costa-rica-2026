@@ -646,6 +646,22 @@ body {
 
 .hotel-link:hover { color: var(--ocean-light); }
 
+.booking-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+.meta-tag {
+  font-size: 0.72rem;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+.meta-dates { background: rgba(42,122,181,0.1); color: var(--ocean); }
+.meta-pin { background: rgba(92,168,122,0.12); color: var(--canopy); }
+.meta-cancel { background: rgba(232,93,58,0.1); color: var(--lava); }
+
 /* ─── COSTS ─── */
 .cost-grid {
   display: grid;
@@ -1082,8 +1098,29 @@ function selectDay(i) {
 }
 
 function getBookings() {
-  try { return JSON.parse(localStorage.getItem('cr2026_bookings') || '{}'); }
-  catch { return {}; }
+  try {
+    const raw = JSON.parse(localStorage.getItem('cr2026_bookings') || '{}');
+    for (const loc in raw) {
+      if (raw[loc] && !Array.isArray(raw[loc])) {
+        raw[loc] = [raw[loc]];
+      }
+    }
+    return raw;
+  } catch { return {}; }
+}
+
+function findBookingForDay(d, bookings) {
+  if (!d.location) return null;
+  const arr = bookings[d.location] || [];
+  if (!arr.length) return null;
+  // Build full ISO date from day's date (DD/MM) + year 2026
+  const parts = d.date.split('/');
+  const dayISO = '2026-' + parts[1] + '-' + parts[0];
+  // Find a booking where checkin <= dayDate < checkout
+  return arr.find(b => {
+    if (!b.checkin || !b.checkout) return true; // legacy entries without dates always match
+    return dayISO >= b.checkin && dayISO < b.checkout;
+  }) || null;
 }
 
 // Helpers BRL para conteúdo dinâmico
@@ -1101,7 +1138,7 @@ function _wbrl(t) { return window.withBrl ? window.withBrl(t) : t; }
 
 function renderDay(d) {
   const bookings = getBookings();
-  const booked = d.location ? bookings[d.location] : null;
+  const booked = findBookingForDay(d, bookings);
   let hotelsHTML = '';
 
   if (d.hotels.length) {
@@ -1129,6 +1166,11 @@ function renderDay(d) {
                 <h4>${booked.name}</h4>
                 <p>${booked.desc}</p>
                 <div class="hotel-price">${booked.price}${_brl(booked.price)}</div>
+                <div class="booking-meta">
+                  ${booked.checkin && booked.checkout ? '<span class="meta-tag meta-dates">🗓 ' + booked.checkin.split('-').reverse().slice(0,2).join('/') + ' → ' + booked.checkout.split('-').reverse().slice(0,2).join('/') + '</span>' : ''}
+                  ${booked.pin ? '<span class="meta-tag meta-pin">🔑 PIN: ' + booked.pin + '</span>' : ''}
+                  ${booked.cancelDate ? '<span class="meta-tag meta-cancel">📅 Cancelar até: ' + booked.cancelDate.split('-').reverse().slice(0,2).join('/') + '</span>' : ''}
+                </div>
               </div>`
             : hotelCards
           }
