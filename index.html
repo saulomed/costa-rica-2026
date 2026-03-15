@@ -1585,16 +1585,6 @@ function toggleTodo(el) {
   renderTodos();
 }
 
-// Render on load
-renderTodos();
-
-// Sync across tabs
-window.addEventListener('storage', (e) => {
-  if (e.key === 'cr2026_todos' || e.key === 'cr2026_bookings' || e.key === 'cr2026_car_booking') {
-    renderTodos();
-  }
-});
-
 // ─── SCROLL EFFECTS ───
 function navigateTo(selector) {
   const el = document.querySelector(selector);
@@ -1627,7 +1617,7 @@ window.addEventListener('scroll', () => {
   });
 });
 
-// Fade-in observer
+// Fade-in observer (must be defined before renderTodos)
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => {
     if (e.isIntersecting) {
@@ -1637,6 +1627,16 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 
 document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// Render TODOs (after observer is available)
+renderTodos();
+
+// Sync across tabs
+window.addEventListener('storage', (e) => {
+  if (e.key === 'cr2026_todos' || e.key === 'cr2026_bookings' || e.key === 'cr2026_car_booking') {
+    renderTodos();
+  }
+});
 
 // Nav scroll indicator
 const navInner = document.querySelector('.nav-inner');
