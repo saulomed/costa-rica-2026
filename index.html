@@ -720,9 +720,10 @@ body {
 <!-- ═══ NAV ═══ -->
 <nav class="nav-bar" id="navbar">
   <div class="nav-inner">
-    <button class="nav-btn active" onclick="scrollTo('#alerts-section')">⚠️ Atenção</button>
-    <button class="nav-btn" onclick="scrollTo('#calendar-section')">🗓️ Calendário</button>
-    <button class="nav-btn" onclick="scrollTo('#costs-section')">💰 Custos</button>
+    <button class="nav-btn active" data-section="alerts-section" onclick="navigateTo('#alerts-section')">⚠️ Atenção</button>
+    <button class="nav-btn" data-section="calendar-section" onclick="navigateTo('#calendar-section')">🗓️ Calendário</button>
+    <button class="nav-btn" data-section="costs-section" onclick="navigateTo('#costs-section')">💰 Custos</button>
+    <a class="nav-btn" href="hospedagem.html">🏨 Hospedagem</a>
     <a class="nav-btn" href="https://www.google.com/maps/dir/Aeroporto+Juan+Santamaria+Costa+Rica/Alajuela+Costa+Rica/La+Fortuna+Alajuela+Costa+Rica/Parque+Nacional+Volcan+Tenorio+Costa+Rica/Tamarindo+Guanacaste+Costa+Rica/Hacienda+Guachipelin+Liberia+Costa+Rica/Manuel+Antonio+Quepos+Costa+Rica/Aeroporto+Juan+Santamaria+Costa+Rica/" target="_blank" rel="noopener">🌍 Mapa</a>
     <a class="nav-btn" href="https://www.notion.so/31d95c7b3aae81fa8265c1d552486f7a" target="_blank" rel="noopener">📝 Notion</a>
   </div>
@@ -1027,14 +1028,35 @@ function renderDay(d) {
 selectDay(0);
 
 // ─── SCROLL EFFECTS ───
-function scrollTo(selector) {
-  document.querySelector(selector).scrollIntoView({ behavior: 'smooth' });
+function navigateTo(selector) {
+  const el = document.querySelector(selector);
+  if (el) {
+    const navHeight = document.getElementById('navbar').offsetHeight;
+    const top = el.getBoundingClientRect().top + window.pageYOffset - navHeight - 8;
+    window.scrollTo({ top: top, behavior: 'smooth' });
+  }
 }
 
-// Navbar shadow
+// Navbar shadow + active section tracking
 const navbar = document.getElementById('navbar');
+const navBtns = document.querySelectorAll('.nav-btn[data-section]');
+const sections = ['alerts-section', 'calendar-section', 'costs-section'];
+
 window.addEventListener('scroll', () => {
   navbar.classList.toggle('scrolled', window.scrollY > 100);
+
+  // Update active nav button based on scroll position
+  const navHeight = navbar.offsetHeight + 20;
+  let current = '';
+  sections.forEach(id => {
+    const sec = document.getElementById(id);
+    if (sec && sec.getBoundingClientRect().top <= navHeight + 80) {
+      current = id;
+    }
+  });
+  navBtns.forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.section === current);
+  });
 });
 
 // Fade-in observer

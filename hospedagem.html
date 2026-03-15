@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hospedagem — Costa Rica 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --jungle: #1a3a2a;
+  --jungle-light: #2d5a3f;
+  --canopy: #3d7a5a;
+  --leaf: #5ca87a;
+  --sand: #f5e6c8;
+  --sand-light: #faf3e6;
+  --sand-dark: #e8d4a8;
+  --lava: #e85d3a;
+  --lava-dark: #c44a2d;
+  --ocean: #2a7ab5;
+  --ocean-light: #3d9ad8;
+  --sky: #87ceeb;
+  --gold: #d4a843;
+  --white: #fefdfb;
+  --text: #2a2520;
+  --text-muted: #6b6560;
+  --text-light: #9a9590;
+  --shadow-sm: 0 1px 3px rgba(26,58,42,0.08);
+  --shadow-md: 0 4px 16px rgba(26,58,42,0.1);
+  --shadow-lg: 0 12px 40px rgba(26,58,42,0.15);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --radius-xs: 6px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text);
+  background: var(--sand-light);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── HEADER ─── */
+.page-header {
+  background:
+    linear-gradient(175deg, rgba(26,58,42,0.85) 0%, rgba(26,58,42,0.6) 60%, rgba(232,93,58,0.2) 100%),
+    url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1600&q=80') center/cover no-repeat;
+  padding: 100px clamp(24px, 6vw, 80px) 60px;
+  position: relative;
+}
+
+.page-header::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 120px;
+  background: linear-gradient(to top, var(--sand-light), transparent);
+}
+
+.header-content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  animation: fadeUp 0.8s ease-out;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255,255,255,0.8);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 24px;
+  padding: 6px 16px;
+  border-radius: 100px;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.15);
+  transition: all 0.3s;
+}
+
+.back-link:hover {
+  background: rgba(255,255,255,0.2);
+  color: white;
+}
+
+.page-header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.2rem, 6vw, 3.5rem);
+  font-weight: 900;
+  color: white;
+  line-height: 1.1;
+  margin-bottom: 12px;
+}
+
+.page-header p {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: rgba(255,255,255,0.75);
+  font-weight: 300;
+}
+
+/* ─── NAV BAR ─── */
+.nav-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(254,253,251,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(26,58,42,0.08);
+  padding: 0 clamp(16px, 4vw, 60px);
+  transition: box-shadow 0.3s;
+}
+
+.nav-bar.scrolled { box-shadow: var(--shadow-md); }
+
+.nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 12px 0;
+}
+
+.nav-inner::-webkit-scrollbar { display: none; }
+
+.nav-btn {
+  flex-shrink: 0;
+  border: none;
+  background: transparent;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  padding: 8px 16px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all 0.25s;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.nav-btn:hover { background: var(--sand); color: var(--jungle); }
+.nav-btn.active { background: var(--jungle); color: white; }
+
+/* ─── SECTIONS ─── */
+.section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px clamp(16px, 4vw, 40px) 40px;
+}
+
+.section-header {
+  margin-bottom: 32px;
+}
+
+.section-tag {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--lava);
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+  font-weight: 700;
+  color: var(--jungle);
+  line-height: 1.15;
+}
+
+.section-desc {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-top: 8px;
+  max-width: 600px;
+}
+
+/* ─── LOCATION GROUP ─── */
+.location-group {
+  margin-bottom: 48px;
+}
+
+.location-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--jungle);
+  color: white;
+  padding: 6px 18px;
+  border-radius: 100px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.location-dates {
+  font-size: 0.82rem;
+  color: var(--text-light);
+  margin-bottom: 20px;
+  padding-left: 4px;
+}
+
+/* ─── HOTEL CARDS ─── */
+.hotels-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.hotel-card {
+  background: white;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid rgba(26,58,42,0.06);
+  transition: all 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+
+.hotel-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-4px);
+}
+
+.hotel-img {
+  height: 180px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.hotel-img::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 60px;
+  background: linear-gradient(to top, rgba(0,0,0,0.3), transparent);
+}
+
+.hotel-tier {
+  position: absolute;
+  top: 12px; right: 12px;
+  padding: 4px 12px;
+  border-radius: 100px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  z-index: 1;
+}
+
+.tier-premium { background: var(--gold); color: var(--jungle); }
+.tier-mid { background: var(--ocean); color: white; }
+.tier-budget { background: var(--leaf); color: white; }
+
+.hotel-body {
+  padding: 24px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.hotel-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--jungle);
+  margin-bottom: 6px;
+}
+
+.hotel-card .hotel-desc {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 16px;
+  flex: 1;
+}
+
+.hotel-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.feature-tag {
+  font-size: 0.72rem;
+  padding: 4px 10px;
+  border-radius: 100px;
+  background: var(--sand);
+  color: var(--jungle);
+  font-weight: 500;
+}
+
+.hotel-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 16px;
+  border-top: 1px solid rgba(26,58,42,0.06);
+}
+
+.hotel-price {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--lava);
+}
+
+.hotel-nights {
+  font-size: 0.78rem;
+  color: var(--text-light);
+}
+
+/* ─── TIPS SECTION ─── */
+.tips-section {
+  background: var(--jungle);
+  padding: 60px clamp(16px, 4vw, 40px);
+  margin-top: 20px;
+}
+
+.tips-section .section-tag { color: var(--gold); }
+.tips-section .section-title { color: var(--sand); }
+
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 32px;
+}
+
+.tip-card {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius);
+  padding: 24px;
+  transition: transform 0.3s, background 0.3s;
+}
+
+.tip-card:hover {
+  transform: translateY(-4px);
+  background: rgba(255,255,255,0.12);
+}
+
+.tip-card .tip-icon {
+  font-size: 1.6rem;
+  margin-bottom: 12px;
+}
+
+.tip-card h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 8px;
+}
+
+.tip-card p {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.6;
+}
+
+/* ─── FOOTER ─── */
+.footer {
+  background: var(--jungle);
+  padding: 48px clamp(16px, 4vw, 40px);
+  text-align: center;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.footer p { color: rgba(255,255,255,0.5); font-size: 0.85rem; }
+.footer a { color: var(--sand); text-decoration: none; }
+.footer .pura-vida {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--sand);
+  margin-bottom: 8px;
+}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 768px) {
+  .page-header { padding: 80px 20px 40px; }
+  .hotels-grid { grid-template-columns: 1fr; }
+  .tips-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<header class="page-header">
+  <div class="header-content">
+    <a href="index.html" class="back-link">← Voltar ao Roteiro</a>
+    <h1>🏨 Hospedagem</h1>
+    <p>Sugestões de hotéis por destino — de boutique a econômico, sempre com personalidade.</p>
+  </div>
+</header>
+
+<!-- ═══ NAV ═══ -->
+<nav class="nav-bar" id="navbar">
+  <div class="nav-inner">
+    <button class="nav-btn active" data-section="alajuela" onclick="navigateTo('#alajuela')">Alajuela</button>
+    <button class="nav-btn" data-section="la-fortuna" onclick="navigateTo('#la-fortuna')">La Fortuna</button>
+    <button class="nav-btn" data-section="tamarindo" onclick="navigateTo('#tamarindo')">Tamarindo</button>
+    <button class="nav-btn" data-section="manuel-antonio" onclick="navigateTo('#manuel-antonio')">Manuel Antonio</button>
+    <button class="nav-btn" data-section="dicas" onclick="navigateTo('#dicas')">Dicas</button>
+    <a class="nav-btn" href="index.html">📅 Roteiro</a>
+  </div>
+</nav>
+
+<!-- ═══ ALAJUELA ═══ -->
+<section class="section" id="alajuela">
+  <div class="section-header fade-in">
+    <span class="section-tag">Base — Início e Fim</span>
+    <h2 class="section-title">Alajuela / San José</h2>
+    <p class="section-desc">Próximo ao aeroporto, ideal para a primeira e última noite. Priorize conforto e praticidade.</p>
+  </div>
+
+  <div class="location-group">
+    <div class="location-badge">📍 Alajuela — Dia 1 (09/04) e Dia 8 (16/04)</div>
+    <p class="location-dates">2 noites no total (chegada + véspera do voo)</p>
+
+    <div class="hotels-grid">
+      <div class="hotel-card fade-in">
+        <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=600&q=80')">
+          <span class="hotel-tier tier-premium">Premium</span>
+        </div>
+        <div class="hotel-body">
+          <h3>Xandari Resort & Spa</h3>
+          <p class="hotel-desc">Resort boutique sustentável em meio a jardins tropicais. Spa premiado, piscina infinita e vistas do Vale Central. Arquitetura moderna integrada à natureza.</p>
+          <div class="hotel-features">
+            <span class="feature-tag">Spa</span>
+            <span class="feature-tag">Piscina</span>
+            <span class="feature-tag">Sustentável</span>
+            <span class="feature-tag">Restaurante</span>
+          </div>
+          <div class="hotel-footer">
+            <span class="hotel-price">~US$ 200/noite</span>
+            <span class="hotel-nights">Dia 1</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hotel-card fade-in">
+        <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=80')">
+          <span class="hotel-tier tier-mid">Custo-Benefício</span>
+        </div>
+        <div class="hotel-body">
+          <h3>Hampton Inn Alajuela</h3>
+          <p class="hotel-desc">A 5 minutos do aeroporto com transfer gratuito. Café da manhã incluso, quartos modernos e ótima estrutura. Ideal para primeira e última noite.</p>
+          <div class="hotel-features">
+            <span class="feature-tag">Transfer aeroporto</span>
+            <span class="feature-tag">Café incluso</span>
+            <span class="feature-tag">5 min SJO</span>
+          </div>
+          <div class="hotel-footer">
+            <span class="hotel-price">~US$ 110–120/noite</span>
+            <span class="hotel-nights">Dia 1 e 8</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hotel-card fade-in">
+        <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600&q=80')">
+          <span class="hotel-tier tier-mid">Custo-Benefício</span>
+        </div>
+        <div class="hotel-body">
+          <h3>Courtyard San José Airport</h3>
+          <p class="hotel-desc">Hotel novo da rede Marriott com excelente estrutura. Piscina, academia, restaurante e proximidade ao aeroporto. Boa opção para a última noite.</p>
+          <div class="hotel-features">
+            <span class="feature-tag">Marriott</span>
+            <span class="feature-tag">Piscina</span>
+            <span class="feature-tag">Novo</span>
+          </div>
+          <div class="hotel-footer">
+            <span class="hotel-price">~US$ 130/noite</span>
+            <span class="hotel-nights">Dia 8</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hotel-card fade-in">
+        <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600&q=80')">
+          <span class="hotel-tier tier-budget">Econômico</span>
+        </div>
+        <div class="hotel-body">
+          <h3>Hotel Buena Vista</h3>
+          <p class="hotel-desc">Hotel com vista para o vale, piscina e ambiente tranquilo. Quartos limpos e confortáveis, ótimo para quem quer economizar sem abrir mão da qualidade.</p>
+          <div class="hotel-features">
+            <span class="feature-tag">Vista</span>
+            <span class="feature-tag">Piscina</span>
+            <span class="feature-tag">Econômico</span>
+          </div>
+          <div class="hotel-footer">
+            <span class="hotel-price">~US$ 90/noite</span>
+            <span class="hotel-nights">Dia 1</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ LA FORTUNA ═══ -->
+<section class="section" id="la-fortuna">
+  <div class="section-header fade-in">
+    <span class="section-tag">Aventura e Natureza</span>
+    <h2 class="section-title">La Fortuna / Arenal</h2>
+    <p class="section-desc">O coração aventureiro da Costa Rica. Priorize hotéis com vista do vulcão e piscinas termais.</p>
+  </div>
+
+  <div class="location-group">
+    <div class="location-badge">📍 La Fortuna — Dias 2–3 (10–11/04)</div>
+    <p class="location-dates">2 noites · Vulcão Poás, Blue Falls, Místico, Arenal, Catarata, Termas</p>
+
+    <div class="hotels-grid">
+      <div class="hotel-card fade-in">
+        <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=600&q=80')">
+          <span class="hotel-tier tier-mid">Custo-Benefício</span>
+        </div>
+        <div class="hotel-body">
+          <h3>Arenal Manoa Hotel & Spa</h3>
+          <p class="hotel-desc">Bangalôs com vista direta do Vulcão Arenal. Piscina termal privativa, spa e restaurante com ingredientes locais. A melhor relação custo-benefício da região.</p>
+          <div class="hotel-features">
+            <span class="feature-tag">Termas</span>
+            <span class="feature-tag">Vista do vulcão</span>
+            <span class="feature-tag">Bangalôs</span>
+            <span class="feature-tag">Spa</span>
+          </div>
+          <div class="hotel-footer">
+            <span class="hotel-price">~US$ 130/noite</span>
+            <span class="hotel-nights">2 noites</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hotel-card fade-in">
+        <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1540541338287-41700207dee6?w=600&q=80')">
+          <span class="hotel-tier tier-premium">Premium</span>
+        </div>
+        <div class="hotel-body">
+          <h3>Lost Iguana Resort & Spa</h3>
+          <p class="hotel-desc">Resort boutique romântico imerso na floresta tropical. Suítes com vista panorâmica do vulcão, piscina infinita e trilhas privativas dentro da propriedade.</p>
+          <div class="hotel-features">
+            <span class="feature-tag">Romântico</span>
+            <span class="feature-tag">Boutique</span>
+            <span class="feature-tag">Trilhas</span>
+            <span class="feature-tag">Piscina infinita</span>
+          </div>
+          <div class="hotel-footer">
+            <span class="hotel-price">~US$ 180/noite</span>
+            <span class="hotel-nights">2 noites</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hotel-card fade-in">
+        <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=600&q=80')">
+          <span class="hotel-tier tier-budget">Econômico</span>
+        </div>
+        <div class="hotel-body">
+          <h3>Hotel La Fortuna</h3>
+          <p class="hotel-desc">No coração do centrinho de La Fortuna. Quartos simples e limpos, a poucos passos de restaurantes, lojas e operadoras de tours. Prático e econômico.</p>
+          <div class="hotel-features">
+            <span class="feature-tag">Centro</span>
+            <span class="feature-tag">Prático</span>
+            <span class="feature-tag">Econômico</span>
+          </div>
+          <div class="hotel-footer">
+            <span class="hotel-price">~US$ 60/noite</span>
+            <span class="hotel-nights">2 noites</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TAMARINDO ═══ -->
+<section class="section" id="tamarindo">
+  <div class="section-header fade-in">
+    <span class="section-tag">Praia e Aventura</span>
+    <h2 class="section-title">Tamarindo / Guanacaste</h2>
+    <p class="section-desc">Costa do Pacífico com praias paradisíacas, surf e pôr do sol inesquecível. Base para Hacienda Guachipelin.</p>
+  </div>
+
+  <div class="location-group">
+    <div class="location-badge">📍 Tamarindo — Dias 4–6 (12–14/04)</div>
+    <p class="location-dates">3 noites · Rio Celeste, Hacienda Guachipelin, Playa Conchal, Surf</p>
+
+    <div class="hotels-grid">
+      <div class="hotel-card fade-in">
+        <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600&q=80')">
+          <span class="hotel-tier tier-premium">Premium</span>
+        </div>
+        <div class="hotel-body">
+          <h3>Cala Luna Boutique Hotel</h3>
+          <p class="hotel-desc">Villas privativas em estilo balinês com piscina própria. Jardins tropicais, spa e restaurante premiado. O hotel mais romântico de Tamarindo.</p>
+          <div class="hotel-features">
+            <span class="feature-tag">Villas</span>
+            <span class="feature-tag">Piscina privativa</span>
+            <span class="feature-tag">Spa</span>
+            <span class="feature-tag">Romântico</span>
+          </div>
+          <div class="hotel-footer">
+            <span class="hotel-price">~US$ 250/noite</span>
+            <span class="hotel-nights">3 noites</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hotel-card fade-in">
+        <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=600&q=80')">
+          <span class="hotel-tier tier-mid">Custo-Benefício</span>
+        </div>
+        <div class="hotel-body">
+          <h3>Wyndham Tamarindo</h3>
+          <p class="hotel-desc">Hotel bem estruturado com café da manhã incluso, piscina grande e localização central. Quartos modernos e confortáveis com bom atendimento.</p>
+          <div class="hotel-features">
+            <span class="feature-tag">Café incluso</span>
+            <span class="feature-tag">Piscina</span>
+            <span class="feature-tag">Central</span>
+          </div>
+          <div class="hotel-footer">
+            <span class="hotel-price">~US$ 150/noite</span>
+            <span class="hotel-nights">3 noites</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hotel-card fade-in">
+        <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=600&q=80')">
+          <span class="hotel-tier tier-budget">Econômico</span>
+        </div>
+        <div class="hotel-body">
+          <h3>Hotel Pasatiempo</h3>
+          <p class="hotel-desc">Hotel charmoso a 5 minutos da praia com piscina, jardim e bar. Ambiente descontraído com vibe praiana. Ótimo custo-benefício em Tamarindo.</p>
+          <div class="hotel-features">
+            <span class="feature-tag">5 min praia</span>
+            <span class="feature-tag">Piscina</span>
+            <span class="feature-tag">Bar</span>
+          </div>
+          <div class="hotel-footer">
+            <span class="hotel-price">~US$ 100/noite</span>
+            <span class="hotel-nights">3 noites</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ MANUEL ANTONIO ═══ -->
+<section class="section" id="manuel-antonio">
+  <div class="section-header fade-in">
+    <span class="section-tag">Floresta e Mar</span>
+    <h2 class="section-title">Manuel Antonio / Quepos</h2>
+    <p class="section-desc">Onde a floresta tropical encontra o oceano. Hotéis com vistas cinematográficas e vida selvagem na porta.</p>
+  </div>
+
+  <div class="location-group">
+    <div class="location-badge">📍 Manuel Antonio — Dia 7 (15/04)</div>
+    <p class="location-dates">1 noite · Rafting Rio Savegre, Parque Nacional, Playa Biesanz</p>
+
+    <div class="hotels-grid">
+      <div class="hotel-card fade-in">
+        <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=600&q=80')">
+          <span class="hotel-tier tier-premium">Premium</span>
+        </div>
+        <div class="hotel-body">
+          <h3>Hotel La Mariposa</h3>
+          <p class="hotel-desc">Vista panorâmica do "Rabo da Baleia" — uma das vistas mais famosas da Costa Rica. Piscina infinita sobre o oceano, quartos elegantes e pôr do sol inesquecível.</p>
+          <div class="hotel-features">
+            <span class="feature-tag">Vista icônica</span>
+            <span class="feature-tag">Piscina infinita</span>
+            <span class="feature-tag">Restaurante</span>
+          </div>
+          <div class="hotel-footer">
+            <span class="hotel-price">~US$ 200/noite</span>
+            <span class="hotel-nights">1 noite</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hotel-card fade-in">
+        <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=600&q=80')">
+          <span class="hotel-tier tier-mid">Custo-Benefício</span>
+        </div>
+        <div class="hotel-body">
+          <h3>Si Como No Resort</h3>
+          <p class="hotel-desc">Resort sustentável com certificação CST. Duas piscinas (uma com tobogã!), cinema ao ar livre, spa e reserva natural privativa com preguiças.</p>
+          <div class="hotel-features">
+            <span class="feature-tag">Sustentável</span>
+            <span class="feature-tag">Tobogã</span>
+            <span class="feature-tag">Reserva natural</span>
+          </div>
+          <div class="hotel-footer">
+            <span class="hotel-price">~US$ 180/noite</span>
+            <span class="hotel-nights">1 noite</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hotel-card fade-in">
+        <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=80')">
+          <span class="hotel-tier tier-premium">Premium</span>
+        </div>
+        <div class="hotel-body">
+          <h3>Hotel Makanda</h3>
+          <p class="hotel-desc">Adults only, perfeito para casais. Villas e estúdios luxuosos em meio à floresta, piscina infinita com vista do Pacífico e total privacidade.</p>
+          <div class="hotel-features">
+            <span class="feature-tag">Adults only</span>
+            <span class="feature-tag">Romântico</span>
+            <span class="feature-tag">Privacidade</span>
+            <span class="feature-tag">Luxo</span>
+          </div>
+          <div class="hotel-footer">
+            <span class="hotel-price">~US$ 250/noite</span>
+            <span class="hotel-nights">1 noite</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ DICAS ═══ -->
+<section class="tips-section" id="dicas">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div class="section-header fade-in">
+      <span class="section-tag">Guia Prático</span>
+      <h2 class="section-title">💡 Dicas de Hospedagem</h2>
+    </div>
+    <div class="tips-grid">
+      <div class="tip-card fade-in">
+        <div class="tip-icon">📅</div>
+        <h3>Reserve com Antecedência</h3>
+        <p>Abril é alta temporada seca. Hotéis populares esgotam 2–3 meses antes. Reserve assim que definir o roteiro para garantir os melhores preços.</p>
+      </div>
+      <div class="tip-card fade-in">
+        <div class="tip-icon">💳</div>
+        <h3>Booking vs. Direto</h3>
+        <p>Compare sempre o preço no site oficial do hotel. Muitos oferecem desconto de 5–15% para reservas diretas, além de upgrades e flexibilidade no cancelamento.</p>
+      </div>
+      <div class="tip-card fade-in">
+        <div class="tip-icon">🅿️</div>
+        <h3>Estacionamento</h3>
+        <p>Com carro alugado, confirme se o hotel tem estacionamento gratuito e seguro. Em Tamarindo e Manuel Antonio, nem todos os hotéis oferecem vaga incluída.</p>
+      </div>
+      <div class="tip-card fade-in">
+        <div class="tip-icon">🌿</div>
+        <h3>Certificação CST</h3>
+        <p>Hotéis com certificação CST (Certificación para la Sostenibilidad Turística) são auditados pelo governo. Priorize-os para apoiar turismo sustentável.</p>
+      </div>
+      <div class="tip-card fade-in">
+        <div class="tip-icon">🔌</div>
+        <h3>Tomadas e Wi-Fi</h3>
+        <p>Costa Rica usa tomadas tipo A/B (mesma dos EUA). O Wi-Fi nos hotéis rurais pode ser instável — considere um eSIM com dados como backup.</p>
+      </div>
+      <div class="tip-card fade-in">
+        <div class="tip-icon">💰</div>
+        <h3>Imposto de 13%</h3>
+        <p>Atenção: hotéis na Costa Rica cobram 13% de IVA sobre a tarifa. Verifique se o preço anunciado já inclui esse imposto para evitar surpresas no checkout.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <p class="pura-vida">🌴 Pura Vida!</p>
+  <p>Saulo & Lorena · Costa Rica · Abril 2026</p>
+  <p style="margin-top:12px"><a href="index.html">← Voltar ao roteiro completo</a></p>
+</footer>
+
+<script>
+// ─── NAVIGATION ───
+function navigateTo(selector) {
+  const el = document.querySelector(selector);
+  if (el) {
+    const navHeight = document.getElementById('navbar').offsetHeight;
+    const top = el.getBoundingClientRect().top + window.pageYOffset - navHeight - 8;
+    window.scrollTo({ top: top, behavior: 'smooth' });
+  }
+}
+
+// Navbar shadow + active section tracking
+const navbar = document.getElementById('navbar');
+const navBtns = document.querySelectorAll('.nav-btn[data-section]');
+const sectionIds = ['alajuela', 'la-fortuna', 'tamarindo', 'manuel-antonio', 'dicas'];
+
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 50);
+
+  const navHeight = navbar.offsetHeight + 20;
+  let current = '';
+  sectionIds.forEach(id => {
+    const sec = document.getElementById(id);
+    if (sec && sec.getBoundingClientRect().top <= navHeight + 80) {
+      current = id;
+    }
+  });
+  navBtns.forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.section === current);
+  });
+});
+
+// Fade-in observer
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
