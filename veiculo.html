@@ -494,20 +494,57 @@ body {
 .rental-footer {
   padding: 16px 24px;
   border-top: 1px solid rgba(26,58,42,0.06);
-  display: flex;
-  align-items: center;
-  gap: 12px;
   font-size: 0.8rem;
   color: var(--text-light);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
-
+.rental-footer-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 .rental-footer a {
   color: var(--ocean);
   text-decoration: none;
   font-weight: 500;
 }
-
 .rental-footer a:hover { text-decoration: underline; }
+
+/* Booking overlay/modal */
+.booking-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(26,58,42,0.6); backdrop-filter: blur(8px); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+.booking-overlay.active { opacity: 1; pointer-events: all; }
+.booking-modal { background: var(--sand-light); border-radius: var(--radius); padding: 32px; max-width: 500px; width: 90%; box-shadow: var(--shadow-xl); transform: translateY(20px); transition: transform 0.3s; position: relative; }
+.booking-overlay.active .booking-modal { transform: translateY(0); }
+.modal-close { position: absolute; top: 12px; right: 16px; background: none; border: none; font-size: 1.5rem; color: var(--text-muted); cursor: pointer; padding: 4px 8px; border-radius: 8px; transition: background 0.2s; }
+.modal-close:hover { background: var(--sand); }
+.modal-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--jungle); margin-bottom: 4px; }
+.modal-hotel-name { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 20px; }
+.modal-form { display: flex; flex-direction: column; gap: 16px; }
+.modal-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.modal-field label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--jungle); margin-bottom: 4px; }
+.modal-field input, .modal-field textarea { width: 100%; padding: 10px 14px; border: 1.5px solid var(--sand-dark); border-radius: var(--radius-xs); font-family: 'DM Sans', sans-serif; font-size: 0.9rem; background: white; transition: border-color 0.2s; }
+.modal-field input:focus, .modal-field textarea:focus { outline: none; border-color: var(--leaf); }
+.modal-field input.input-error { border-color: var(--lava); }
+.field-optional { font-weight: 400; color: var(--text-light); font-size: 0.75rem; }
+.modal-error { color: var(--lava); font-size: 0.82rem; font-weight: 500; min-height: 1.2em; margin-top: 8px; }
+.modal-actions { display: flex; gap: 12px; margin-top: 20px; }
+.modal-btn { flex: 1; padding: 12px; border: none; border-radius: var(--radius-xs); font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+.modal-btn-cancel { background: var(--sand); color: var(--text-muted); }
+.modal-btn-cancel:hover { background: var(--sand-dark); }
+.modal-btn-confirm { background: var(--leaf); color: white; }
+.modal-btn-confirm:hover { background: var(--canopy); }
+
+/* Booked card styling */
+.rental-card.car-booked { border: 2px solid var(--leaf); background: rgba(92,168,122,0.04); }
+.car-booked-badge { display: inline-flex; align-items: center; gap: 4px; background: var(--leaf); color: white; padding: 2px 10px; border-radius: 100px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+
+/* Reservar button */
+.btn-reservar-car { padding: 6px 16px; border: none; border-radius: 100px; background: var(--leaf); color: white; font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.2s; margin-left: auto; }
+.btn-reservar-car:hover { background: var(--canopy); transform: translateY(-1px); }
+.btn-reservar-car.is-booked { background: var(--lava); }
+.btn-reservar-car.is-booked:hover { background: var(--lava-dark); }
 
 /* ─── RECOMMENDATION BOX ─── */
 .recommendation {
@@ -784,7 +821,7 @@ body {
 
   <div class="rental-grid">
     <!-- Adobe -->
-    <div class="rental-card fade-in">
+    <div class="rental-card fade-in" data-company="Adobe Rent a Car" data-type="4x2" data-total="~US$ 472">
       <div class="rental-header">
         <h3>Adobe Rent a Car</h3>
         <span class="rental-type type-local">Local ⭐</span>
@@ -815,12 +852,13 @@ body {
         </div>
       </div>
       <div class="rental-footer">
-        📞 +506 2442-2422 · <a href="https://www.adobecar.com" target="_blank">adobecar.com</a>
+        <div class="rental-footer-row">📞 +506 2442-2422 · <a href="https://www.adobecar.com" target="_blank">adobecar.com</a> <button class="btn-reservar-car" onclick="toggleCarBooking(this)">Reservar</button></div>
+        <div class="rental-footer-row">📍 Calle 42, La Uruca, San José (shuttle gratuito ao aeroporto)</div>
       </div>
     </div>
 
     <!-- Vamos -->
-    <div class="rental-card fade-in">
+    <div class="rental-card fade-in" data-company="Vamos Rent-A-Car" data-type="4x2" data-total="~US$ 496">
       <div class="rental-header">
         <h3>Vamos Rent-A-Car</h3>
         <span class="rental-type type-local">Local ⭐</span>
@@ -851,12 +889,13 @@ body {
         </div>
       </div>
       <div class="rental-footer">
-        📞 +506 4000-0557 · <a href="https://vamosrentacar.com" target="_blank">vamosrentacar.com</a>
+        <div class="rental-footer-row">📞 +506 4000-0557 · <a href="https://vamosrentacar.com" target="_blank">vamosrentacar.com</a> <button class="btn-reservar-car" onclick="toggleCarBooking(this)">Reservar</button></div>
+        <div class="rental-footer-row">📍 800m norte del Aeropuerto SJO, Alajuela (shuttle gratuito)</div>
       </div>
     </div>
 
     <!-- Enterprise -->
-    <div class="rental-card fade-in">
+    <div class="rental-card fade-in" data-company="Enterprise" data-type="4x2" data-total="~US$ 510">
       <div class="rental-header">
         <h3>Enterprise</h3>
         <span class="rental-type type-international">Internacional</span>
@@ -887,12 +926,13 @@ body {
         </div>
       </div>
       <div class="rental-footer">
-        📞 SJO Airport · <a href="https://www.enterprise.com" target="_blank">enterprise.com</a>
+        <div class="rental-footer-row">📞 SJO Airport · <a href="https://www.enterprise.com" target="_blank">enterprise.com</a> <button class="btn-reservar-car" onclick="toggleCarBooking(this)">Reservar</button></div>
+        <div class="rental-footer-row">📍 Aeroporto Juan Santamaría, Terminal Principal, Alajuela</div>
       </div>
     </div>
 
     <!-- Hertz -->
-    <div class="rental-card fade-in">
+    <div class="rental-card fade-in" data-company="Hertz" data-type="4x2" data-total="~US$ 560">
       <div class="rental-header">
         <h3>Hertz</h3>
         <span class="rental-type type-international">Internacional</span>
@@ -923,12 +963,13 @@ body {
         </div>
       </div>
       <div class="rental-footer">
-        📞 +506 4036-9513 · <a href="https://www.hertz.com" target="_blank">hertz.com</a>
+        <div class="rental-footer-row">📞 +506 4036-9513 · <a href="https://www.hertz.com" target="_blank">hertz.com</a> <button class="btn-reservar-car" onclick="toggleCarBooking(this)">Reservar</button></div>
+        <div class="rental-footer-row">📍 Aeroporto Juan Santamaría, Terminal de Llegadas, Alajuela</div>
       </div>
     </div>
 
     <!-- SIXT -->
-    <div class="rental-card fade-in">
+    <div class="rental-card fade-in" data-company="SIXT" data-type="4x2" data-total="~US$ 482">
       <div class="rental-header">
         <h3>SIXT</h3>
         <span class="rental-type type-international">Internacional</span>
@@ -959,7 +1000,82 @@ body {
         </div>
       </div>
       <div class="rental-footer">
-        📞 +506 4000-7498 · <a href="https://www.sixt.com" target="_blank">sixt.com</a>
+        <div class="rental-footer-row">📞 +506 4000-7498 · <a href="https://www.sixt.com" target="_blank">sixt.com</a> <button class="btn-reservar-car" onclick="toggleCarBooking(this)">Reservar</button></div>
+        <div class="rental-footer-row">📍 Aeroporto Juan Santamaría, Terminal de Llegadas, Alajuela</div>
+      </div>
+    </div>
+
+    <!-- Avis -->
+    <div class="rental-card fade-in" data-company="Avis" data-type="4x2" data-total="~US$ 540">
+      <div class="rental-header">
+        <h3>Avis</h3>
+        <span class="rental-type type-international">Internacional</span>
+      </div>
+      <div class="rental-body">
+        <div class="rental-vehicles">Hyundai Tucson, Nissan Kicks ou similar</div>
+        <div class="price-row">
+          <span class="price-label">Base (8 dias)</span>
+          <span class="price-value">~US$ 380</span>
+        </div>
+        <div class="price-row">
+          <span class="price-label">PLI obrigatório</span>
+          <span class="price-value">~US$ 160</span>
+        </div>
+        <div class="price-row dispensable">
+          <span class="price-label">CDW/LDW</span>
+          <span class="price-value">~US$ 165<span class="visa-tag">Visa cobre</span></span>
+        </div>
+        <div class="price-total">
+          <div class="total-with-visa">
+            <span class="price-label">💳 Total com Visa Infinite</span>
+            <span class="price-value">~US$ 540</span>
+          </div>
+          <div class="total-without-visa">
+            <span class="price-label">Total sem Visa (CDW incluso)</span>
+            <span class="price-value">~US$ 705</span>
+          </div>
+        </div>
+      </div>
+      <div class="rental-footer">
+        <div class="rental-footer-row">📞 +506 2293-2222 · <a href="https://www.avis.co.cr" target="_blank">avis.co.cr</a> <button class="btn-reservar-car" onclick="toggleCarBooking(this)">Reservar</button></div>
+        <div class="rental-footer-row">📍 Aeroporto Juan Santamaría, Terminal de Llegadas, Alajuela</div>
+      </div>
+    </div>
+
+    <!-- Budget -->
+    <div class="rental-card fade-in" data-company="Budget" data-type="4x2" data-total="~US$ 525">
+      <div class="rental-header">
+        <h3>Budget</h3>
+        <span class="rental-type type-international">Internacional</span>
+      </div>
+      <div class="rental-body">
+        <div class="rental-vehicles">Kia Seltos, Hyundai Creta ou similar</div>
+        <div class="price-row">
+          <span class="price-label">Base (8 dias)</span>
+          <span class="price-value">~US$ 370</span>
+        </div>
+        <div class="price-row">
+          <span class="price-label">PLI obrigatório</span>
+          <span class="price-value">~US$ 155</span>
+        </div>
+        <div class="price-row dispensable">
+          <span class="price-label">CDW/LDW</span>
+          <span class="price-value">~US$ 155<span class="visa-tag">Visa cobre</span></span>
+        </div>
+        <div class="price-total">
+          <div class="total-with-visa">
+            <span class="price-label">💳 Total com Visa Infinite</span>
+            <span class="price-value">~US$ 525</span>
+          </div>
+          <div class="total-without-visa">
+            <span class="price-label">Total sem Visa (CDW incluso)</span>
+            <span class="price-value">~US$ 680</span>
+          </div>
+        </div>
+      </div>
+      <div class="rental-footer">
+        <div class="rental-footer-row">📞 +506 2436-2000 · <a href="https://www.budget.co.cr" target="_blank">budget.co.cr</a> <button class="btn-reservar-car" onclick="toggleCarBooking(this)">Reservar</button></div>
+        <div class="rental-footer-row">📍 Aeroporto Juan Santamaría, Terminal de Llegadas, Alajuela</div>
       </div>
     </div>
   </div>
@@ -983,7 +1099,7 @@ body {
 
   <div class="rental-grid">
     <!-- Adobe 4x4 -->
-    <div class="rental-card fade-in">
+    <div class="rental-card fade-in" data-company="Adobe Rent a Car" data-type="4x4" data-total="~US$ 562">
       <div class="rental-header">
         <h3>Adobe Rent a Car</h3>
         <span class="rental-type type-local">Local ⭐</span>
@@ -1014,12 +1130,13 @@ body {
         </div>
       </div>
       <div class="rental-footer">
-        📞 +506 2442-2422 · <a href="https://www.adobecar.com" target="_blank">adobecar.com</a>
+        <div class="rental-footer-row">📞 +506 2442-2422 · <a href="https://www.adobecar.com" target="_blank">adobecar.com</a> <button class="btn-reservar-car" onclick="toggleCarBooking(this)">Reservar</button></div>
+        <div class="rental-footer-row">📍 Calle 42, La Uruca, San José (shuttle gratuito ao aeroporto)</div>
       </div>
     </div>
 
     <!-- Vamos 4x4 -->
-    <div class="rental-card fade-in">
+    <div class="rental-card fade-in" data-company="Vamos Rent-A-Car" data-type="4x4" data-total="~US$ 706">
       <div class="rental-header">
         <h3>Vamos Rent-A-Car</h3>
         <span class="rental-type type-local">Local ⭐</span>
@@ -1050,12 +1167,13 @@ body {
         </div>
       </div>
       <div class="rental-footer">
-        📞 +506 4000-0557 · <a href="https://vamosrentacar.com" target="_blank">vamosrentacar.com</a>
+        <div class="rental-footer-row">📞 +506 4000-0557 · <a href="https://vamosrentacar.com" target="_blank">vamosrentacar.com</a> <button class="btn-reservar-car" onclick="toggleCarBooking(this)">Reservar</button></div>
+        <div class="rental-footer-row">📍 800m norte del Aeropuerto SJO, Alajuela (shuttle gratuito)</div>
       </div>
     </div>
 
     <!-- Enterprise 4x4 -->
-    <div class="rental-card fade-in">
+    <div class="rental-card fade-in" data-company="Enterprise" data-type="4x4" data-total="~US$ 660">
       <div class="rental-header">
         <h3>Enterprise</h3>
         <span class="rental-type type-international">Internacional</span>
@@ -1086,12 +1204,13 @@ body {
         </div>
       </div>
       <div class="rental-footer">
-        📞 SJO Airport · <a href="https://www.enterprise.com" target="_blank">enterprise.com</a>
+        <div class="rental-footer-row">📞 SJO Airport · <a href="https://www.enterprise.com" target="_blank">enterprise.com</a> <button class="btn-reservar-car" onclick="toggleCarBooking(this)">Reservar</button></div>
+        <div class="rental-footer-row">📍 Aeroporto Juan Santamaría, Terminal Principal, Alajuela</div>
       </div>
     </div>
 
     <!-- Hertz 4x4 -->
-    <div class="rental-card fade-in">
+    <div class="rental-card fade-in" data-company="Hertz" data-type="4x4" data-total="~US$ 710">
       <div class="rental-header">
         <h3>Hertz</h3>
         <span class="rental-type type-international">Internacional</span>
@@ -1122,12 +1241,13 @@ body {
         </div>
       </div>
       <div class="rental-footer">
-        📞 +506 4036-9513 · <a href="https://www.hertz.com" target="_blank">hertz.com</a>
+        <div class="rental-footer-row">📞 +506 4036-9513 · <a href="https://www.hertz.com" target="_blank">hertz.com</a> <button class="btn-reservar-car" onclick="toggleCarBooking(this)">Reservar</button></div>
+        <div class="rental-footer-row">📍 Aeroporto Juan Santamaría, Terminal de Llegadas, Alajuela</div>
       </div>
     </div>
 
     <!-- SIXT 4x4 -->
-    <div class="rental-card fade-in">
+    <div class="rental-card fade-in" data-company="SIXT" data-type="4x4" data-total="~US$ 632">
       <div class="rental-header">
         <h3>SIXT</h3>
         <span class="rental-type type-international">Internacional</span>
@@ -1158,7 +1278,82 @@ body {
         </div>
       </div>
       <div class="rental-footer">
-        📞 +506 4000-7498 · <a href="https://www.sixt.com" target="_blank">sixt.com</a>
+        <div class="rental-footer-row">📞 +506 4000-7498 · <a href="https://www.sixt.com" target="_blank">sixt.com</a> <button class="btn-reservar-car" onclick="toggleCarBooking(this)">Reservar</button></div>
+        <div class="rental-footer-row">📍 Aeroporto Juan Santamaría, Terminal de Llegadas, Alajuela</div>
+      </div>
+    </div>
+
+    <!-- Avis 4x4 -->
+    <div class="rental-card fade-in" data-company="Avis" data-type="4x4" data-total="~US$ 680">
+      <div class="rental-header">
+        <h3>Avis</h3>
+        <span class="rental-type type-international">Internacional</span>
+      </div>
+      <div class="rental-body">
+        <div class="rental-vehicles">Toyota RAV4 4WD, Hyundai Tucson 4WD ou similar</div>
+        <div class="price-row">
+          <span class="price-label">Base (8 dias)</span>
+          <span class="price-value">~US$ 520</span>
+        </div>
+        <div class="price-row">
+          <span class="price-label">PLI obrigatório</span>
+          <span class="price-value">~US$ 160</span>
+        </div>
+        <div class="price-row dispensable">
+          <span class="price-label">CDW/LDW</span>
+          <span class="price-value">~US$ 185<span class="visa-tag">Visa cobre</span></span>
+        </div>
+        <div class="price-total">
+          <div class="total-with-visa">
+            <span class="price-label">💳 Total com Visa Infinite</span>
+            <span class="price-value">~US$ 680</span>
+          </div>
+          <div class="total-without-visa">
+            <span class="price-label">Total sem Visa (CDW incluso)</span>
+            <span class="price-value">~US$ 865</span>
+          </div>
+        </div>
+      </div>
+      <div class="rental-footer">
+        <div class="rental-footer-row">📞 +506 2293-2222 · <a href="https://www.avis.co.cr" target="_blank">avis.co.cr</a> <button class="btn-reservar-car" onclick="toggleCarBooking(this)">Reservar</button></div>
+        <div class="rental-footer-row">📍 Aeroporto Juan Santamaría, Terminal de Llegadas, Alajuela</div>
+      </div>
+    </div>
+
+    <!-- Budget 4x4 -->
+    <div class="rental-card fade-in" data-company="Budget" data-type="4x4" data-total="~US$ 655">
+      <div class="rental-header">
+        <h3>Budget</h3>
+        <span class="rental-type type-international">Internacional</span>
+      </div>
+      <div class="rental-body">
+        <div class="rental-vehicles">Mitsubishi ASX 4WD, Kia Sportage 4WD ou similar</div>
+        <div class="price-row">
+          <span class="price-label">Base (8 dias)</span>
+          <span class="price-value">~US$ 500</span>
+        </div>
+        <div class="price-row">
+          <span class="price-label">PLI obrigatório</span>
+          <span class="price-value">~US$ 155</span>
+        </div>
+        <div class="price-row dispensable">
+          <span class="price-label">CDW/LDW</span>
+          <span class="price-value">~US$ 175<span class="visa-tag">Visa cobre</span></span>
+        </div>
+        <div class="price-total">
+          <div class="total-with-visa">
+            <span class="price-label">💳 Total com Visa Infinite</span>
+            <span class="price-value">~US$ 655</span>
+          </div>
+          <div class="total-without-visa">
+            <span class="price-label">Total sem Visa (CDW incluso)</span>
+            <span class="price-value">~US$ 830</span>
+          </div>
+        </div>
+      </div>
+      <div class="rental-footer">
+        <div class="rental-footer-row">📞 +506 2436-2000 · <a href="https://www.budget.co.cr" target="_blank">budget.co.cr</a> <button class="btn-reservar-car" onclick="toggleCarBooking(this)">Reservar</button></div>
+        <div class="rental-footer-row">📍 Aeroporto Juan Santamaría, Terminal de Llegadas, Alajuela</div>
       </div>
     </div>
   </div>
@@ -1205,6 +1400,40 @@ body {
     </div>
   </div>
 </section>
+
+<!-- ═══ BOOKING MODAL ═══ -->
+<div class="booking-overlay" id="carBookingOverlay" onclick="closeCarModal(event)">
+  <div class="booking-modal">
+    <button type="button" class="modal-close" onclick="closeCarModal()">&times;</button>
+    <h3 class="modal-title">🚗 Confirmar Reserva de Veículo</h3>
+    <p class="modal-hotel-name" id="carModalName"></p>
+    <div class="modal-form">
+      <div class="modal-row">
+        <div class="modal-field">
+          <label for="carPickup">Retirada</label>
+          <input type="date" id="carPickup" value="2026-04-09" required>
+        </div>
+        <div class="modal-field">
+          <label for="carReturn">Devolução</label>
+          <input type="date" id="carReturn" value="2026-04-17" required>
+        </div>
+      </div>
+      <div class="modal-field">
+        <label for="carConfirmation">Número de confirmação <span class="field-optional">(opcional)</span></label>
+        <input type="text" id="carConfirmation" placeholder="Ex: ABC12345" maxlength="30" autocomplete="off">
+      </div>
+      <div class="modal-field">
+        <label for="carNotes">Observações <span class="field-optional">(opcional)</span></label>
+        <textarea id="carNotes" rows="2" placeholder="Ex: Pedir cadeirinha, GPS..."></textarea>
+      </div>
+    </div>
+    <p class="modal-error" id="carModalError"></p>
+    <div class="modal-actions">
+      <button type="button" class="modal-btn modal-btn-cancel" onclick="closeCarModal()">Cancelar</button>
+      <button type="button" class="modal-btn modal-btn-confirm" onclick="confirmCarBooking()">Confirmar Reserva</button>
+    </div>
+  </div>
+</div>
 
 <!-- ═══ FOOTER ═══ -->
 <footer class="footer">
@@ -1266,6 +1495,101 @@ function checkNavScroll() {
 navInner.addEventListener('scroll', checkNavScroll);
 window.addEventListener('resize', checkNavScroll);
 checkNavScroll();
+
+// ─── CAR BOOKING SYSTEM ───
+let pendingCarBtn = null;
+
+function getCarBooking() {
+  try { return JSON.parse(localStorage.getItem('cr2026_car_booking')); } catch { return null; }
+}
+
+function saveCarBooking(booking) {
+  if (booking) {
+    localStorage.setItem('cr2026_car_booking', JSON.stringify(booking));
+  } else {
+    localStorage.removeItem('cr2026_car_booking');
+  }
+}
+
+function toggleCarBooking(btn) {
+  const card = btn.closest('.rental-card');
+  const company = card.dataset.company;
+  const current = getCarBooking();
+
+  if (current && current.company === company) {
+    // Unbook
+    saveCarBooking(null);
+    refreshCarUI();
+  } else {
+    // Open modal
+    pendingCarBtn = btn;
+    document.getElementById('carModalName').textContent = company + ' — ' + card.dataset.type.toUpperCase();
+    document.getElementById('carPickup').value = '2026-04-09';
+    document.getElementById('carReturn').value = '2026-04-17';
+    document.getElementById('carConfirmation').value = '';
+    document.getElementById('carNotes').value = '';
+    document.getElementById('carModalError').textContent = '';
+    document.getElementById('carBookingOverlay').classList.add('active');
+  }
+}
+
+function confirmCarBooking() {
+  if (!pendingCarBtn) return;
+  const pickup = document.getElementById('carPickup').value;
+  const ret = document.getElementById('carReturn').value;
+  const errorEl = document.getElementById('carModalError');
+
+  if (!pickup || !ret) { errorEl.textContent = 'Preencha as datas.'; return; }
+  if (ret <= pickup) { errorEl.textContent = 'Devolução deve ser posterior à retirada.'; return; }
+
+  const card = pendingCarBtn.closest('.rental-card');
+  saveCarBooking({
+    company: card.dataset.company,
+    type: card.dataset.type,
+    total: card.dataset.total,
+    pickup: pickup,
+    returnDate: ret,
+    confirmation: document.getElementById('carConfirmation').value.trim() || null,
+    notes: document.getElementById('carNotes').value.trim() || null
+  });
+
+  pendingCarBtn = null;
+  closeCarModal();
+  refreshCarUI();
+}
+
+function closeCarModal(event) {
+  if (event && event.target !== event.currentTarget) return;
+  document.getElementById('carBookingOverlay').classList.remove('active');
+  pendingCarBtn = null;
+}
+
+function refreshCarUI() {
+  const booking = getCarBooking();
+  document.querySelectorAll('.rental-card[data-company]').forEach(card => {
+    const btn = card.querySelector('.btn-reservar-car');
+    if (!btn) return;
+    const isBooked = booking && booking.company === card.dataset.company;
+    card.classList.toggle('car-booked', isBooked);
+    btn.classList.toggle('is-booked', isBooked);
+    btn.innerHTML = isBooked ? '✓ Reservado' : 'Reservar';
+
+    // Show/hide booked badge
+    let badge = card.querySelector('.car-booked-badge');
+    if (isBooked) {
+      if (!badge) {
+        badge = document.createElement('span');
+        badge.className = 'car-booked-badge';
+        card.querySelector('.rental-header').appendChild(badge);
+      }
+      badge.textContent = '✓ Reservado';
+    } else if (badge) {
+      badge.remove();
+    }
+  });
+}
+
+refreshCarUI();
 </script>
 <script src="currency.js"></script>
 

@@ -809,6 +809,187 @@ body {
   display: none;
 }
 .rate-bar.visible { display: block; }
+
+/* ─── TODO SECTION ─── */
+.todo-section-wrap {
+  background: var(--sand-light);
+}
+
+.todo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 40px;
+}
+
+.todo-card {
+  background: white;
+  border-radius: var(--radius);
+  padding: 0;
+  box-shadow: var(--shadow-sm);
+  border: 2px solid transparent;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  overflow: hidden;
+}
+
+.todo-card.todo-card-done {
+  border-color: rgba(92,168,122,0.35);
+  background: rgba(92,168,122,0.03);
+}
+
+.todo-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid rgba(26,58,42,0.06);
+}
+
+.todo-card-header h3 {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--jungle);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.todo-progress-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-light);
+  white-space: nowrap;
+}
+
+.todo-card-done .todo-progress-text {
+  color: var(--leaf);
+}
+
+.todo-card-body {
+  padding: 12px 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.todo-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 8px;
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+  transition: background 0.2s;
+  user-select: none;
+}
+
+.todo-item:hover {
+  background: var(--sand-light);
+}
+
+.todo-item.todo-done {
+  opacity: 0.65;
+}
+
+.todo-check {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--sand-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+  transition: all 0.25s;
+  font-size: 0.7rem;
+  color: transparent;
+}
+
+.todo-done .todo-check {
+  background: var(--leaf);
+  border-color: var(--leaf);
+  color: white;
+}
+
+.todo-item.todo-auto .todo-check {
+  background: var(--ocean);
+  border-color: var(--ocean);
+  color: white;
+}
+
+.todo-text {
+  font-size: 0.9rem;
+  color: var(--text);
+  line-height: 1.5;
+  flex: 1;
+}
+
+.todo-done .todo-text {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+.todo-auto-label {
+  font-size: 0.7rem;
+  color: var(--ocean);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  margin-top: 2px;
+}
+
+.todo-summary {
+  margin-top: 32px;
+  background: white;
+  border-radius: var(--radius);
+  padding: 24px 32px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.todo-summary-bar-wrap {
+  flex: 1;
+  min-width: 200px;
+}
+
+.todo-summary-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--jungle);
+  margin-bottom: 8px;
+}
+
+.todo-summary-bar {
+  height: 10px;
+  background: var(--sand);
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.todo-summary-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--leaf), var(--canopy));
+  border-radius: 100px;
+  transition: width 0.5s ease-out;
+}
+
+.todo-summary-count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+@media (max-width: 768px) {
+  .todo-grid { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
@@ -832,6 +1013,7 @@ body {
 <nav class="nav-bar" id="navbar">
   <div class="nav-inner">
     <button class="nav-btn active" data-section="alerts-section" onclick="navigateTo('#alerts-section')">⚠️ Atenção</button>
+    <button class="nav-btn" data-section="todo-section" onclick="navigateTo('#todo-section')">📝 TODO</button>
     <button class="nav-btn" data-section="calendar-section" onclick="navigateTo('#calendar-section')">🗓️ Calendário</button>
     <button class="nav-btn" data-section="costs-section" onclick="navigateTo('#costs-section')">💰 Custos</button>
     <a class="nav-btn" href="hospedagem.html">🏨 Hospedagem</a>
@@ -890,6 +1072,16 @@ body {
       </div>
     </div>
   </div>
+</section>
+
+<!-- ═══ TODO ═══ -->
+<section class="section" id="todo-section">
+  <div class="section-header fade-in">
+    <span class="section-tag">Planejamento</span>
+    <h2 class="section-title">📝 Lista de Tarefas</h2>
+  </div>
+  <div class="todo-grid" id="todoGrid"></div>
+  <div id="todoSummary"></div>
 </section>
 
 <!-- ═══ CALENDAR ═══ -->
@@ -1223,6 +1415,186 @@ window.addEventListener('brl-ready', () => {
   window.applyBrlConversion();
 });
 
+// ─── TODO CHECKLIST ───
+const todoData = [
+  {
+    city: 'Alajuela',
+    emoji: '✈️',
+    subtitle: 'Dia 1 & 8',
+    items: [
+      { id: 'alajuela-hotel-d1', text: 'Reservar hotel — Dia 1', autoKey: 'alajuela', autoType: 'booking' },
+      { id: 'alajuela-hotel-d8', text: 'Reservar hotel — Dia 8', autoKey: 'alajuela', autoType: 'booking' }
+    ]
+  },
+  {
+    city: 'La Fortuna',
+    emoji: '🌋',
+    subtitle: 'Dias 2–3',
+    items: [
+      { id: 'lafortuna-hotel', text: 'Reservar hotel — 2 noites', autoKey: 'la-fortuna', autoType: 'booking' },
+      { id: 'lafortuna-poas', text: 'Ingresso Vulcão Poás — sinac.go.cr' },
+      { id: 'lafortuna-mistico', text: 'Ingresso Místico Bridges — misticopark.com' },
+      { id: 'lafortuna-bluefalls', text: 'Ingresso Blue Falls' }
+    ]
+  },
+  {
+    city: 'Tamarindo',
+    emoji: '🏖️',
+    subtitle: 'Dias 4–6',
+    items: [
+      { id: 'tamarindo-hotel', text: 'Reservar hotel — 3 noites', autoKey: 'tamarindo', autoType: 'booking' },
+      { id: 'tamarindo-celeste', text: 'Ingresso Rio Celeste — sinac.go.cr' },
+      { id: 'tamarindo-guachipelin', text: 'Reservar Hacienda Guachipelin — guachipelin.com' },
+      { id: 'tamarindo-surf', text: 'Aula de surf (opcional)' }
+    ]
+  },
+  {
+    city: 'Manuel Antonio',
+    emoji: '🐒',
+    subtitle: 'Dia 7',
+    items: [
+      { id: 'manuelantonio-hotel', text: 'Reservar hotel — 1 noite', autoKey: 'manuel-antonio', autoType: 'booking' },
+      { id: 'manuelantonio-parque', text: 'Ingresso Manuel Antonio — sinac.go.cr' },
+      { id: 'manuelantonio-rafting', text: 'Reservar rafting Rio Savegre' }
+    ]
+  },
+  {
+    city: 'Geral',
+    emoji: '📦',
+    subtitle: '',
+    items: [
+      { id: 'geral-carro', text: 'Alugar carro 4x4 + seguro', autoType: 'car' },
+      { id: 'geral-seguro', text: 'Seguro viagem para aventura' },
+      { id: 'geral-esim', text: 'Comprar eSIM ou chip local' },
+      { id: 'geral-dinheiro', text: 'Levar US$ 200–300 em espécie' },
+      { id: 'geral-docs', text: 'CNH original + passaporte' }
+    ]
+  }
+];
+
+function getTodos() {
+  try { return JSON.parse(localStorage.getItem('cr2026_todos') || '{}'); } catch { return {}; }
+}
+
+function saveTodos(todos) {
+  localStorage.setItem('cr2026_todos', JSON.stringify(todos));
+}
+
+function isAutoChecked(item) {
+  try {
+    if (item.autoType === 'booking' && item.autoKey) {
+      const bookings = JSON.parse(localStorage.getItem('cr2026_bookings') || '{}');
+      const arr = bookings[item.autoKey];
+      if (arr && (Array.isArray(arr) ? arr.length > 0 : true)) return true;
+    }
+    if (item.autoType === 'car') {
+      const car = localStorage.getItem('cr2026_car_booking');
+      if (car) return true;
+    }
+  } catch {}
+  return false;
+}
+
+function getAutoLabel(item) {
+  try {
+    if (item.autoType === 'booking' && item.autoKey) {
+      const bookings = JSON.parse(localStorage.getItem('cr2026_bookings') || '{}');
+      const arr = bookings[item.autoKey];
+      if (arr) {
+        const entries = Array.isArray(arr) ? arr : [arr];
+        if (entries.length > 0 && entries[0].name) return entries[0].name;
+      }
+    }
+    if (item.autoType === 'car') {
+      const car = JSON.parse(localStorage.getItem('cr2026_car_booking'));
+      if (car && car.company) return car.company;
+    }
+  } catch {}
+  return 'Detectado';
+}
+
+function renderTodos() {
+  const grid = document.getElementById('todoGrid');
+  const summaryEl = document.getElementById('todoSummary');
+  const todos = getTodos();
+  let totalItems = 0;
+  let totalDone = 0;
+
+  grid.innerHTML = '';
+
+  todoData.forEach(group => {
+    const card = document.createElement('div');
+    card.className = 'todo-card fade-in';
+    let doneCount = 0;
+
+    const itemsHTML = group.items.map(item => {
+      const auto = isAutoChecked(item);
+      const manual = todos[item.id] === true;
+      const done = auto || manual;
+      if (done) doneCount++;
+      totalItems++;
+      if (done) totalDone++;
+
+      const autoLabel = auto ? `<div class="todo-auto-label">🔗 ${getAutoLabel(item)}</div>` : '';
+      return `
+        <div class="todo-item ${done ? 'todo-done' : ''} ${auto ? 'todo-auto' : ''}" data-id="${item.id}" ${auto ? '' : 'onclick="toggleTodo(this)"'}>
+          <div class="todo-check">${done ? '✓' : ''}</div>
+          <div>
+            <div class="todo-text">${item.text}</div>
+            ${autoLabel}
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    const allDone = doneCount === group.items.length;
+    if (allDone) card.classList.add('todo-card-done');
+
+    card.innerHTML = `
+      <div class="todo-card-header">
+        <h3>${group.emoji} ${group.city}${group.subtitle ? ' <span style="font-weight:400;font-size:0.82rem;color:var(--text-muted);">(' + group.subtitle + ')</span>' : ''}</h3>
+        <span class="todo-progress-text">${doneCount} de ${group.items.length}</span>
+      </div>
+      <div class="todo-card-body">${itemsHTML}</div>
+    `;
+    grid.appendChild(card);
+  });
+
+  const pct = totalItems > 0 ? Math.round((totalDone / totalItems) * 100) : 0;
+  summaryEl.innerHTML = `
+    <div class="todo-summary fade-in">
+      <div class="todo-summary-bar-wrap">
+        <div class="todo-summary-label">Progresso geral</div>
+        <div class="todo-summary-bar">
+          <div class="todo-summary-fill" style="width:${pct}%"></div>
+        </div>
+      </div>
+      <div class="todo-summary-count">${totalDone} de ${totalItems} (${pct}%)</div>
+    </div>
+  `;
+
+  // Observe new fade-in elements
+  document.querySelectorAll('#todo-section .fade-in:not(.visible)').forEach(el => observer.observe(el));
+}
+
+function toggleTodo(el) {
+  const id = el.dataset.id;
+  const todos = getTodos();
+  todos[id] = !todos[id];
+  saveTodos(todos);
+  renderTodos();
+}
+
+// Render on load
+renderTodos();
+
+// Sync across tabs
+window.addEventListener('storage', (e) => {
+  if (e.key === 'cr2026_todos' || e.key === 'cr2026_bookings' || e.key === 'cr2026_car_booking') {
+    renderTodos();
+  }
+});
+
 // ─── SCROLL EFFECTS ───
 function navigateTo(selector) {
   const el = document.querySelector(selector);
@@ -1236,7 +1608,7 @@ function navigateTo(selector) {
 // Navbar shadow + active section tracking
 const navbar = document.getElementById('navbar');
 const navBtns = document.querySelectorAll('.nav-btn[data-section]');
-const sections = ['alerts-section', 'calendar-section', 'costs-section'];
+const sections = ['alerts-section', 'todo-section', 'calendar-section', 'costs-section'];
 
 window.addEventListener('scroll', () => {
   navbar.classList.toggle('scrolled', window.scrollY > 100);
