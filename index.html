@@ -1018,7 +1018,7 @@ body {
     <button class="nav-btn" data-section="costs-section" onclick="navigateTo('#costs-section')">💰 Custos</button>
     <a class="nav-btn" href="hospedagem.html">🏨 Hospedagem</a>
     <a class="nav-btn" href="veiculo.html">🚗 Veículo</a>
-    <a class="nav-btn" href="https://www.google.com/maps/dir/Aeroporto+Juan+Santamaria+Costa+Rica/Alajuela+Costa+Rica/La+Fortuna+Alajuela+Costa+Rica/Parque+Nacional+Volcan+Tenorio+Costa+Rica/Tamarindo+Guanacaste+Costa+Rica/Hacienda+Guachipelin+Liberia+Costa+Rica/Manuel+Antonio+Quepos+Costa+Rica/Aeroporto+Juan+Santamaria+Costa+Rica/" target="_blank" rel="noopener">🌍 Mapa</a>
+    <a class="nav-btn" href="mapa.html">🌍 Mapa</a>
     <a class="nav-btn" href="https://www.notion.so/31d95c7b3aae81fa8265c1d552486f7a" target="_blank" rel="noopener">📝 Notion</a>
   </div>
 </nav>
@@ -1422,8 +1422,8 @@ const todoData = [
     emoji: '✈️',
     subtitle: 'Dia 1 & 8',
     items: [
-      { id: 'alajuela-hotel-d1', text: 'Reservar hotel — Dia 1', autoKey: 'alajuela', autoType: 'booking' },
-      { id: 'alajuela-hotel-d8', text: 'Reservar hotel — Dia 8', autoKey: 'alajuela', autoType: 'booking' }
+      { id: 'alajuela-hotel-d1', text: 'Reservar hotel — Dia 1', autoKey: 'alajuela', autoType: 'booking', autoDate: '2026-04-09' },
+      { id: 'alajuela-hotel-d8', text: 'Reservar hotel — Dia 8', autoKey: 'alajuela', autoType: 'booking', autoDate: '2026-04-16' }
     ]
   },
   {
@@ -1480,37 +1480,41 @@ function saveTodos(todos) {
   localStorage.setItem('cr2026_todos', JSON.stringify(todos));
 }
 
-function isAutoChecked(item) {
+function findMatchingBooking(item) {
+  // Returns the matching booking entry or null
   try {
     if (item.autoType === 'booking' && item.autoKey) {
       const bookings = JSON.parse(localStorage.getItem('cr2026_bookings') || '{}');
       const arr = bookings[item.autoKey];
-      if (arr && (Array.isArray(arr) ? arr.length > 0 : true)) return true;
-    }
-    if (item.autoType === 'car') {
-      const car = localStorage.getItem('cr2026_car_booking');
-      if (car) return true;
-    }
-  } catch {}
-  return false;
-}
-
-function getAutoLabel(item) {
-  try {
-    if (item.autoType === 'booking' && item.autoKey) {
-      const bookings = JSON.parse(localStorage.getItem('cr2026_bookings') || '{}');
-      const arr = bookings[item.autoKey];
-      if (arr) {
-        const entries = Array.isArray(arr) ? arr : [arr];
-        if (entries.length > 0 && entries[0].name) return entries[0].name;
+      if (!arr) return null;
+      const entries = Array.isArray(arr) ? arr : [arr];
+      if (!entries.length) return null;
+      if (item.autoDate) {
+        // Match only bookings that cover this specific date (checkin <= autoDate < checkout)
+        return entries.find(b => {
+          if (!b.checkin || !b.checkout) return false;
+          return item.autoDate >= b.checkin && item.autoDate < b.checkout;
+        }) || null;
       }
+      // No date filter — any booking matches
+      return entries[0] || null;
     }
     if (item.autoType === 'car') {
       const car = JSON.parse(localStorage.getItem('cr2026_car_booking'));
-      if (car && car.company) return car.company;
+      return car || null;
     }
   } catch {}
-  return 'Detectado';
+  return null;
+}
+
+function isAutoChecked(item) {
+  return findMatchingBooking(item) !== null;
+}
+
+function getAutoLabel(item) {
+  const match = findMatchingBooking(item);
+  if (!match) return 'Detectado';
+  return match.name || match.company || 'Detectado';
 }
 
 function renderTodos() {
