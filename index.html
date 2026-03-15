@@ -592,10 +592,30 @@ body {
   transform: translateY(-2px);
 }
 
+.hotel-card.hotel-booked {
+  border: 2px solid var(--leaf);
+  background: rgba(92,168,122,0.04);
+}
+
 .hotel-card h4 {
   font-size: 0.95rem;
   font-weight: 700;
   color: var(--jungle);
+  margin-bottom: 4px;
+}
+
+.hotel-card .booked-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--leaf);
+  color: white;
+  padding: 2px 10px;
+  border-radius: 100px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
   margin-bottom: 4px;
 }
 
@@ -611,6 +631,20 @@ body {
   color: var(--lava);
   margin-top: 8px;
 }
+
+.hotel-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8rem;
+  color: var(--ocean);
+  text-decoration: none;
+  font-weight: 600;
+  margin-top: 8px;
+  transition: color 0.2s;
+}
+
+.hotel-link:hover { color: var(--ocean-light); }
 
 /* ─── COSTS ─── */
 .cost-grid {
@@ -834,13 +868,13 @@ body {
   </div>
   <div class="cost-grid fade-in">
     <div class="cost-card"><div class="emoji">🚗</div><div class="category">Carro 4x4 + Seguro</div><div class="amount">US$ 500–800</div></div>
-    <div class="cost-card"><div class="emoji">🏨</div><div class="category">Hospedagem (8 noites)</div><div class="amount">US$ 800–1.200</div></div>
+    <div class="cost-card"><div class="emoji">🏨</div><div class="category">Hospedagem (8 noites)</div><div class="amount">US$ 550–850</div></div>
     <div class="cost-card"><div class="emoji">🍽️</div><div class="category">Alimentação (~US$ 50/dia)</div><div class="amount">US$ 400</div></div>
     <div class="cost-card"><div class="emoji">🎫</div><div class="category">Passeios e Entradas</div><div class="amount">US$ 450–550</div></div>
   </div>
   <div class="cost-total fade-in">
     <div class="label">Total estimado</div>
-    <div class="amount">US$ 2.150 – 2.950</div>
+    <div class="amount">US$ 1.900 – 2.600</div>
     <div class="sub">Valores aproximados · Abril 2026</div>
   </div>
 </section>
@@ -864,10 +898,11 @@ const days = [
       { time: '13h – 17h', title: '🎭 Centro de San José', items: ['Teatro Nacional de Costa Rica — edifício de 1897, inspirado na Ópera de Paris', 'Café no salão dourado do Teatro', 'Museo del Oro Precolombino — 3 andares, 1.586 peças de ouro (~US$ 18)', 'Passeio pela Avenida Central e Plaza de la Democracia'], price: '~US$ 18' },
       { time: '17h+', title: '🏨 Check-in em Alajuela', items: ['Jantar: La Jarra (costarriquenha) ou El Chante Vegano', 'Cama cedo — amanhã começa a aventura!'] }
     ],
+    location: 'alajuela',
     hotels: [
-      { name: 'Xandari Resort', desc: 'Boutique sustentável, spa', price: '~US$ 200/noite' },
-      { name: 'Hampton Inn Alajuela', desc: '5 min do aeroporto', price: '~US$ 120/noite' },
-      { name: 'Hotel Buena Vista', desc: 'Vista, piscina', price: '~US$ 90/noite' }
+      { name: 'Hampton Inn Alajuela', desc: 'Transfer aeroporto + café incluso', price: '~US$ 110/noite' },
+      { name: 'Hotel Buena Vista', desc: 'Vista do vale + piscina', price: '~US$ 85/noite' },
+      { name: 'Adventure Inn', desc: 'Piscina + shuttle aeroporto', price: '~US$ 75/noite' }
     ]
   },
   {
@@ -880,10 +915,11 @@ const days = [
       { time: '14h – 16h30', title: '🚗 Rumo a La Fortuna', items: ['Almoço rápido em Bajos del Toro', 'Blue Falls → La Fortuna (~1h30–2h, Rota 4 pavimentada)', 'Chegada ~16h com sol!'] },
       { time: '17h+', title: '🌙 Escolha uma opção!', items: ['☕ OPÇÃO A: Tour de Café e Chocolate — North Fields (~2h, ~US$ 43)', '✨ OPÇÃO B: Termas gratuitas do Rio Tabacón — acesso público', '💡 Decidam na hora conforme o cansaço!'] }
     ],
+    location: 'la-fortuna',
     hotels: [
-      { name: 'Arenal Manoa Hotel & Spa', desc: 'Piscina termal + vista do vulcão', price: '~US$ 130/noite' },
-      { name: 'Lost Iguana Resort', desc: 'Boutique na floresta, romântico', price: '~US$ 180/noite' },
-      { name: 'Hotel La Fortuna', desc: 'Econômico no centrinho', price: '~US$ 60/noite' }
+      { name: 'Hotel Lomas del Volcán', desc: 'Vista do vulcão + termas', price: '~US$ 95/noite' },
+      { name: 'Arenal Backpackers Resort', desc: 'Piscina + quartos privados', price: '~US$ 70/noite' },
+      { name: 'Hotel La Fortuna', desc: 'Centro, prático e econômico', price: '~US$ 55/noite' }
     ]
   },
   {
@@ -896,9 +932,10 @@ const days = [
       { time: '13h – 15h', title: '💧 Catarata La Fortuna', items: ['70m de queda d\'água espetacular', '530 degraus (descida e subida) — prepare as pernas!', 'Rio na base para banho. Ingresso: ~US$ 17'], price: '~US$ 17' },
       { time: '18h+', title: '🌡️ Baldi Hot Springs', items: ['25 piscinas de 37°C a 67°C', 'Bares dentro d\'água, música ao vivo', 'Day use: ~US$ 50/pessoa, jantar incluso!'], price: '~US$ 50' }
     ],
+    location: 'la-fortuna',
     hotels: [
-      { name: 'Arenal Manoa Hotel & Spa', desc: 'Piscina termal + vista', price: '~US$ 130/noite' },
-      { name: 'Lost Iguana Resort', desc: 'Romântico na floresta', price: '~US$ 180/noite' }
+      { name: 'Hotel Lomas del Volcán', desc: 'Vista do vulcão + termas', price: '~US$ 95/noite' },
+      { name: 'Arenal Backpackers Resort', desc: 'Piscina + quartos privados', price: '~US$ 70/noite' }
     ]
   },
   {
@@ -909,10 +946,11 @@ const days = [
       { time: '07h30 – 11h', title: '🔵 Rio Celeste', items: ['A atração mais deslumbrante da Costa Rica!', 'Cor azul neon 100% natural — reação química de dois minerais', 'Trilha até a cachoeira: ~3,5 km, 2h. Ingresso: ~US$ 12', 'Banho fora do parque, embaixo de uma ponte na estrada', '⚠️ Compre ONLINE semanas antes em sinac.go.cr!'], price: '~US$ 12', tip: 'Comprar online!' },
       { time: '14h – 17h', title: '🚗 Rumo a Tamarindo', items: ['Almoço nos restaurantes da estrada do parque', 'Rio Celeste → Tamarindo (~2,5–3h via Liberia)', 'Check-in à beira-mar. Jantar leve e descanso'] }
     ],
+    location: 'tamarindo',
     hotels: [
-      { name: 'Cala Luna Boutique Hotel', desc: 'Villas privativas, romântico', price: '~US$ 250/noite' },
-      { name: 'Wyndham Tamarindo', desc: 'Estruturado, café incluso', price: '~US$ 150/noite' },
-      { name: 'Hotel Pasatiempo', desc: 'Piscina, 5 min da praia', price: '~US$ 100/noite' }
+      { name: 'Hotel Pasatiempo', desc: 'Piscina + 5 min da praia', price: '~US$ 95/noite' },
+      { name: 'Tamarindo Diria Beach Resort', desc: 'Pé na areia, piscina + café', price: '~US$ 130/noite' },
+      { name: "Witch's Rock Surf Camp", desc: 'Na praia, vibe surf', price: '~US$ 75/noite' }
     ]
   },
   {
@@ -922,9 +960,10 @@ const days = [
     blocks: [
       { time: 'Dia inteiro', title: '🏇 Hacienda Guachipelin', items: ['🪂 Canopy: 7 tirolesas + Tarzan Swing + Rapel (2h)', '🛟 Tubing: descida pelo rio em boias pelas corredeiras', '💧 Catarata Oropêndola: queda de 25m com poço azul', '🧖 Banho de lama vulcânica + Termas do Rio Negro (10 piscinas)', '💰 Combo: ~US$ 120–150/pessoa, almoço incluso!', '💪 Dia mais físico do roteiro — perfeito para vocês!'], price: '~US$ 120–150', tip: 'Reserve em guachipelin.com' }
     ],
+    location: 'tamarindo',
     hotels: [
-      { name: 'Cala Luna Boutique Hotel', desc: 'Villas privativas', price: '~US$ 250/noite' },
-      { name: 'Wyndham Tamarindo', desc: 'Café incluso', price: '~US$ 150/noite' }
+      { name: 'Hotel Pasatiempo', desc: 'Piscina + 5 min da praia', price: '~US$ 95/noite' },
+      { name: 'Tamarindo Diria Beach Resort', desc: 'Pé na areia, café incluso', price: '~US$ 130/noite' }
     ]
   },
   {
@@ -935,8 +974,9 @@ const days = [
       { time: '09h – 12h', title: '🐚 Playa Conchal', items: ['Uma das praias mais bonitas da Costa Rica!', 'Areia formada por milhões de conchas moídas', 'Água azul cristalina — leve snorkel!', 'Acesso pela praia de Brasilito (~20 min ao norte)'] },
       { time: '14h+', title: '🏄 Surf + Tempo livre', items: ['Aula de surf em Tamarindo — ondas perfeitas (~US$ 50–80)', 'Tarde livre: caminhada, artesanato, compras', '🌅 Pôr do sol famoso em Tamarindo', 'Jantar no El Mercadito — complexo gastronômico ao ar livre'], price: '~US$ 50–80' }
     ],
+    location: 'tamarindo',
     hotels: [
-      { name: 'Cala Luna Boutique Hotel', desc: 'Última noite em Tamarindo', price: '~US$ 250/noite' }
+      { name: 'Hotel Pasatiempo', desc: 'Última noite em Tamarindo', price: '~US$ 95/noite' }
     ]
   },
   {
@@ -948,10 +988,11 @@ const days = [
       { time: '11h30 – 15h', title: '🌊 Rafting no Rio Savegre', items: ['O melhor rafting da Costa Rica!', 'Nível 3–4, percurso 14 km, ~3–4h no rio', 'Pausa em cachoeira + almoço na beira do rio', 'Operadoras: Ríos Tropicales ou Aguas Bravas', '⚠️ Confirme horário ao reservar — peça ~11h30'], price: '~US$ 110', tip: 'Reserve com antecedência!' },
       { time: '16h+', title: '🍽️ Manuel Antonio', items: ['Check-in no hotel (~30 min do rafting)', 'Jantar no El Avión — restaurante num avião de carga dos anos 80!', 'Vista panorâmica do pôr do sol — imperdível!'] }
     ],
+    location: 'manuel-antonio',
     hotels: [
-      { name: 'Hotel La Mariposa', desc: 'Vista do "Rabo da Baleia"', price: '~US$ 200/noite' },
-      { name: 'Si Como No Resort', desc: 'Sustentável, piscina com tobogã', price: '~US$ 180/noite' },
-      { name: 'Hotel Makanda', desc: 'Adults only, romântico', price: '~US$ 250/noite' }
+      { name: 'Hotel Playa Espadilla', desc: '2 min do parque + piscina', price: '~US$ 90/noite' },
+      { name: 'Villas Lirio', desc: 'Piscina + ambiente tranquilo', price: '~US$ 80/noite' },
+      { name: 'Hotel Manuel Antonio', desc: 'Econômico + perto do parque', price: '~US$ 65/noite' }
     ]
   },
   {
@@ -963,9 +1004,11 @@ const days = [
       { time: '11h – 12h30', title: '🏖️ Playa Biesanz', items: ['Praia escondida, água calma, perfeita para casal', 'Ótima para snorkel', 'Acesso por trilha curta (5 min). Leve lanche'] },
       { time: '13h – 17h', title: '🚗 Retorno a Alajuela', items: ['Almoço rápido em Quepos', '🐊 Ponte dos Crocodilos (Rio Tárcoles) — no caminho!', 'Crocodilos de 4m+ visíveis da ponte. Parada 15–20 min', 'Chegada em Alajuela ~16–17h', '⚠️ Voo às 8h13 amanhã! Saída do hotel às ~6h'] }
     ],
+    location: 'alajuela',
     hotels: [
-      { name: 'Hampton Inn Alajuela', desc: '5 min do aeroporto', price: '~US$ 110/noite' },
-      { name: 'Courtyard San José Airport', desc: 'Novo, ótima estrutura', price: '~US$ 130/noite' }
+      { name: 'Hampton Inn Alajuela', desc: 'Transfer aeroporto + café incluso', price: '~US$ 110/noite' },
+      { name: 'Hotel Buena Vista', desc: 'Vista do vale + piscina', price: '~US$ 85/noite' },
+      { name: 'Adventure Inn', desc: 'Piscina + shuttle aeroporto', price: '~US$ 75/noite' }
     ]
   },
   {
@@ -1007,21 +1050,46 @@ function selectDay(i) {
   }, 100);
 }
 
+function getBookings() {
+  try { return JSON.parse(localStorage.getItem('cr2026_bookings') || '{}'); }
+  catch { return {}; }
+}
+
 function renderDay(d) {
+  const bookings = getBookings();
+  const booked = d.location ? bookings[d.location] : null;
   let hotelsHTML = '';
+
   if (d.hotels.length) {
+    const hotelCards = d.hotels.map(h => {
+      const isBooked = booked && booked.name === h.name;
+      return `
+        <div class="hotel-card${isBooked ? ' hotel-booked' : ''}">
+          ${isBooked ? '<span class="booked-badge">✓ Reservado</span>' : ''}
+          <h4>${h.name}</h4>
+          <p>${h.desc}</p>
+          <div class="hotel-price">${h.price}</div>
+        </div>
+      `;
+    }).join('');
+
     hotelsHTML = `
       <div style="margin-top:40px;">
-        <h3 style="font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--jungle);margin-bottom:16px;">🏨 Hospedagem</h3>
+        <h3 style="font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--jungle);margin-bottom:16px;">
+          🏨 Hospedagem${booked ? ' <span style="font-size:0.75rem;color:var(--leaf);font-family:DM Sans,sans-serif;font-weight:600;vertical-align:middle;margin-left:8px;">✓ ${booked.name} reservado</span>' : ''}
+        </h3>
         <div class="hotels">
-          ${d.hotels.map(h => `
-            <div class="hotel-card">
-              <h4>${h.name}</h4>
-              <p>${h.desc}</p>
-              <div class="hotel-price">${h.price}</div>
-            </div>
-          `).join('')}
+          ${booked
+            ? `<div class="hotel-card hotel-booked">
+                <span class="booked-badge">✓ Reservado</span>
+                <h4>${booked.name}</h4>
+                <p>${booked.desc}</p>
+                <div class="hotel-price">${booked.price}</div>
+              </div>`
+            : hotelCards
+          }
         </div>
+        ${!booked ? '<a href="hospedagem.html" class="hotel-link">Ver todas as opções e reservar →</a>' : '<a href="hospedagem.html" class="hotel-link">Alterar reserva →</a>'}
       </div>
     `;
   }

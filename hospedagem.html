@@ -255,7 +255,7 @@ body {
   background: white;
   border-radius: var(--radius);
   overflow: hidden;
-  border: 1px solid rgba(26,58,42,0.06);
+  border: 2px solid rgba(26,58,42,0.06);
   transition: all 0.3s;
   display: flex;
   flex-direction: column;
@@ -264,6 +264,15 @@ body {
 .hotel-card:hover {
   box-shadow: var(--shadow-lg);
   transform: translateY(-4px);
+}
+
+.hotel-card.booked {
+  border-color: var(--leaf);
+  box-shadow: 0 0 0 3px rgba(92,168,122,0.2), var(--shadow-md);
+}
+
+.hotel-card.booked:hover {
+  box-shadow: 0 0 0 3px rgba(92,168,122,0.2), var(--shadow-lg);
 }
 
 .hotel-img {
@@ -293,9 +302,26 @@ body {
   z-index: 1;
 }
 
-.tier-premium { background: var(--gold); color: var(--jungle); }
 .tier-mid { background: var(--ocean); color: white; }
 .tier-budget { background: var(--leaf); color: white; }
+
+/* Nossa Escolha badge */
+.hotel-pick {
+  position: absolute;
+  top: 12px; left: 12px;
+  padding: 5px 14px;
+  border-radius: 100px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  z-index: 1;
+  background: var(--lava);
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
 
 .hotel-body {
   padding: 24px;
@@ -342,6 +368,7 @@ body {
   justify-content: space-between;
   padding-top: 16px;
   border-top: 1px solid rgba(26,58,42,0.06);
+  gap: 12px;
 }
 
 .hotel-price {
@@ -354,6 +381,40 @@ body {
 .hotel-nights {
   font-size: 0.78rem;
   color: var(--text-light);
+}
+
+.hotel-footer-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Booking button */
+.btn-reservar {
+  border: none;
+  background: var(--jungle);
+  color: white;
+  padding: 7px 18px;
+  border-radius: 100px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.btn-reservar:hover { background: var(--jungle-light); transform: scale(1.03); }
+
+.btn-reservar.is-booked {
+  background: var(--leaf);
+}
+
+.btn-reservar.is-booked:hover {
+  background: #4a9568;
 }
 
 /* ─── TIPS SECTION ─── */
@@ -454,7 +515,7 @@ body {
   <div class="header-content">
     <a href="index.html" class="back-link">← Voltar ao Roteiro</a>
     <h1>🏨 Hospedagem</h1>
-    <p>Sugestões de hotéis por destino — de boutique a econômico, sempre com personalidade.</p>
+    <p>Opções econômicas e confortáveis — o melhor custo-benefício em cada destino.</p>
   </div>
 </header>
 
@@ -475,7 +536,7 @@ body {
   <div class="section-header fade-in">
     <span class="section-tag">Base — Início e Fim</span>
     <h2 class="section-title">Alajuela / San José</h2>
-    <p class="section-desc">Próximo ao aeroporto, ideal para a primeira e última noite. Priorize conforto e praticidade.</p>
+    <p class="section-desc">Próximo ao aeroporto, ideal para a primeira e última noite. Conforto e praticidade sem gastar demais.</p>
   </div>
 
   <div class="location-group">
@@ -483,79 +544,71 @@ body {
     <p class="location-dates">2 noites no total (chegada + véspera do voo)</p>
 
     <div class="hotels-grid">
-      <div class="hotel-card fade-in">
-        <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=600&q=80')">
-          <span class="hotel-tier tier-premium">Premium</span>
-        </div>
-        <div class="hotel-body">
-          <h3>Xandari Resort & Spa</h3>
-          <p class="hotel-desc">Resort boutique sustentável em meio a jardins tropicais. Spa premiado, piscina infinita e vistas do Vale Central. Arquitetura moderna integrada à natureza.</p>
-          <div class="hotel-features">
-            <span class="feature-tag">Spa</span>
-            <span class="feature-tag">Piscina</span>
-            <span class="feature-tag">Sustentável</span>
-            <span class="feature-tag">Restaurante</span>
-          </div>
-          <div class="hotel-footer">
-            <span class="hotel-price">~US$ 200/noite</span>
-            <span class="hotel-nights">Dia 1</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="hotel-card fade-in">
+      <div class="hotel-card fade-in" data-location="alajuela" data-hotel='{"name":"Hampton Inn Alajuela","price":"~US$ 110/noite","desc":"Transfer aeroporto + café incluso"}'>
         <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=80')">
+          <span class="hotel-pick">⭐ Nossa Escolha</span>
           <span class="hotel-tier tier-mid">Custo-Benefício</span>
         </div>
         <div class="hotel-body">
           <h3>Hampton Inn Alajuela</h3>
-          <p class="hotel-desc">A 5 minutos do aeroporto com transfer gratuito. Café da manhã incluso, quartos modernos e ótima estrutura. Ideal para primeira e última noite.</p>
+          <p class="hotel-desc">A 5 minutos do aeroporto com transfer gratuito 24h. Café da manhã americano incluso, quartos modernos e confortáveis. Ideal para primeira e última noite — praticidade total.</p>
           <div class="hotel-features">
-            <span class="feature-tag">Transfer aeroporto</span>
+            <span class="feature-tag">Transfer 24h</span>
             <span class="feature-tag">Café incluso</span>
             <span class="feature-tag">5 min SJO</span>
+            <span class="feature-tag">Wi-Fi</span>
           </div>
           <div class="hotel-footer">
-            <span class="hotel-price">~US$ 110–120/noite</span>
-            <span class="hotel-nights">Dia 1 e 8</span>
+            <span class="hotel-price">~US$ 110/noite</span>
+            <div class="hotel-footer-right">
+              <span class="hotel-nights">Dia 1 e 8</span>
+              <button class="btn-reservar" onclick="toggleBooking(this)">Reservar</button>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="hotel-card fade-in">
-        <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600&q=80')">
-          <span class="hotel-tier tier-mid">Custo-Benefício</span>
-        </div>
-        <div class="hotel-body">
-          <h3>Courtyard San José Airport</h3>
-          <p class="hotel-desc">Hotel novo da rede Marriott com excelente estrutura. Piscina, academia, restaurante e proximidade ao aeroporto. Boa opção para a última noite.</p>
-          <div class="hotel-features">
-            <span class="feature-tag">Marriott</span>
-            <span class="feature-tag">Piscina</span>
-            <span class="feature-tag">Novo</span>
-          </div>
-          <div class="hotel-footer">
-            <span class="hotel-price">~US$ 130/noite</span>
-            <span class="hotel-nights">Dia 8</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="hotel-card fade-in">
+      <div class="hotel-card fade-in" data-location="alajuela" data-hotel='{"name":"Hotel Buena Vista","price":"~US$ 85/noite","desc":"Vista do vale + piscina"}'>
         <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600&q=80')">
           <span class="hotel-tier tier-budget">Econômico</span>
         </div>
         <div class="hotel-body">
           <h3>Hotel Buena Vista</h3>
-          <p class="hotel-desc">Hotel com vista para o vale, piscina e ambiente tranquilo. Quartos limpos e confortáveis, ótimo para quem quer economizar sem abrir mão da qualidade.</p>
+          <p class="hotel-desc">Hotel com vista panorâmica do Vale Central, piscina e ambiente tranquilo. Quartos limpos e confortáveis com ar-condicionado. Ótimo para economizar sem perder qualidade.</p>
           <div class="hotel-features">
             <span class="feature-tag">Vista</span>
             <span class="feature-tag">Piscina</span>
-            <span class="feature-tag">Econômico</span>
+            <span class="feature-tag">A/C</span>
+            <span class="feature-tag">Estacionamento</span>
           </div>
           <div class="hotel-footer">
-            <span class="hotel-price">~US$ 90/noite</span>
-            <span class="hotel-nights">Dia 1</span>
+            <span class="hotel-price">~US$ 85/noite</span>
+            <div class="hotel-footer-right">
+              <span class="hotel-nights">Dia 1 e 8</span>
+              <button class="btn-reservar" onclick="toggleBooking(this)">Reservar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hotel-card fade-in" data-location="alajuela" data-hotel='{"name":"Adventure Inn","price":"~US$ 75/noite","desc":"Piscina + shuttle aeroporto"}'>
+        <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600&q=80')">
+          <span class="hotel-tier tier-budget">Econômico</span>
+        </div>
+        <div class="hotel-body">
+          <h3>Adventure Inn</h3>
+          <p class="hotel-desc">Hotel boutique econômico com shuttle gratuito para o aeroporto. Piscina, jardim tropical e restaurante no local. Quartos simples mas bem cuidados — ideal para pernoite de trânsito.</p>
+          <div class="hotel-features">
+            <span class="feature-tag">Shuttle aeroporto</span>
+            <span class="feature-tag">Piscina</span>
+            <span class="feature-tag">Restaurante</span>
+          </div>
+          <div class="hotel-footer">
+            <span class="hotel-price">~US$ 75/noite</span>
+            <div class="hotel-footer-right">
+              <span class="hotel-nights">Dia 1 e 8</span>
+              <button class="btn-reservar" onclick="toggleBooking(this)">Reservar</button>
+            </div>
           </div>
         </div>
       </div>
@@ -568,7 +621,7 @@ body {
   <div class="section-header fade-in">
     <span class="section-tag">Aventura e Natureza</span>
     <h2 class="section-title">La Fortuna / Arenal</h2>
-    <p class="section-desc">O coração aventureiro da Costa Rica. Priorize hotéis com vista do vulcão e piscinas termais.</p>
+    <p class="section-desc">O coração aventureiro da Costa Rica. Hotéis com vista do vulcão e acesso fácil às atrações.</p>
   </div>
 
   <div class="location-group">
@@ -576,61 +629,72 @@ body {
     <p class="location-dates">2 noites · Vulcão Poás, Blue Falls, Místico, Arenal, Catarata, Termas</p>
 
     <div class="hotels-grid">
-      <div class="hotel-card fade-in">
+      <div class="hotel-card fade-in" data-location="la-fortuna" data-hotel='{"name":"Hotel Lomas del Volcán","price":"~US$ 95/noite","desc":"Vista do vulcão + termas"}'>
         <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=600&q=80')">
+          <span class="hotel-pick">⭐ Nossa Escolha</span>
           <span class="hotel-tier tier-mid">Custo-Benefício</span>
         </div>
         <div class="hotel-body">
-          <h3>Arenal Manoa Hotel & Spa</h3>
-          <p class="hotel-desc">Bangalôs com vista direta do Vulcão Arenal. Piscina termal privativa, spa e restaurante com ingredientes locais. A melhor relação custo-benefício da região.</p>
+          <h3>Hotel Lomas del Volcán</h3>
+          <p class="hotel-desc">Cabanas rústicas com vista direta do Vulcão Arenal. Piscina termal, trilhas no jardim e restaurante com ingredientes locais. Melhor relação custo-benefício da região — conforto de resort por preço justo.</p>
           <div class="hotel-features">
-            <span class="feature-tag">Termas</span>
             <span class="feature-tag">Vista do vulcão</span>
-            <span class="feature-tag">Bangalôs</span>
-            <span class="feature-tag">Spa</span>
+            <span class="feature-tag">Termas</span>
+            <span class="feature-tag">Cabanas</span>
+            <span class="feature-tag">Restaurante</span>
           </div>
           <div class="hotel-footer">
-            <span class="hotel-price">~US$ 130/noite</span>
-            <span class="hotel-nights">2 noites</span>
+            <span class="hotel-price">~US$ 95/noite</span>
+            <div class="hotel-footer-right">
+              <span class="hotel-nights">2 noites</span>
+              <button class="btn-reservar" onclick="toggleBooking(this)">Reservar</button>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="hotel-card fade-in">
+      <div class="hotel-card fade-in" data-location="la-fortuna" data-hotel='{"name":"Arenal Backpackers Resort","price":"~US$ 70/noite","desc":"Piscina + quartos privados"}'>
         <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1540541338287-41700207dee6?w=600&q=80')">
-          <span class="hotel-tier tier-premium">Premium</span>
+          <span class="hotel-tier tier-budget">Econômico</span>
         </div>
         <div class="hotel-body">
-          <h3>Lost Iguana Resort & Spa</h3>
-          <p class="hotel-desc">Resort boutique romântico imerso na floresta tropical. Suítes com vista panorâmica do vulcão, piscina infinita e trilhas privativas dentro da propriedade.</p>
+          <h3>Arenal Backpackers Resort</h3>
+          <p class="hotel-desc">Não se engane pelo nome — tem quartos privados excelentes! Piscina com vista do vulcão, bar, cozinha compartilhada e ambiente jovem. O "econômico chique" de La Fortuna.</p>
           <div class="hotel-features">
-            <span class="feature-tag">Romântico</span>
-            <span class="feature-tag">Boutique</span>
-            <span class="feature-tag">Trilhas</span>
-            <span class="feature-tag">Piscina infinita</span>
+            <span class="feature-tag">Piscina</span>
+            <span class="feature-tag">Vista vulcão</span>
+            <span class="feature-tag">Bar</span>
+            <span class="feature-tag">Quartos privados</span>
           </div>
           <div class="hotel-footer">
-            <span class="hotel-price">~US$ 180/noite</span>
-            <span class="hotel-nights">2 noites</span>
+            <span class="hotel-price">~US$ 70/noite</span>
+            <div class="hotel-footer-right">
+              <span class="hotel-nights">2 noites</span>
+              <button class="btn-reservar" onclick="toggleBooking(this)">Reservar</button>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="hotel-card fade-in">
+      <div class="hotel-card fade-in" data-location="la-fortuna" data-hotel='{"name":"Hotel La Fortuna","price":"~US$ 55/noite","desc":"Centro, prático e econômico"}'>
         <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=600&q=80')">
           <span class="hotel-tier tier-budget">Econômico</span>
         </div>
         <div class="hotel-body">
           <h3>Hotel La Fortuna</h3>
-          <p class="hotel-desc">No coração do centrinho de La Fortuna. Quartos simples e limpos, a poucos passos de restaurantes, lojas e operadoras de tours. Prático e econômico.</p>
+          <p class="hotel-desc">No coração do centrinho de La Fortuna. Quartos limpos com A/C, a poucos passos de restaurantes, lojas e operadoras de tours. O mais prático e barato — sobra dinheiro para as termas!</p>
           <div class="hotel-features">
             <span class="feature-tag">Centro</span>
             <span class="feature-tag">Prático</span>
-            <span class="feature-tag">Econômico</span>
+            <span class="feature-tag">A/C</span>
+            <span class="feature-tag">Wi-Fi</span>
           </div>
           <div class="hotel-footer">
-            <span class="hotel-price">~US$ 60/noite</span>
-            <span class="hotel-nights">2 noites</span>
+            <span class="hotel-price">~US$ 55/noite</span>
+            <div class="hotel-footer-right">
+              <span class="hotel-nights">2 noites</span>
+              <button class="btn-reservar" onclick="toggleBooking(this)">Reservar</button>
+            </div>
           </div>
         </div>
       </div>
@@ -643,7 +707,7 @@ body {
   <div class="section-header fade-in">
     <span class="section-tag">Praia e Aventura</span>
     <h2 class="section-title">Tamarindo / Guanacaste</h2>
-    <p class="section-desc">Costa do Pacífico com praias paradisíacas, surf e pôr do sol inesquecível. Base para Hacienda Guachipelin.</p>
+    <p class="section-desc">Costa do Pacífico com praias paradisíacas e surf. Foco em opções pé na areia sem estourar o orçamento.</p>
   </div>
 
   <div class="location-group">
@@ -651,60 +715,71 @@ body {
     <p class="location-dates">3 noites · Rio Celeste, Hacienda Guachipelin, Playa Conchal, Surf</p>
 
     <div class="hotels-grid">
-      <div class="hotel-card fade-in">
-        <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600&q=80')">
-          <span class="hotel-tier tier-premium">Premium</span>
-        </div>
-        <div class="hotel-body">
-          <h3>Cala Luna Boutique Hotel</h3>
-          <p class="hotel-desc">Villas privativas em estilo balinês com piscina própria. Jardins tropicais, spa e restaurante premiado. O hotel mais romântico de Tamarindo.</p>
-          <div class="hotel-features">
-            <span class="feature-tag">Villas</span>
-            <span class="feature-tag">Piscina privativa</span>
-            <span class="feature-tag">Spa</span>
-            <span class="feature-tag">Romântico</span>
-          </div>
-          <div class="hotel-footer">
-            <span class="hotel-price">~US$ 250/noite</span>
-            <span class="hotel-nights">3 noites</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="hotel-card fade-in">
-        <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=600&q=80')">
+      <div class="hotel-card fade-in" data-location="tamarindo" data-hotel='{"name":"Hotel Pasatiempo","price":"~US$ 95/noite","desc":"Piscina + 5 min da praia"}'>
+        <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=600&q=80')">
+          <span class="hotel-pick">⭐ Nossa Escolha</span>
           <span class="hotel-tier tier-mid">Custo-Benefício</span>
         </div>
         <div class="hotel-body">
-          <h3>Wyndham Tamarindo</h3>
-          <p class="hotel-desc">Hotel bem estruturado com café da manhã incluso, piscina grande e localização central. Quartos modernos e confortáveis com bom atendimento.</p>
-          <div class="hotel-features">
-            <span class="feature-tag">Café incluso</span>
-            <span class="feature-tag">Piscina</span>
-            <span class="feature-tag">Central</span>
-          </div>
-          <div class="hotel-footer">
-            <span class="hotel-price">~US$ 150/noite</span>
-            <span class="hotel-nights">3 noites</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="hotel-card fade-in">
-        <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=600&q=80')">
-          <span class="hotel-tier tier-budget">Econômico</span>
-        </div>
-        <div class="hotel-body">
           <h3>Hotel Pasatiempo</h3>
-          <p class="hotel-desc">Hotel charmoso a 5 minutos da praia com piscina, jardim e bar. Ambiente descontraído com vibe praiana. Ótimo custo-benefício em Tamarindo.</p>
+          <p class="hotel-desc">Hotel charmoso a 5 minutos a pé da praia com piscina, jardim tropical e bar. Quartos com A/C e frigobar. Ambiente descontraído com vibe praiana — o favorito dos viajantes espertos em Tamarindo.</p>
           <div class="hotel-features">
             <span class="feature-tag">5 min praia</span>
             <span class="feature-tag">Piscina</span>
             <span class="feature-tag">Bar</span>
+            <span class="feature-tag">Estacionamento</span>
           </div>
           <div class="hotel-footer">
-            <span class="hotel-price">~US$ 100/noite</span>
-            <span class="hotel-nights">3 noites</span>
+            <span class="hotel-price">~US$ 95/noite</span>
+            <div class="hotel-footer-right">
+              <span class="hotel-nights">3 noites</span>
+              <button class="btn-reservar" onclick="toggleBooking(this)">Reservar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hotel-card fade-in" data-location="tamarindo" data-hotel='{"name":"Tamarindo Diria Beach Resort","price":"~US$ 130/noite","desc":"Pé na areia, piscina + café"}'>
+        <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=600&q=80')">
+          <span class="hotel-tier tier-mid">Custo-Benefício</span>
+        </div>
+        <div class="hotel-body">
+          <h3>Tamarindo Diria Beach Resort</h3>
+          <p class="hotel-desc">Único hotel pé na areia de Tamarindo. 5 piscinas, café da manhã incluso, restaurante e acesso direto à praia. Se quiser investir um pouco mais para o trecho de praia — vale cada centavo.</p>
+          <div class="hotel-features">
+            <span class="feature-tag">Pé na areia</span>
+            <span class="feature-tag">5 piscinas</span>
+            <span class="feature-tag">Café incluso</span>
+          </div>
+          <div class="hotel-footer">
+            <span class="hotel-price">~US$ 130/noite</span>
+            <div class="hotel-footer-right">
+              <span class="hotel-nights">3 noites</span>
+              <button class="btn-reservar" onclick="toggleBooking(this)">Reservar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hotel-card fade-in" data-location="tamarindo" data-hotel='{"name":"Witch&apos;s Rock Surf Camp","price":"~US$ 75/noite","desc":"Na praia, vibe surf"}'>
+        <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600&q=80')">
+          <span class="hotel-tier tier-budget">Econômico</span>
+        </div>
+        <div class="hotel-body">
+          <h3>Witch's Rock Surf Camp</h3>
+          <p class="hotel-desc">Na beira da praia com quartos privados e A/C. Piscina, bar, restaurante e aulas de surf inclusas no pacote. Perfeito para quem quer viver a vibe de Tamarindo sem gastar muito.</p>
+          <div class="hotel-features">
+            <span class="feature-tag">Beira-mar</span>
+            <span class="feature-tag">Surf incluso</span>
+            <span class="feature-tag">Piscina</span>
+            <span class="feature-tag">Bar</span>
+          </div>
+          <div class="hotel-footer">
+            <span class="hotel-price">~US$ 75/noite</span>
+            <div class="hotel-footer-right">
+              <span class="hotel-nights">3 noites</span>
+              <button class="btn-reservar" onclick="toggleBooking(this)">Reservar</button>
+            </div>
           </div>
         </div>
       </div>
@@ -717,7 +792,7 @@ body {
   <div class="section-header fade-in">
     <span class="section-tag">Floresta e Mar</span>
     <h2 class="section-title">Manuel Antonio / Quepos</h2>
-    <p class="section-desc">Onde a floresta tropical encontra o oceano. Hotéis com vistas cinematográficas e vida selvagem na porta.</p>
+    <p class="section-desc">Onde a floresta tropical encontra o oceano. Apenas 1 noite — conforto sem exageros.</p>
   </div>
 
   <div class="location-group">
@@ -725,60 +800,71 @@ body {
     <p class="location-dates">1 noite · Rafting Rio Savegre, Parque Nacional, Playa Biesanz</p>
 
     <div class="hotels-grid">
-      <div class="hotel-card fade-in">
+      <div class="hotel-card fade-in" data-location="manuel-antonio" data-hotel='{"name":"Hotel Playa Espadilla","price":"~US$ 90/noite","desc":"2 min do parque + piscina"}'>
         <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=600&q=80')">
-          <span class="hotel-tier tier-premium">Premium</span>
-        </div>
-        <div class="hotel-body">
-          <h3>Hotel La Mariposa</h3>
-          <p class="hotel-desc">Vista panorâmica do "Rabo da Baleia" — uma das vistas mais famosas da Costa Rica. Piscina infinita sobre o oceano, quartos elegantes e pôr do sol inesquecível.</p>
-          <div class="hotel-features">
-            <span class="feature-tag">Vista icônica</span>
-            <span class="feature-tag">Piscina infinita</span>
-            <span class="feature-tag">Restaurante</span>
-          </div>
-          <div class="hotel-footer">
-            <span class="hotel-price">~US$ 200/noite</span>
-            <span class="hotel-nights">1 noite</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="hotel-card fade-in">
-        <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=600&q=80')">
+          <span class="hotel-pick">⭐ Nossa Escolha</span>
           <span class="hotel-tier tier-mid">Custo-Benefício</span>
         </div>
         <div class="hotel-body">
-          <h3>Si Como No Resort</h3>
-          <p class="hotel-desc">Resort sustentável com certificação CST. Duas piscinas (uma com tobogã!), cinema ao ar livre, spa e reserva natural privativa com preguiças.</p>
+          <h3>Hotel Playa Espadilla</h3>
+          <p class="hotel-desc">A 2 minutos a pé da entrada do Parque Nacional e da praia. Piscina, jardim e quartos com A/C. Localização perfeita para chegar cedo no parque — e é só 1 noite!</p>
           <div class="hotel-features">
-            <span class="feature-tag">Sustentável</span>
-            <span class="feature-tag">Tobogã</span>
-            <span class="feature-tag">Reserva natural</span>
+            <span class="feature-tag">2 min do parque</span>
+            <span class="feature-tag">Piscina</span>
+            <span class="feature-tag">A/C</span>
+            <span class="feature-tag">Praia</span>
           </div>
           <div class="hotel-footer">
-            <span class="hotel-price">~US$ 180/noite</span>
-            <span class="hotel-nights">1 noite</span>
+            <span class="hotel-price">~US$ 90/noite</span>
+            <div class="hotel-footer-right">
+              <span class="hotel-nights">1 noite</span>
+              <button class="btn-reservar" onclick="toggleBooking(this)">Reservar</button>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="hotel-card fade-in">
-        <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=80')">
-          <span class="hotel-tier tier-premium">Premium</span>
+      <div class="hotel-card fade-in" data-location="manuel-antonio" data-hotel='{"name":"Villas Lirio","price":"~US$ 80/noite","desc":"Piscina + ambiente tranquilo"}'>
+        <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=600&q=80')">
+          <span class="hotel-tier tier-budget">Econômico</span>
         </div>
         <div class="hotel-body">
-          <h3>Hotel Makanda</h3>
-          <p class="hotel-desc">Adults only, perfeito para casais. Villas e estúdios luxuosos em meio à floresta, piscina infinita com vista do Pacífico e total privacidade.</p>
+          <h3>Villas Lirio</h3>
+          <p class="hotel-desc">Hotel tranquilo em meio à vegetação, com piscina e quartos amplos. Boa localização entre Quepos e o parque. Estacionamento gratuito e Wi-Fi — simples e eficiente para 1 noite.</p>
           <div class="hotel-features">
-            <span class="feature-tag">Adults only</span>
-            <span class="feature-tag">Romântico</span>
-            <span class="feature-tag">Privacidade</span>
-            <span class="feature-tag">Luxo</span>
+            <span class="feature-tag">Piscina</span>
+            <span class="feature-tag">Tranquilo</span>
+            <span class="feature-tag">Estacionamento</span>
+            <span class="feature-tag">Wi-Fi</span>
           </div>
           <div class="hotel-footer">
-            <span class="hotel-price">~US$ 250/noite</span>
-            <span class="hotel-nights">1 noite</span>
+            <span class="hotel-price">~US$ 80/noite</span>
+            <div class="hotel-footer-right">
+              <span class="hotel-nights">1 noite</span>
+              <button class="btn-reservar" onclick="toggleBooking(this)">Reservar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hotel-card fade-in" data-location="manuel-antonio" data-hotel='{"name":"Hotel Manuel Antonio","price":"~US$ 65/noite","desc":"Econômico + perto do parque"}'>
+        <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=80')">
+          <span class="hotel-tier tier-budget">Econômico</span>
+        </div>
+        <div class="hotel-body">
+          <h3>Hotel Manuel Antonio</h3>
+          <p class="hotel-desc">O mais econômico da região com localização decente. Quartos básicos com A/C, perto de restaurantes e do parque. Para 1 noite é mais que suficiente — gaste o dinheiro nos passeios!</p>
+          <div class="hotel-features">
+            <span class="feature-tag">Econômico</span>
+            <span class="feature-tag">A/C</span>
+            <span class="feature-tag">Perto do parque</span>
+          </div>
+          <div class="hotel-footer">
+            <span class="hotel-price">~US$ 65/noite</span>
+            <div class="hotel-footer-right">
+              <span class="hotel-nights">1 noite</span>
+              <button class="btn-reservar" onclick="toggleBooking(this)">Reservar</button>
+            </div>
           </div>
         </div>
       </div>
@@ -836,6 +922,52 @@ body {
 </footer>
 
 <script>
+// ─── BOOKING SYSTEM ───
+function getBookings() {
+  try {
+    return JSON.parse(localStorage.getItem('cr2026_bookings') || '{}');
+  } catch { return {}; }
+}
+
+function saveBookings(bookings) {
+  localStorage.setItem('cr2026_bookings', JSON.stringify(bookings));
+}
+
+function toggleBooking(btn) {
+  const card = btn.closest('.hotel-card');
+  const location = card.dataset.location;
+  const hotel = JSON.parse(card.dataset.hotel);
+  const bookings = getBookings();
+
+  if (bookings[location] && bookings[location].name === hotel.name) {
+    // Unbook
+    delete bookings[location];
+    saveBookings(bookings);
+  } else {
+    // Book this one (replaces any previous for this location)
+    bookings[location] = hotel;
+    saveBookings(bookings);
+  }
+  refreshBookingUI();
+}
+
+function refreshBookingUI() {
+  const bookings = getBookings();
+  document.querySelectorAll('.hotel-card[data-location]').forEach(card => {
+    const location = card.dataset.location;
+    const hotel = JSON.parse(card.dataset.hotel);
+    const btn = card.querySelector('.btn-reservar');
+    const isBooked = bookings[location] && bookings[location].name === hotel.name;
+
+    card.classList.toggle('booked', isBooked);
+    btn.classList.toggle('is-booked', isBooked);
+    btn.innerHTML = isBooked ? '✓ Reservado' : 'Reservar';
+  });
+}
+
+// Initialize on load
+refreshBookingUI();
+
 // ─── NAVIGATION ───
 function navigateTo(selector) {
   const el = document.querySelector(selector);
