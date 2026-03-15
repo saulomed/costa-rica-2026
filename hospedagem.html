@@ -525,11 +525,145 @@ body {
 }
 .rate-bar.visible { display: block; }
 
+/* ─── MODAL DE RESERVA ─── */
+.booking-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(26,58,42,0.6);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
+.booking-overlay.active {
+  display: flex;
+}
+.booking-modal {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 32px;
+  max-width: 440px;
+  width: 90%;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  animation: modalIn 0.25s ease-out;
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(20px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  line-height: 1;
+}
+.modal-close:hover { color: var(--lava); }
+.modal-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  margin-bottom: 4px;
+}
+.modal-hotel-name {
+  color: var(--canopy);
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin-bottom: 20px;
+}
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.modal-field label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+.field-optional {
+  color: var(--text-light);
+  font-weight: 400;
+  font-size: 0.8rem;
+}
+.modal-field input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid var(--sand-dark);
+  border-radius: var(--radius-xs);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  background: var(--sand-light);
+  color: var(--text);
+  transition: border-color 0.2s;
+}
+.modal-field input:focus {
+  outline: none;
+  border-color: var(--canopy);
+  box-shadow: 0 0 0 3px rgba(92,168,122,0.15);
+}
+.modal-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+.modal-btn {
+  padding: 10px 22px;
+  border-radius: var(--radius-xs);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+}
+.modal-btn-cancel {
+  background: var(--sand);
+  color: var(--text-muted);
+}
+.modal-btn-cancel:hover { background: var(--sand-dark); }
+.modal-btn-confirm {
+  background: var(--canopy);
+  color: #fff;
+}
+.modal-btn-confirm:hover { background: var(--jungle-light); }
+
+/* ─── BOOKING INFO (PIN & CANCEL DATE) ─── */
+.booking-info {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+.booking-info-tag {
+  font-size: 0.75rem;
+  padding: 3px 8px;
+  border-radius: var(--radius-xs);
+  background: rgba(92,168,122,0.12);
+  color: var(--canopy);
+  font-weight: 500;
+}
+.booking-info-tag.cancel-date {
+  background: rgba(232,93,58,0.1);
+  color: var(--lava);
+}
+
 /* ─── RESPONSIVE ─── */
 @media (max-width: 768px) {
   .page-header { padding: 80px 20px 40px; }
   .hotels-grid { grid-template-columns: 1fr; }
   .tips-grid { grid-template-columns: 1fr; }
+  .booking-modal { padding: 24px 20px; }
+  .modal-actions { flex-direction: column; }
+  .modal-btn { text-align: center; }
 }
 </style>
 </head>
@@ -631,6 +765,29 @@ body {
           </div>
           <div class="hotel-footer">
             <span class="hotel-price">~US$ 75/noite</span>
+            <div class="hotel-footer-right">
+              <span class="hotel-nights">Dia 1 e 8</span>
+              <button class="btn-reservar" onclick="toggleBooking(this)">Reservar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hotel-card fade-in" data-location="alajuela" data-hotel='{"name":"Hotel 1915 INN &amp; SUITES","price":"~US$ 65/noite","desc":"Hotel histórico + café incluso"}'>
+        <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=600&q=80')">
+          <span class="hotel-tier tier-budget">Econômico</span>
+        </div>
+        <div class="hotel-body">
+          <h3>Hotel 1915 INN & SUITES</h3>
+          <p class="hotel-desc">Hotel boutique no centro histórico de Alajuela, em casarão restaurado de 1915. Café da manhã incluso, quartos com charme colonial e Wi-Fi. A poucos minutos do aeroporto — ótimo custo-benefício.</p>
+          <div class="hotel-features">
+            <span class="feature-tag">Café incluso</span>
+            <span class="feature-tag">Centro histórico</span>
+            <span class="feature-tag">Wi-Fi</span>
+            <span class="feature-tag">Charme colonial</span>
+          </div>
+          <div class="hotel-footer">
+            <span class="hotel-price">~US$ 65/noite</span>
             <div class="hotel-footer-right">
               <span class="hotel-nights">Dia 1 e 8</span>
               <button class="btn-reservar" onclick="toggleBooking(this)">Reservar</button>
@@ -940,6 +1097,29 @@ body {
   </div>
 </section>
 
+<!-- ═══ MODAL DE RESERVA ═══ -->
+<div class="booking-overlay" id="bookingOverlay" onclick="closeBookingModal(event)">
+  <div class="booking-modal">
+    <button class="modal-close" onclick="closeBookingModal()">&times;</button>
+    <h3 class="modal-title">📋 Confirmar Reserva</h3>
+    <p class="modal-hotel-name" id="modalHotelName"></p>
+    <div class="modal-form">
+      <div class="modal-field">
+        <label for="bookingPin">PIN de confirmação <span class="field-optional">(opcional)</span></label>
+        <input type="text" id="bookingPin" placeholder="Ex: 1234" maxlength="20" autocomplete="off">
+      </div>
+      <div class="modal-field">
+        <label for="bookingCancelDate">Data limite de cancelamento <span class="field-optional">(opcional)</span></label>
+        <input type="date" id="bookingCancelDate">
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn modal-btn-cancel" onclick="closeBookingModal()">Cancelar</button>
+      <button class="modal-btn modal-btn-confirm" onclick="confirmBooking()">Confirmar Reserva</button>
+    </div>
+  </div>
+</div>
+
 <!-- ═══ FOOTER ═══ -->
 <footer class="footer">
   <p class="pura-vida">🌴 Pura Vida!</p>
@@ -959,6 +1139,9 @@ function saveBookings(bookings) {
   localStorage.setItem('cr2026_bookings', JSON.stringify(bookings));
 }
 
+// ─── MODAL STATE ───
+let pendingBookingBtn = null;
+
 function toggleBooking(btn) {
   const card = btn.closest('.hotel-card');
   const location = card.dataset.location;
@@ -969,12 +1152,42 @@ function toggleBooking(btn) {
     // Unbook
     delete bookings[location];
     saveBookings(bookings);
+    refreshBookingUI();
   } else {
-    // Book this one (replaces any previous for this location)
-    bookings[location] = hotel;
-    saveBookings(bookings);
+    // Open modal to confirm booking
+    pendingBookingBtn = btn;
+    const hotelName = hotel.name.replace(/&amp;/g, '&');
+    document.getElementById('modalHotelName').textContent = hotelName;
+    document.getElementById('bookingPin').value = '';
+    document.getElementById('bookingCancelDate').value = '';
+    document.getElementById('bookingOverlay').classList.add('active');
   }
+}
+
+function confirmBooking() {
+  if (!pendingBookingBtn) return;
+  const card = pendingBookingBtn.closest('.hotel-card');
+  const location = card.dataset.location;
+  const hotel = JSON.parse(card.dataset.hotel);
+  const bookings = getBookings();
+
+  const pin = document.getElementById('bookingPin').value.trim();
+  const cancelDate = document.getElementById('bookingCancelDate').value;
+
+  hotel.pin = pin || null;
+  hotel.cancelDate = cancelDate || null;
+
+  bookings[location] = hotel;
+  saveBookings(bookings);
+  closeBookingModal();
   refreshBookingUI();
+  pendingBookingBtn = null;
+}
+
+function closeBookingModal(event) {
+  if (event && event.target !== event.currentTarget) return;
+  document.getElementById('bookingOverlay').classList.remove('active');
+  pendingBookingBtn = null;
 }
 
 function refreshBookingUI() {
@@ -983,11 +1196,32 @@ function refreshBookingUI() {
     const location = card.dataset.location;
     const hotel = JSON.parse(card.dataset.hotel);
     const btn = card.querySelector('.btn-reservar');
-    const isBooked = bookings[location] && bookings[location].name === hotel.name;
+    const booked = bookings[location];
+    const isBooked = booked && booked.name === hotel.name;
 
     card.classList.toggle('booked', isBooked);
     btn.classList.toggle('is-booked', isBooked);
     btn.innerHTML = isBooked ? '✓ Reservado' : 'Reservar';
+
+    // Show/remove booking info tags
+    let infoEl = card.querySelector('.booking-info');
+    if (isBooked && (booked.pin || booked.cancelDate)) {
+      if (!infoEl) {
+        infoEl = document.createElement('div');
+        infoEl.className = 'booking-info';
+        card.querySelector('.hotel-footer').after(infoEl);
+      }
+      let html = '';
+      if (booked.pin) html += '<span class="booking-info-tag">🔑 PIN: ' + booked.pin + '</span>';
+      if (booked.cancelDate) {
+        const parts = booked.cancelDate.split('-');
+        const formatted = parts[2] + '/' + parts[1] + '/' + parts[0];
+        html += '<span class="booking-info-tag cancel-date">📅 Cancelar até: ' + formatted + '</span>';
+      }
+      infoEl.innerHTML = html;
+    } else if (infoEl) {
+      infoEl.remove();
+    }
   });
 }
 
