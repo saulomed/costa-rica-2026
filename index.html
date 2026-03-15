@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Costa Rica 2026 — Saulo & Lorena</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --jungle: #1a3a2a;
+  --jungle-light: #2d5a3f;
+  --canopy: #3d7a5a;
+  --leaf: #5ca87a;
+  --sand: #f5e6c8;
+  --sand-light: #faf3e6;
+  --sand-dark: #e8d4a8;
+  --lava: #e85d3a;
+  --lava-dark: #c44a2d;
+  --ocean: #2a7ab5;
+  --ocean-light: #3d9ad8;
+  --sky: #87ceeb;
+  --gold: #d4a843;
+  --white: #fefdfb;
+  --text: #2a2520;
+  --text-muted: #6b6560;
+  --text-light: #9a9590;
+  --shadow-sm: 0 1px 3px rgba(26,58,42,0.08);
+  --shadow-md: 0 4px 16px rgba(26,58,42,0.1);
+  --shadow-lg: 0 12px 40px rgba(26,58,42,0.15);
+  --shadow-xl: 0 20px 60px rgba(26,58,42,0.2);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --radius-xs: 6px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text);
+  background: var(--sand-light);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── HERO ─── */
+.hero {
+  min-height: 100vh;
+  background:
+    linear-gradient(175deg, rgba(26,58,42,0.7) 0%, rgba(26,58,42,0.3) 40%, rgba(232,93,58,0.2) 100%),
+    url('https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=1600&q=80') center/cover no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 60px clamp(24px, 6vw, 80px);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 200px;
+  background: linear-gradient(to top, var(--sand-light), transparent);
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  animation: fadeUp 1s ease-out;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 8px 20px;
+  border-radius: 100px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: white;
+  letter-spacing: 0.5px;
+  margin-bottom: 24px;
+  animation: fadeUp 1s ease-out 0.1s both;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 900;
+  color: white;
+  line-height: 1.05;
+  margin-bottom: 16px;
+  animation: fadeUp 1s ease-out 0.2s both;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--sand);
+}
+
+.hero-sub {
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  color: rgba(255,255,255,0.85);
+  font-weight: 300;
+  margin-bottom: 32px;
+  animation: fadeUp 1s ease-out 0.3s both;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+  animation: fadeUp 1s ease-out 0.4s both;
+}
+
+.hero-stat {
+  text-align: center;
+  color: white;
+}
+
+.hero-stat .num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  display: block;
+}
+
+.hero-stat .label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  opacity: 0.7;
+}
+
+/* ─── NAVIGATION ─── */
+.nav-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(254,253,251,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(26,58,42,0.08);
+  padding: 0 clamp(16px, 4vw, 60px);
+  transition: box-shadow 0.3s;
+}
+
+.nav-bar.scrolled { box-shadow: var(--shadow-md); }
+
+.nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 12px 0;
+}
+
+.nav-inner::-webkit-scrollbar { display: none; }
+
+.nav-btn {
+  flex-shrink: 0;
+  border: none;
+  background: transparent;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  padding: 8px 16px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all 0.25s;
+  white-space: nowrap;
+}
+
+.nav-btn:hover { background: var(--sand); color: var(--jungle); }
+.nav-btn.active { background: var(--jungle); color: white; }
+
+/* ─── SECTIONS ─── */
+.section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px clamp(16px, 4vw, 40px);
+}
+
+.section-header {
+  margin-bottom: 48px;
+}
+
+.section-tag {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--lava);
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  color: var(--jungle);
+  line-height: 1.15;
+}
+
+/* ─── ALERT SECTION ─── */
+.alerts {
+  background: var(--jungle);
+  padding: 80px clamp(16px, 4vw, 40px);
+}
+
+.alerts .section-tag { color: var(--gold); }
+.alerts .section-title { color: var(--sand); }
+
+.alert-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 40px;
+}
+
+.alert-card {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius);
+  padding: 28px;
+  transition: transform 0.3s, background 0.3s;
+}
+
+.alert-card:hover {
+  transform: translateY(-4px);
+  background: rgba(255,255,255,0.12);
+}
+
+.alert-icon {
+  width: 48px; height: 48px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem;
+  margin-bottom: 16px;
+}
+
+.alert-icon.tickets { background: rgba(232,93,58,0.2); }
+.alert-icon.reservas { background: rgba(42,122,181,0.2); }
+.alert-icon.dinheiro { background: rgba(212,168,67,0.2); }
+.alert-icon.mala { background: rgba(92,168,122,0.2); }
+
+.alert-card h3 {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 12px;
+}
+
+.alert-card ul {
+  list-style: none;
+  display: flex; flex-direction: column; gap: 8px;
+}
+
+.alert-card li {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.7);
+  padding-left: 20px;
+  position: relative;
+  line-height: 1.5;
+}
+
+.alert-card li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--lava);
+  font-weight: 700;
+}
+
+.alert-card a {
+  color: var(--sand);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ─── CALENDAR ─── */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+  margin-top: 40px;
+}
+
+.cal-day {
+  background: white;
+  border-radius: var(--radius-sm);
+  padding: 16px 14px;
+  text-align: center;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.cal-day::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+}
+
+.cal-day:nth-child(1)::before, .cal-day:nth-child(9)::before { background: var(--text-muted); }
+.cal-day:nth-child(2)::before, .cal-day:nth-child(3)::before { background: var(--lava); }
+.cal-day:nth-child(4)::before { background: var(--ocean); }
+.cal-day:nth-child(5)::before { background: var(--gold); }
+.cal-day:nth-child(6)::before { background: var(--sky); }
+.cal-day:nth-child(7)::before { background: var(--ocean-light); }
+.cal-day:nth-child(8)::before { background: var(--leaf); }
+
+.cal-day:hover {
+  border-color: var(--jungle);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.cal-day.active {
+  border-color: var(--jungle);
+  background: var(--jungle);
+}
+
+.cal-day.active .cal-date,
+.cal-day.active .cal-weekday,
+.cal-day.active .cal-emoji,
+.cal-day.active .cal-city { color: white !important; }
+
+.cal-emoji {
+  font-size: 1.6rem;
+  display: block;
+  margin-bottom: 8px;
+  margin-top: 8px;
+}
+
+.cal-weekday {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.cal-date {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--jungle);
+  margin: 2px 0;
+}
+
+.cal-city {
+  font-size: 0.75rem;
+  color: var(--text-light);
+  font-weight: 500;
+}
+
+/* ─── DAY DETAIL ─── */
+.day-detail {
+  margin-top: 48px;
+  animation: fadeUp 0.5s ease-out;
+}
+
+.day-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  margin-bottom: 36px;
+  flex-wrap: wrap;
+}
+
+.day-num {
+  width: 72px; height: 72px;
+  background: var(--jungle);
+  color: white;
+  border-radius: var(--radius-sm);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+.day-num span:first-child {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  opacity: 0.7;
+}
+
+.day-num span:last-child {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.day-info h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--jungle);
+}
+
+.day-route {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.timeline {
+  position: relative;
+  padding-left: 36px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 14px; top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--leaf), var(--sand-dark));
+  border-radius: 2px;
+}
+
+.tl-block {
+  position: relative;
+  margin-bottom: 32px;
+  animation: fadeUp 0.4s ease-out both;
+}
+
+.tl-block:nth-child(1) { animation-delay: 0.05s; }
+.tl-block:nth-child(2) { animation-delay: 0.1s; }
+.tl-block:nth-child(3) { animation-delay: 0.15s; }
+.tl-block:nth-child(4) { animation-delay: 0.2s; }
+
+.tl-dot {
+  position: absolute;
+  left: -29px; top: 8px;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--leaf);
+  border: 3px solid var(--sand-light);
+  z-index: 1;
+}
+
+.tl-time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--lava);
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.tl-card {
+  background: white;
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(26,58,42,0.05);
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+
+.tl-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateX(4px);
+}
+
+.tl-card h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--jungle);
+  margin-bottom: 8px;
+}
+
+.tl-card p, .tl-card li {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.tl-card ul {
+  list-style: none;
+  display: flex; flex-direction: column; gap: 6px;
+  margin-top: 8px;
+}
+
+.tl-card li { padding-left: 18px; position: relative; }
+.tl-card li::before {
+  content: '•';
+  position: absolute; left: 0;
+  color: var(--leaf);
+  font-weight: 700;
+}
+
+.tip-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--sand);
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--jungle);
+  margin-top: 12px;
+}
+
+.price-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(232,93,58,0.08);
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--lava);
+  margin-top: 12px;
+  margin-left: 6px;
+}
+
+/* ─── HOTEL CARDS ─── */
+.hotels {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.hotel-card {
+  background: white;
+  border-radius: var(--radius-sm);
+  padding: 20px;
+  border: 1px solid rgba(26,58,42,0.06);
+  transition: all 0.3s;
+}
+
+.hotel-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.hotel-card h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--jungle);
+  margin-bottom: 4px;
+}
+
+.hotel-card p {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.hotel-price {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--lava);
+  margin-top: 8px;
+}
+
+/* ─── COSTS ─── */
+.cost-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 40px;
+}
+
+.cost-card {
+  background: white;
+  border-radius: var(--radius);
+  padding: 28px;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.3s;
+}
+
+.cost-card:hover { transform: translateY(-4px); }
+
+.cost-card .emoji { font-size: 2rem; margin-bottom: 12px; }
+
+.cost-card .category {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.cost-card .amount {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--jungle);
+}
+
+.cost-total {
+  background: var(--jungle);
+  margin-top: 20px;
+  border-radius: var(--radius);
+  padding: 32px;
+  text-align: center;
+}
+
+.cost-total .label {
+  color: rgba(255,255,255,0.7);
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+}
+
+.cost-total .amount {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--sand);
+}
+
+.cost-total .sub {
+  color: rgba(255,255,255,0.5);
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
+
+/* ─── FOOTER ─── */
+.footer {
+  background: var(--jungle);
+  padding: 48px clamp(16px, 4vw, 40px);
+  text-align: center;
+}
+
+.footer p {
+  color: rgba(255,255,255,0.5);
+  font-size: 0.85rem;
+}
+
+.footer a {
+  color: var(--sand);
+  text-decoration: none;
+}
+
+.footer .pura-vida {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--sand);
+  margin-bottom: 8px;
+}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 768px) {
+  .hero { min-height: 85vh; padding: 40px 20px; }
+  .hero-stats { gap: 20px; }
+  .calendar-grid { grid-template-columns: repeat(3, 1fr); }
+  .day-header { gap: 16px; }
+  .timeline { padding-left: 28px; }
+  .tl-dot { left: -21px; }
+  .alert-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+  .calendar-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .cal-day { padding: 12px 8px; }
+  .cal-emoji { font-size: 1.2rem; }
+  .cal-date { font-size: 1.2rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero" id="top">
+  <div class="hero-content">
+    <div class="hero-badge">🇨🇷 Abril 2026 · 9 dias de aventura</div>
+    <h1>Costa <em>Rica</em></h1>
+    <p class="hero-sub">Vulcões, cachoeiras, praias paradisíacas e pura vida.<br>Saulo & Lorena — a trip of a lifetime.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="num">9</span><span class="label">Dias</span></div>
+      <div class="hero-stat"><span class="num">7</span><span class="label">Cidades</span></div>
+      <div class="hero-stat"><span class="num">900</span><span class="label">km</span></div>
+      <div class="hero-stat"><span class="num">4x4</span><span class="label">SUV</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ NAV ═══ -->
+<nav class="nav-bar" id="navbar">
+  <div class="nav-inner">
+    <button class="nav-btn active" onclick="scrollTo('#alerts-section')">⚠️ Atenção</button>
+    <button class="nav-btn" onclick="scrollTo('#calendar-section')">🗓️ Calendário</button>
+    <button class="nav-btn" onclick="scrollTo('#costs-section')">💰 Custos</button>
+    <a class="nav-btn" href="https://www.google.com/maps/dir/Aeroporto+Juan+Santamaria+Costa+Rica/Alajuela+Costa+Rica/La+Fortuna+Alajuela+Costa+Rica/Parque+Nacional+Volcan+Tenorio+Costa+Rica/Tamarindo+Guanacaste+Costa+Rica/Hacienda+Guachipelin+Liberia+Costa+Rica/Manuel+Antonio+Quepos+Costa+Rica/Aeroporto+Juan+Santamaria+Costa+Rica/" target="_blank" rel="noopener">🌍 Mapa</a>
+    <a class="nav-btn" href="https://www.notion.so/31d95c7b3aae81fa8265c1d552486f7a" target="_blank" rel="noopener">📝 Notion</a>
+  </div>
+</nav>
+
+<!-- ═══ ALERTS ═══ -->
+<section class="alerts" id="alerts-section">
+  <div class="section" style="padding-top:0;padding-bottom:0;">
+    <div class="section-header">
+      <span class="section-tag">Antes de Viajar</span>
+      <h2 class="section-title">⚠️ Não Esqueça!</h2>
+    </div>
+    <div class="alert-grid">
+      <div class="alert-card fade-in">
+        <div class="alert-icon tickets">🎫</div>
+        <h3>Ingressos Online</h3>
+        <ul>
+          <li>Vulcão Poás — <a href="https://sinac.go.cr" target="_blank">sinac.go.cr</a> (limite diário!)</li>
+          <li>Rio Celeste — <a href="https://sinac.go.cr" target="_blank">sinac.go.cr</a> (esgota semanas antes!)</li>
+          <li>Manuel Antonio — <a href="https://sinac.go.cr" target="_blank">sinac.go.cr</a> (esgota todo dia!)</li>
+          <li>Místico Bridges — <a href="https://misticopark.com" target="_blank">misticopark.com</a></li>
+        </ul>
+      </div>
+      <div class="alert-card fade-in">
+        <div class="alert-icon reservas">📋</div>
+        <h3>Reservas Obrigatórias</h3>
+        <ul>
+          <li>Carro 4x4 + Seguro Full Coverage</li>
+          <li>Rafting Rio Savegre — <a href="https://riostropicales.com" target="_blank">Ríos Tropicales</a></li>
+          <li>Hacienda Guachipelin — <a href="https://guachipelin.com" target="_blank">guachipelin.com</a></li>
+        </ul>
+      </div>
+      <div class="alert-card fade-in">
+        <div class="alert-icon dinheiro">💵</div>
+        <h3>Dinheiro em Espécie</h3>
+        <ul>
+          <li>Leve <strong style="color:var(--sand)">US$ 200–300</strong> em dólar</li>
+          <li>Caixas eletrônicos cobram ~US$ 9/saque</li>
+          <li>Cartão de crédito <strong style="color:var(--sand)">físico</strong> para o carro</li>
+        </ul>
+      </div>
+      <div class="alert-card fade-in">
+        <div class="alert-icon mala">🎒</div>
+        <h3>Itens Essenciais</h3>
+        <ul>
+          <li>Sapatilha aquática de neoprene</li>
+          <li>Casaco leve (~11°C nos vulcões)</li>
+          <li>Seguro viagem p/ aventura</li>
+          <li>eSIM ou chip local (Kolbi/Claro)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CALENDAR ═══ -->
+<section class="section" id="calendar-section">
+  <div class="section-header fade-in">
+    <span class="section-tag">Dia a Dia</span>
+    <h2 class="section-title">🗓️ Calendário da Viagem</h2>
+  </div>
+
+  <div class="calendar-grid" id="calendarGrid"></div>
+
+  <div id="dayDetail"></div>
+</section>
+
+<!-- ═══ COSTS ═══ -->
+<section class="section" id="costs-section">
+  <div class="section-header fade-in">
+    <span class="section-tag">Investimento</span>
+    <h2 class="section-title">💰 Estimativa de Custos</h2>
+  </div>
+  <div class="cost-grid fade-in">
+    <div class="cost-card"><div class="emoji">🚗</div><div class="category">Carro 4x4 + Seguro (÷2)</div><div class="amount">US$ 300–400</div></div>
+    <div class="cost-card"><div class="emoji">🏨</div><div class="category">Hospedagem (8 noites)</div><div class="amount">US$ 800–1.200</div></div>
+    <div class="cost-card"><div class="emoji">🍽️</div><div class="category">Alimentação (~US$ 50/dia)</div><div class="amount">US$ 400</div></div>
+    <div class="cost-card"><div class="emoji">🎫</div><div class="category">Passeios e Entradas</div><div class="amount">US$ 450–550</div></div>
+  </div>
+  <div class="cost-total fade-in">
+    <div class="label">Total estimado por pessoa</div>
+    <div class="amount">US$ 1.900 – 2.500</div>
+    <div class="sub">Valores aproximados · Abril 2026</div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <p class="pura-vida">🌴 Pura Vida!</p>
+  <p>Saulo & Lorena · Costa Rica · Abril 2026</p>
+  <p style="margin-top:12px"><a href="https://www.notion.so/31d95c7b3aae81fa8265c1d552486f7a" target="_blank">Ver roteiro completo no Notion →</a></p>
+</footer>
+
+<script>
+// ─── DATA ───
+const days = [
+  {
+    num: 1, weekday: 'Qua', date: '09/04', emoji: '✈️', city: 'Alajuela',
+    title: 'Chegada + Passeio Cultural',
+    route: 'Aeroporto (SJO) → Centro de San José → Alajuela',
+    blocks: [
+      { time: '08h20 – 11h', title: '✈️ Chegada no Aeroporto', items: ['Pouso no Aeroporto Juan Santamaría', 'Retirada do carro alugado (~1h)', 'Café da manhã: Galo Pinto — arroz, feijão preto, ovo, tortilha (~US$ 8)', 'Depositar malas no hotel de Alajuela'] },
+      { time: '13h – 17h', title: '🎭 Centro de San José', items: ['Teatro Nacional de Costa Rica — edifício de 1897, inspirado na Ópera de Paris', 'Café no salão dourado do Teatro', 'Museo del Oro Precolombino — 3 andares, 1.586 peças de ouro (~US$ 18)', 'Passeio pela Avenida Central e Plaza de la Democracia'], price: '~US$ 18' },
+      { time: '17h+', title: '🏨 Check-in em Alajuela', items: ['Jantar: La Jarra (costarriquenha) ou El Chante Vegano', 'Cama cedo — amanhã começa a aventura!'] }
+    ],
+    hotels: [
+      { name: 'Xandari Resort', desc: 'Boutique sustentável, spa', price: '~US$ 200/noite' },
+      { name: 'Hampton Inn Alajuela', desc: '5 min do aeroporto', price: '~US$ 120/noite' },
+      { name: 'Hotel Buena Vista', desc: 'Vista, piscina', price: '~US$ 90/noite' }
+    ]
+  },
+  {
+    num: 2, weekday: 'Qui', date: '10/04', emoji: '🌋', city: 'La Fortuna',
+    title: 'Vulcão Poás + Blue Falls + La Fortuna',
+    route: 'Alajuela → Vulcão Poás → Blue Falls → La Fortuna (~140 km)',
+    blocks: [
+      { time: '06h – 08h30', title: '🌋 Vulcão Poás', items: ['Cratera de 1.350m com lago ácido — visão de outro planeta!', 'Trilha até a cratera: 1 km. Ingresso ~US$ 15 (sinac.go.cr)', '⚠️ Chegue na abertura — nuvens fecham após 10h!', '⚠️ Leve casaco (~11°C e muito vento)', 'Parada na Catarata La Paz (gratuita) na descida'], price: '~US$ 15', tip: 'Comprar online!' },
+      { time: '10h – 13h', title: '🌊 Blue Falls of Costa Rica', items: ['6 cachoeiras de águas azul turquesa', 'Pozo Azul — único local permitido para banho', 'Ingresso: ~US$ 19/pessoa. Reserve 2–3h', '⚠️ Sapatilha aquática obrigatória! Água ~16°C'], price: '~US$ 19' },
+      { time: '14h – 16h30', title: '🚗 Rumo a La Fortuna', items: ['Almoço rápido em Bajos del Toro', 'Blue Falls → La Fortuna (~1h30–2h, Rota 4 pavimentada)', 'Chegada ~16h com sol!'] },
+      { time: '17h+', title: '🌙 Escolha uma opção!', items: ['☕ OPÇÃO A: Tour de Café e Chocolate — North Fields (~2h, ~US$ 43)', '✨ OPÇÃO B: Termas gratuitas do Rio Tabacón — acesso público', '💡 Decidam na hora conforme o cansaço!'] }
+    ],
+    hotels: [
+      { name: 'Arenal Manoa Hotel & Spa', desc: 'Piscina termal + vista do vulcão', price: '~US$ 130/noite' },
+      { name: 'Lost Iguana Resort', desc: 'Boutique na floresta, romântico', price: '~US$ 180/noite' },
+      { name: 'Hotel La Fortuna', desc: 'Econômico no centrinho', price: '~US$ 60/noite' }
+    ]
+  },
+  {
+    num: 3, weekday: 'Sex', date: '11/04', emoji: '🌿', city: 'La Fortuna',
+    title: 'Místico + Vulcão Arenal + Catarata + Termas',
+    route: 'Dia completo em La Fortuna — o mais intenso!',
+    blocks: [
+      { time: '06h – 08h', title: '🌿 Místico Hanging Bridges', items: ['16 pontes (6 suspensas), a mais alta a 45m', 'Trilha de 3,2 km (~2h) na copa das árvores', 'Ingresso: ~US$ 28 — compre online em misticopark.com', '⚠️ Chegue às 6h para pontes quase vazias + preguiças, tucanos, macacos'], price: '~US$ 28', tip: 'Comprar online!' },
+      { time: '09h – 11h', title: '🌋 Parque Nacional Vulcão Arenal', items: ['Caminhada sobre lava petrificada da erupção de 1968', 'Sendero Las Coladas: ~4 km, nível médio, 2h', 'Ingresso: ~US$ 17'], price: '~US$ 17' },
+      { time: '13h – 15h', title: '💧 Catarata La Fortuna', items: ['70m de queda d\'água espetacular', '530 degraus (descida e subida) — prepare as pernas!', 'Rio na base para banho. Ingresso: ~US$ 17'], price: '~US$ 17' },
+      { time: '18h+', title: '🌡️ Baldi Hot Springs', items: ['25 piscinas de 37°C a 67°C', 'Bares dentro d\'água, música ao vivo', 'Day use: ~US$ 50/pessoa, jantar incluso!'], price: '~US$ 50' }
+    ],
+    hotels: [
+      { name: 'Arenal Manoa Hotel & Spa', desc: 'Piscina termal + vista', price: '~US$ 130/noite' },
+      { name: 'Lost Iguana Resort', desc: 'Romântico na floresta', price: '~US$ 180/noite' }
+    ]
+  },
+  {
+    num: 4, weekday: 'Sáb', date: '12/04', emoji: '🔵', city: 'Tamarindo',
+    title: 'Rio Celeste + Deslocamento para Tamarindo',
+    route: 'La Fortuna → Rio Celeste → Tamarindo',
+    blocks: [
+      { time: '07h30 – 11h', title: '🔵 Rio Celeste', items: ['A atração mais deslumbrante da Costa Rica!', 'Cor azul neon 100% natural — reação química de dois minerais', 'Trilha até a cachoeira: ~3,5 km, 2h. Ingresso: ~US$ 12', 'Banho fora do parque, embaixo de uma ponte na estrada', '⚠️ Compre ONLINE semanas antes em sinac.go.cr!'], price: '~US$ 12', tip: 'Comprar online!' },
+      { time: '14h – 17h', title: '🚗 Rumo a Tamarindo', items: ['Almoço nos restaurantes da estrada do parque', 'Rio Celeste → Tamarindo (~2,5–3h via Liberia)', 'Check-in à beira-mar. Jantar leve e descanso'] }
+    ],
+    hotels: [
+      { name: 'Cala Luna Boutique Hotel', desc: 'Villas privativas, romântico', price: '~US$ 250/noite' },
+      { name: 'Wyndham Tamarindo', desc: 'Estruturado, café incluso', price: '~US$ 150/noite' },
+      { name: 'Hotel Pasatiempo', desc: 'Piscina, 5 min da praia', price: '~US$ 100/noite' }
+    ]
+  },
+  {
+    num: 5, weekday: 'Dom', date: '13/04', emoji: '🪂', city: 'Tamarindo',
+    title: 'Hacienda Guachipelin — Aventura Total',
+    route: 'Excursão ida e volta de Tamarindo (~1h cada trecho)',
+    blocks: [
+      { time: 'Dia inteiro', title: '🏇 Hacienda Guachipelin', items: ['🪂 Canopy: 7 tirolesas + Tarzan Swing + Rapel (2h)', '🛟 Tubing: descida pelo rio em boias pelas corredeiras', '💧 Catarata Oropêndola: queda de 25m com poço azul', '🧖 Banho de lama vulcânica + Termas do Rio Negro (10 piscinas)', '💰 Combo: ~US$ 120–150/pessoa, almoço incluso!', '💪 Dia mais físico do roteiro — perfeito para vocês!'], price: '~US$ 120–150', tip: 'Reserve em guachipelin.com' }
+    ],
+    hotels: [
+      { name: 'Cala Luna Boutique Hotel', desc: 'Villas privativas', price: '~US$ 250/noite' },
+      { name: 'Wyndham Tamarindo', desc: 'Café incluso', price: '~US$ 150/noite' }
+    ]
+  },
+  {
+    num: 6, weekday: 'Seg', date: '14/04', emoji: '🏖️', city: 'Tamarindo',
+    title: 'Playa Conchal + Surf — Descanso',
+    route: 'Dia relax em Tamarindo — recarregar as energias!',
+    blocks: [
+      { time: '09h – 12h', title: '🐚 Playa Conchal', items: ['Uma das praias mais bonitas da Costa Rica!', 'Areia formada por milhões de conchas moídas', 'Água azul cristalina — leve snorkel!', 'Acesso pela praia de Brasilito (~20 min ao norte)'] },
+      { time: '14h+', title: '🏄 Surf + Tempo livre', items: ['Aula de surf em Tamarindo — ondas perfeitas (~US$ 50–80)', 'Tarde livre: caminhada, artesanato, compras', '🌅 Pôr do sol famoso em Tamarindo', 'Jantar no El Mercadito — complexo gastronômico ao ar livre'], price: '~US$ 50–80' }
+    ],
+    hotels: [
+      { name: 'Cala Luna Boutique Hotel', desc: 'Última noite em Tamarindo', price: '~US$ 250/noite' }
+    ]
+  },
+  {
+    num: 7, weekday: 'Ter', date: '15/04', emoji: '🌊', city: 'Manuel Antonio',
+    title: 'Rafting Rio Savegre + Manuel Antonio',
+    route: 'Tamarindo → Rafting → Manuel Antonio (~5–6h + atividade)',
+    blocks: [
+      { time: '05h30 – 11h30', title: '🚗 Estrada', items: ['Saída às 5h30 de Tamarindo', 'Rota: Route 21 → Nicoya → Puntarenas → Route 34', 'Café da manhã na estrada ou do hotel'] },
+      { time: '11h30 – 15h', title: '🌊 Rafting no Rio Savegre', items: ['O melhor rafting da Costa Rica!', 'Nível 3–4, percurso 14 km, ~3–4h no rio', 'Pausa em cachoeira + almoço na beira do rio', 'Operadoras: Ríos Tropicales ou Aguas Bravas', '⚠️ Confirme horário ao reservar — peça ~11h30'], price: '~US$ 110', tip: 'Reserve com antecedência!' },
+      { time: '16h+', title: '🍽️ Manuel Antonio', items: ['Check-in no hotel (~30 min do rafting)', 'Jantar no El Avión — restaurante num avião de carga dos anos 80!', 'Vista panorâmica do pôr do sol — imperdível!'] }
+    ],
+    hotels: [
+      { name: 'Hotel La Mariposa', desc: 'Vista do "Rabo da Baleia"', price: '~US$ 200/noite' },
+      { name: 'Si Como No Resort', desc: 'Sustentável, piscina com tobogã', price: '~US$ 180/noite' },
+      { name: 'Hotel Makanda', desc: 'Adults only, romântico', price: '~US$ 250/noite' }
+    ]
+  },
+  {
+    num: 8, weekday: 'Qua', date: '16/04', emoji: '🐒', city: 'Alajuela',
+    title: 'Manuel Antonio + Crocodilos + Alajuela',
+    route: 'Manuel Antonio → Ponte dos Crocodilos → Alajuela',
+    blocks: [
+      { time: '07h – 11h', title: '🐒 Parque Nacional Manuel Antonio', items: ['O parque mais visitado da Costa Rica', 'Trilhas leves (2–4 km): macacos, preguiças, quatis', 'Praias: Playa Manuel Antonio e Playa Espadilla Sur', '💡 Contrate guia local (~US$ 25–30) — sem guia você não vê as preguiças!', '⚠️ Ingresso ~US$ 18 — compre online, esgota todo dia!'], price: '~US$ 18', tip: 'Comprar online!' },
+      { time: '11h – 12h30', title: '🏖️ Playa Biesanz', items: ['Praia escondida, água calma, perfeita para casal', 'Ótima para snorkel', 'Acesso por trilha curta (5 min). Leve lanche'] },
+      { time: '13h – 17h', title: '🚗 Retorno a Alajuela', items: ['Almoço rápido em Quepos', '🐊 Ponte dos Crocodilos (Rio Tárcoles) — no caminho!', 'Crocodilos de 4m+ visíveis da ponte. Parada 15–20 min', 'Chegada em Alajuela ~16–17h', '⚠️ Voo às 8h13 amanhã! Saída do hotel às ~6h'] }
+    ],
+    hotels: [
+      { name: 'Hampton Inn Alajuela', desc: '5 min do aeroporto', price: '~US$ 110/noite' },
+      { name: 'Courtyard San José Airport', desc: 'Novo, ótima estrutura', price: '~US$ 130/noite' }
+    ]
+  },
+  {
+    num: 9, weekday: 'Qui', date: '17/04', emoji: '✈️', city: 'San José',
+    title: 'Voo de Volta — Pura Vida!',
+    route: 'Alajuela → Aeroporto Juan Santamaría',
+    blocks: [
+      { time: '~06h', title: '🚗 Devolução do carro', items: ['Acordar cedo, check-out do hotel', 'Devolução do carro no aeroporto'] },
+      { time: '08h13', title: '✈️ Voo de volta', items: ['Check-in e embarque', '🌴 Pura Vida! Até a próxima, Costa Rica!'] }
+    ],
+    hotels: []
+  }
+];
+
+// ─── RENDER CALENDAR ───
+const calGrid = document.getElementById('calendarGrid');
+const detailEl = document.getElementById('dayDetail');
+
+days.forEach((d, i) => {
+  const el = document.createElement('div');
+  el.className = 'cal-day fade-in';
+  el.dataset.index = i;
+  el.innerHTML = `
+    <span class="cal-weekday">${d.weekday}</span>
+    <span class="cal-date">${d.date.split('/')[0]}</span>
+    <span class="cal-emoji">${d.emoji}</span>
+    <span class="cal-city">${d.city}</span>
+  `;
+  el.addEventListener('click', () => selectDay(i));
+  calGrid.appendChild(el);
+});
+
+function selectDay(i) {
+  document.querySelectorAll('.cal-day').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.cal-day')[i].classList.add('active');
+  renderDay(days[i]);
+  setTimeout(() => {
+    detailEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
+}
+
+function renderDay(d) {
+  let hotelsHTML = '';
+  if (d.hotels.length) {
+    hotelsHTML = `
+      <div style="margin-top:40px;">
+        <h3 style="font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--jungle);margin-bottom:16px;">🏨 Hospedagem</h3>
+        <div class="hotels">
+          ${d.hotels.map(h => `
+            <div class="hotel-card">
+              <h4>${h.name}</h4>
+              <p>${h.desc}</p>
+              <div class="hotel-price">${h.price}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  detailEl.innerHTML = `
+    <div class="day-detail">
+      <div class="day-header">
+        <div class="day-num">
+          <span>Dia</span>
+          <span>${d.num}</span>
+        </div>
+        <div class="day-info">
+          <h2>${d.emoji} ${d.title}</h2>
+          <p class="day-route">${d.route}</p>
+        </div>
+      </div>
+      <div class="timeline">
+        ${d.blocks.map(b => `
+          <div class="tl-block">
+            <div class="tl-dot"></div>
+            <div class="tl-time">${b.time}</div>
+            <div class="tl-card">
+              <h3>${b.title}</h3>
+              <ul>
+                ${b.items.map(it => `<li>${it}</li>`).join('')}
+              </ul>
+              ${b.tip ? `<span class="tip-tag">💡 ${b.tip}</span>` : ''}
+              ${b.price ? `<span class="price-tag">💰 ${b.price}</span>` : ''}
+            </div>
+          </div>
+        `).join('')}
+      </div>
+      ${hotelsHTML}
+    </div>
+  `;
+}
+
+// Auto-select Day 1
+selectDay(0);
+
+// ─── SCROLL EFFECTS ───
+function scrollTo(selector) {
+  document.querySelector(selector).scrollIntoView({ behavior: 'smooth' });
+}
+
+// Navbar shadow
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 100);
+});
+
+// Fade-in observer
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
