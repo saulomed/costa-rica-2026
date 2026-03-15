@@ -500,6 +500,31 @@ body {
   transform: translateY(0);
 }
 
+/* ─── BRL CONVERSION ─── */
+.brl {
+  font-size: 0.82em;
+  color: var(--ocean);
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+.hotel-price .brl {
+  display: block;
+  margin-top: 2px;
+}
+
+.rate-bar {
+  text-align: center;
+  font-size: 0.72rem;
+  color: var(--text-light);
+  padding: 6px;
+  background: var(--sand);
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.5px;
+  display: none;
+}
+.rate-bar.visible { display: block; }
+
 /* ─── RESPONSIVE ─── */
 @media (max-width: 768px) {
   .page-header { padding: 80px 20px 40px; }
@@ -530,6 +555,7 @@ body {
     <a class="nav-btn" href="index.html">📅 Roteiro</a>
   </div>
 </nav>
+<div class="rate-bar" id="rate-bar"></div>
 
 <!-- ═══ ALAJUELA ═══ -->
 <section class="section" id="alajuela">
@@ -1020,6 +1046,7 @@ navInner.addEventListener('scroll', checkNavScroll);
 window.addEventListener('resize', checkNavScroll);
 checkNavScroll();
 </script>
+<script src="currency.js"></script>
 
 </body>
 </html>

@@ -766,6 +766,33 @@ body {
   .cal-emoji { font-size: 1.2rem; }
   .cal-date { font-size: 1.2rem; }
 }
+
+/* ─── BRL CONVERSION ─── */
+.brl {
+  font-size: 0.82em;
+  color: var(--ocean);
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+.hotel-price .brl,
+.cost-card .brl,
+.cost-total .brl {
+  display: block;
+  margin-top: 2px;
+}
+
+.rate-bar {
+  text-align: center;
+  font-size: 0.72rem;
+  color: var(--text-light);
+  padding: 6px;
+  background: var(--sand);
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.5px;
+  display: none;
+}
+.rate-bar.visible { display: block; }
 </style>
 </head>
 <body>
@@ -797,6 +824,7 @@ body {
     <a class="nav-btn" href="https://www.notion.so/31d95c7b3aae81fa8265c1d552486f7a" target="_blank" rel="noopener">📝 Notion</a>
   </div>
 </nav>
+<div class="rate-bar" id="rate-bar"></div>
 
 <!-- ═══ ALERTS ═══ -->
 <section class="alerts" id="alerts-section">
@@ -1042,6 +1070,7 @@ days.forEach((d, i) => {
 });
 
 function selectDay(i) {
+  currentDayIndex = i;
   document.querySelectorAll('.cal-day').forEach(c => c.classList.remove('active'));
   document.querySelectorAll('.cal-day')[i].classList.add('active');
   renderDay(days[i]);
@@ -1054,6 +1083,19 @@ function getBookings() {
   try { return JSON.parse(localStorage.getItem('cr2026_bookings') || '{}'); }
   catch { return {}; }
 }
+
+// Helpers BRL para conteúdo dinâmico
+function _brl(t) {
+  if (!window.BRL_RATE || !t) return '';
+  var b = window.toBrlText(t);
+  return b ? '<span class="brl">' + b + '</span>' : '';
+}
+function _brlInline(t) {
+  if (!window.BRL_RATE || !t) return '';
+  var b = window.toBrlText(t);
+  return b ? ' <span class="brl">· ' + b + '</span>' : '';
+}
+function _wbrl(t) { return window.withBrl ? window.withBrl(t) : t; }
 
 function renderDay(d) {
   const bookings = getBookings();
@@ -1068,7 +1110,7 @@ function renderDay(d) {
           ${isBooked ? '<span class="booked-badge">✓ Reservado</span>' : ''}
           <h4>${h.name}</h4>
           <p>${h.desc}</p>
-          <div class="hotel-price">${h.price}</div>
+          <div class="hotel-price">${h.price}${_brl(h.price)}</div>
         </div>
       `;
     }).join('');
@@ -1084,7 +1126,7 @@ function renderDay(d) {
                 <span class="booked-badge">✓ Reservado</span>
                 <h4>${booked.name}</h4>
                 <p>${booked.desc}</p>
-                <div class="hotel-price">${booked.price}</div>
+                <div class="hotel-price">${booked.price}${_brl(booked.price)}</div>
               </div>`
             : hotelCards
           }
@@ -1114,10 +1156,10 @@ function renderDay(d) {
             <div class="tl-card">
               <h3>${b.title}</h3>
               <ul>
-                ${b.items.map(it => `<li>${it}</li>`).join('')}
+                ${b.items.map(it => `<li>${_wbrl(it)}</li>`).join('')}
               </ul>
               ${b.tip ? `<span class="tip-tag">💡 ${b.tip}</span>` : ''}
-              ${b.price ? `<span class="price-tag">💰 ${b.price}</span>` : ''}
+              ${b.price ? `<span class="price-tag">💰 ${b.price}${_brlInline(b.price)}</span>` : ''}
             </div>
           </div>
         `).join('')}
@@ -1128,7 +1170,14 @@ function renderDay(d) {
 }
 
 // Auto-select Day 1
+let currentDayIndex = 0;
 selectDay(0);
+
+// Re-render quando a cotação BRL carregar
+window.addEventListener('brl-ready', () => {
+  renderDay(days[currentDayIndex]);
+  window.applyBrlConversion();
+});
 
 // ─── SCROLL EFFECTS ───
 function navigateTo(selector) {
@@ -1183,6 +1232,7 @@ navInner.addEventListener('scroll', checkNavScroll);
 window.addEventListener('resize', checkNavScroll);
 checkNavScroll();
 </script>
+<script src="currency.js"></script>
 
 </body>
 </html>
