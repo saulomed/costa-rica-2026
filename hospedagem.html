@@ -640,6 +640,55 @@ body {
   color: #fff;
 }
 .modal-btn-confirm:hover { background: var(--jungle-light); }
+.date-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.date-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border: 1.5px solid var(--sand-dark);
+  border-radius: 100px;
+  background: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.date-chip:hover {
+  border-color: var(--ocean);
+  background: rgba(42,122,181,0.06);
+}
+.date-chip.selected {
+  border-color: var(--ocean);
+  background: rgba(42,122,181,0.1);
+  color: var(--ocean);
+  font-weight: 600;
+}
+.date-chip .chip-label {
+  font-size: 0.72rem;
+  color: var(--text-light);
+  font-weight: 400;
+}
+.date-chip.selected .chip-label {
+  color: var(--ocean);
+}
+.modal-error {
+  color: var(--lava);
+  font-size: 0.82rem;
+  font-weight: 500;
+  min-height: 1.2em;
+  margin-bottom: 4px;
+}
+.modal-field input.input-error {
+  border-color: var(--lava);
+  box-shadow: 0 0 0 3px rgba(232,93,58,0.15);
+}
 
 /* ─── BOOKING INFO (PIN & CANCEL DATE) ─── */
 .booking-info {
@@ -1109,10 +1158,14 @@ body {
 <!-- ═══ MODAL DE RESERVA ═══ -->
 <div class="booking-overlay" id="bookingOverlay" onclick="closeBookingModal(event)">
   <div class="booking-modal">
-    <button class="modal-close" onclick="closeBookingModal()">&times;</button>
+    <button type="button" class="modal-close" onclick="closeBookingModal()">&times;</button>
     <h3 class="modal-title">📋 Confirmar Reserva</h3>
     <p class="modal-hotel-name" id="modalHotelName"></p>
     <div class="modal-form">
+      <div class="modal-field">
+        <label>Datas sugeridas</label>
+        <div class="date-suggestions" id="dateSuggestions"></div>
+      </div>
       <div class="modal-row">
         <div class="modal-field">
           <label for="bookingCheckin">Check-in</label>
@@ -1132,9 +1185,10 @@ body {
         <input type="date" id="bookingCancelDate">
       </div>
     </div>
+    <p class="modal-error" id="modalError"></p>
     <div class="modal-actions">
-      <button class="modal-btn modal-btn-cancel" onclick="closeBookingModal()">Cancelar</button>
-      <button class="modal-btn modal-btn-confirm" onclick="confirmBooking()">Confirmar Reserva</button>
+      <button type="button" class="modal-btn modal-btn-cancel" onclick="closeBookingModal()">Cancelar</button>
+      <button type="button" class="modal-btn modal-btn-confirm" onclick="confirmBooking()">Confirmar Reserva</button>
     </div>
   </div>
 </div>
@@ -1171,8 +1225,50 @@ function fmtDate(iso) {
   return p[2] + '/' + p[1];
 }
 
+// ─── DATE SUGGESTIONS PER LOCATION ───
+const locationDates = {
+  'alajuela': [
+    { label: 'Dia 1 — Chegada', checkin: '2026-04-09', checkout: '2026-04-10' },
+    { label: 'Dia 8 — Véspera do voo', checkin: '2026-04-16', checkout: '2026-04-17' }
+  ],
+  'la-fortuna': [
+    { label: 'Dias 2–3', checkin: '2026-04-10', checkout: '2026-04-12' }
+  ],
+  'tamarindo': [
+    { label: 'Dias 4–6', checkin: '2026-04-12', checkout: '2026-04-15' }
+  ],
+  'manuel-antonio': [
+    { label: 'Dia 7', checkin: '2026-04-15', checkout: '2026-04-16' }
+  ]
+};
+
 // ─── MODAL STATE ───
 let pendingBookingBtn = null;
+
+function renderDateSuggestions(location) {
+  const container = document.getElementById('dateSuggestions');
+  const suggestions = locationDates[location] || [];
+  container.innerHTML = suggestions.map((s, i) =>
+    '<button type="button" class="date-chip" data-idx="' + i + '" onclick="selectDateChip(this, \'' + location + '\')">' +
+      fmtDate(s.checkin) + ' → ' + fmtDate(s.checkout) +
+      ' <span class="chip-label">' + s.label + '</span>' +
+    '</button>'
+  ).join('');
+}
+
+function selectDateChip(chip, location) {
+  const idx = parseInt(chip.dataset.idx);
+  const s = locationDates[location][idx];
+  document.getElementById('bookingCheckin').value = s.checkin;
+  document.getElementById('bookingCheckout').value = s.checkout;
+  // Clear errors
+  document.getElementById('bookingCheckin').classList.remove('input-error');
+  document.getElementById('bookingCheckout').classList.remove('input-error');
+  document.getElementById('modalError').textContent = '';
+  // Toggle selected state
+  document.querySelectorAll('.date-chip').forEach(c => c.classList.remove('selected'));
+  chip.classList.add('selected');
+}
 
 function toggleBooking(btn) {
   const card = btn.closest('.hotel-card');
@@ -1197,29 +1293,47 @@ function toggleBooking(btn) {
     document.getElementById('bookingCheckout').value = '';
     document.getElementById('bookingPin').value = '';
     document.getElementById('bookingCancelDate').value = '';
+    document.getElementById('modalError').textContent = '';
+    document.getElementById('bookingCheckin').classList.remove('input-error');
+    document.getElementById('bookingCheckout').classList.remove('input-error');
+    renderDateSuggestions(location);
+    // Auto-select first suggestion and fill dates
+    const firstChip = document.querySelector('.date-chip');
+    if (firstChip) selectDateChip(firstChip, location);
     document.getElementById('bookingOverlay').classList.add('active');
   }
 }
 
 function confirmBooking() {
   if (!pendingBookingBtn) return;
+
+  const checkinEl = document.getElementById('bookingCheckin');
+  const checkoutEl = document.getElementById('bookingCheckout');
+  const errorEl = document.getElementById('modalError');
+  const checkin = checkinEl.value;
+  const checkout = checkoutEl.value;
+
+  // Clear previous errors
+  checkinEl.classList.remove('input-error');
+  checkoutEl.classList.remove('input-error');
+  errorEl.textContent = '';
+
+  if (!checkin || !checkout) {
+    errorEl.textContent = 'Preencha as datas de check-in e check-out.';
+    if (!checkin) checkinEl.classList.add('input-error');
+    if (!checkout) checkoutEl.classList.add('input-error');
+    return;
+  }
+  if (checkout <= checkin) {
+    errorEl.textContent = 'Check-out deve ser posterior ao check-in.';
+    checkoutEl.classList.add('input-error');
+    return;
+  }
+
   const card = pendingBookingBtn.closest('.hotel-card');
   const location = card.dataset.location;
   const hotel = JSON.parse(card.dataset.hotel);
   const bookings = getBookings();
-
-  const checkin = document.getElementById('bookingCheckin').value;
-  const checkout = document.getElementById('bookingCheckout').value;
-
-  if (!checkin || !checkout) {
-    document.getElementById('bookingCheckin').focus();
-    return;
-  }
-  if (checkout <= checkin) {
-    document.getElementById('bookingCheckout').focus();
-    return;
-  }
-
   const pin = document.getElementById('bookingPin').value.trim();
   const cancelDate = document.getElementById('bookingCancelDate').value;
 
@@ -1236,14 +1350,15 @@ function confirmBooking() {
   if (!bookings[location]) bookings[location] = [];
   bookings[location].push(entry);
   saveBookings(bookings);
+  pendingBookingBtn = null;
   closeBookingModal();
   refreshBookingUI();
-  pendingBookingBtn = null;
 }
 
 function closeBookingModal(event) {
   if (event && event.target !== event.currentTarget) return;
   document.getElementById('bookingOverlay').classList.remove('active');
+  document.getElementById('modalError').textContent = '';
   pendingBookingBtn = null;
 }
 
