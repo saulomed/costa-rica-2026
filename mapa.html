@@ -537,36 +537,52 @@ body {
 
 /* ─── RESPONSIVE ─── */
 @media (max-width: 768px) {
-  .body { grid-template-columns: 1fr; }
-
-  .sidebar {
-    position: fixed;
-    top: 0;
-    right: -100%;
-    width: 85%;
-    max-width: 360px;
-    height: 100vh;
-    height: 100dvh;
-    z-index: 500;
-    transition: right 0.3s ease;
+  body {
+    height: auto;
+    overflow: auto;
     -webkit-overflow-scrolling: touch;
   }
 
-  .sidebar.open { right: 0; }
+  .app {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  .body {
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+  }
+
+  .map-wrap {
+    height: 55vh;
+    height: 55dvh;
+    flex-shrink: 0;
+    position: relative;
+  }
+
+  .sidebar {
+    position: static;
+    width: 100%;
+    max-width: none;
+    height: auto;
+    overflow: visible;
+  }
 
   .mobile-actions {
     display: flex;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    position: sticky;
+    top: 0;
     z-index: 450;
     gap: 1px;
-    background: rgba(15,36,24,0.95);
+    background: rgba(15,36,24,0.98);
     backdrop-filter: blur(12px);
     border-top: 1px solid rgba(92,168,122,0.25);
+    border-bottom: 1px solid rgba(92,168,122,0.25);
     padding: 8px 10px;
-    padding-bottom: max(8px, env(safe-area-inset-bottom));
   }
 
   .mobile-action-btn {
@@ -593,20 +609,7 @@ body {
     color: white;
   }
 
-  .sidebar-backdrop {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0,0,0,0.5);
-    z-index: 499;
-  }
-
-  .sidebar-backdrop.open { display: block; }
-
-  .distance-overlay { bottom: 60px; }
+  .distance-overlay { display: none; }
 
   .header-stats { display: none; }
 
@@ -730,7 +733,6 @@ body {
     <div class="mobile-actions">
       <a class="mobile-action-btn" href="https://www.google.com/maps/dir/Aeroporto+Juan+Santamaria+Costa+Rica/Alajuela+Costa+Rica/La+Fortuna+Alajuela+Costa+Rica/Parque+Nacional+Volcan+Tenorio+Costa+Rica/Tamarindo+Guanacaste+Costa+Rica/Hacienda+Guachipelin+Liberia+Costa+Rica/Manuel+Antonio+Quepos+Costa+Rica/Aeroporto+Juan+Santamaria+Costa+Rica/" target="_blank" rel="noopener">📍 Google Maps</a>
       <button class="mobile-action-btn" onclick="resetView()">🔄 Resetar</button>
-      <button class="mobile-action-btn" onclick="toggleSidebar()">📋 Paradas</button>
     </div>
 
     <!-- Mobile sidebar toggle -->
@@ -1055,12 +1057,11 @@ function flyToStop(i) {
   stopCards[i].classList.add('active');
   activeStopIndex = i;
 
-  // Scroll card into view
-  stopCards[i].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-
-  // Close mobile sidebar
+  // On mobile, scroll to map first then to card
   if (window.innerWidth <= 768) {
-    setTimeout(function() { closeSidebar(); }, 300);
+    document.querySelector('.map-wrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } else {
+    stopCards[i].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 }
 
