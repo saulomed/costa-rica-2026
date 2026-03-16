@@ -1803,6 +1803,7 @@ renderTodos();
 window.addEventListener('storage', (e) => {
   if (e.key === 'cr2026_todos' || e.key === 'cr2026_bookings' || e.key === 'cr2026_car_booking') {
     renderTodos();
+    renderDay(days[currentDayIndex]);
   }
 });
 
@@ -1897,12 +1898,17 @@ async function testSyncConnection() {
   }
 }
 
+function refreshAfterSync() {
+  renderTodos();
+  renderDay(days[currentDayIndex]);
+}
+
 async function saveSyncConfig() {
   // Credenciais já foram salvas no teste
   closeSyncModal();
   updateSyncUI('idle');
   const synced = await GistSync.syncOnLoad();
-  if (synced) renderTodos();
+  if (synced) refreshAfterSync();
 }
 
 function disconnectSync() {
@@ -1915,7 +1921,7 @@ function disconnectSync() {
 if (GistSync.isConfigured()) {
   updateSyncUI('idle');
   GistSync.syncOnLoad().then(synced => {
-    if (synced) renderTodos();
+    if (synced) refreshAfterSync();
   });
 }
 </script>
