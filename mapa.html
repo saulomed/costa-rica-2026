@@ -524,26 +524,15 @@ body {
 
 .action-btn:hover { background: rgba(92,168,122,0.2); color: white; }
 
-/* ─── MOBILE SIDEBAR TOGGLE ─── */
+/* ─── MOBILE ACTION BAR ─── */
+.mobile-actions {
+  display: none;
+}
+
 .sidebar-backdrop { display: none; }
 
 .sidebar-toggle {
   display: none;
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 1000;
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  background: var(--jungle);
-  border: 2px solid var(--leaf);
-  color: white;
-  font-size: 1.2rem;
-  cursor: pointer;
-  box-shadow: var(--shadow-lg);
-  align-items: center;
-  justify-content: center;
 }
 
 /* ─── RESPONSIVE ─── */
@@ -565,7 +554,44 @@ body {
 
   .sidebar.open { right: 0; }
 
-  .sidebar-toggle { display: flex; }
+  .mobile-actions {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 450;
+    gap: 1px;
+    background: rgba(15,36,24,0.95);
+    backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(92,168,122,0.25);
+    padding: 8px 10px;
+    padding-bottom: max(8px, env(safe-area-inset-bottom));
+  }
+
+  .mobile-action-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: rgba(92,168,122,0.15);
+    border: 1px solid rgba(92,168,122,0.3);
+    color: rgba(200,230,205,0.9);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 10px 8px;
+    border-radius: var(--radius-xs);
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .mobile-action-btn:active {
+    background: rgba(92,168,122,0.3);
+    color: white;
+  }
 
   .sidebar-backdrop {
     display: none;
@@ -579,6 +605,8 @@ body {
   }
 
   .sidebar-backdrop.open { display: block; }
+
+  .distance-overlay { bottom: 60px; }
 
   .header-stats { display: none; }
 
@@ -696,6 +724,13 @@ body {
       <div class="distance-overlay-title">Distancia total</div>
       <div class="distance-overlay-value">~915 km</div>
       <div class="distance-overlay-sub">7 paradas · circuito completo</div>
+    </div>
+
+    <!-- Mobile fixed action bar -->
+    <div class="mobile-actions">
+      <a class="mobile-action-btn" href="https://www.google.com/maps/dir/Aeroporto+Juan+Santamaria+Costa+Rica/Alajuela+Costa+Rica/La+Fortuna+Alajuela+Costa+Rica/Parque+Nacional+Volcan+Tenorio+Costa+Rica/Tamarindo+Guanacaste+Costa+Rica/Hacienda+Guachipelin+Liberia+Costa+Rica/Manuel+Antonio+Quepos+Costa+Rica/Aeroporto+Juan+Santamaria+Costa+Rica/" target="_blank" rel="noopener">📍 Google Maps</a>
+      <button class="mobile-action-btn" onclick="resetView()">🔄 Resetar</button>
+      <button class="mobile-action-btn" onclick="toggleSidebar()">📋 Paradas</button>
     </div>
 
     <!-- Mobile sidebar toggle -->
