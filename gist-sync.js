@@ -68,6 +68,20 @@ const GistSync = (() => {
     });
   }
 
+  // Migra formato antigo (flat: {todoId: true, _ts}) → novo ({cr2026_todos: {...}, _ts})
+  function _migrateFormat(data) {
+    if (!data || typeof data !== 'object') return data;
+    // Se já tem alguma SYNC_KEY, está no formato novo
+    if (SYNC_KEYS.some(k => data[k] !== undefined)) return data;
+    // Se está vazio ou só tem _ts, nada a migrar
+    const keys = Object.keys(data).filter(k => k !== '_ts');
+    if (keys.length === 0) return data;
+    // Formato antigo: todo IDs flat no topo → mover para cr2026_todos
+    const todos = {};
+    keys.forEach(k => { todos[k] = data[k]; });
+    return { cr2026_todos: todos, _ts: data._ts || 0 };
+  }
+
   async function gistLoad() {
     const creds = getCredentials();
     if (!creds) return null;
@@ -82,7 +96,8 @@ const GistSync = (() => {
     const file = data.files[FILENAME];
     if (!file || !file.content) return {};
 
-    return JSON.parse(file.content);
+    const parsed = JSON.parse(file.content);
+    return _migrateFormat(parsed);
   }
 
   async function gistSave(state) {
@@ -126,13 +141,14 @@ const GistSync = (() => {
     _setStatus('syncing');
     try {
       const local = _getLocalState();
+      local._ts = local._ts || 0;
       const remote = await gistLoad();
       const merged = gistMerge(local, remote);
 
       // Aplica o estado mergeado no localStorage
       _applyState(merged);
 
-      // Salva no Gist com _ts
+      // Salva no Gist no formato novo (garante migração)
       await gistSave(merged);
 
       _setStatus('synced');

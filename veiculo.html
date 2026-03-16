@@ -1591,7 +1591,14 @@ function refreshCarUI() {
   });
 }
 
-refreshCarUI();
+// Initialize — sync primeiro, depois renderiza
+if (GistSync.isConfigured()) {
+  GistSync.syncOnLoad().then(synced => {
+    refreshCarUI();
+  });
+} else {
+  refreshCarUI();
+}
 </script>
 <script src="currency.js"></script>
 
