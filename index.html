@@ -990,6 +990,136 @@ body {
 @media (max-width: 768px) {
   .todo-grid { grid-template-columns: 1fr; }
 }
+
+/* ─── SYNC ─── */
+.sync-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.sync-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border: 1.5px solid var(--canopy);
+  border-radius: var(--radius-xs);
+  background: var(--white);
+  color: var(--canopy);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.sync-btn:hover { background: var(--canopy); color: var(--white); }
+.sync-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+.sync-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--text-light);
+  transition: background 0.3s;
+}
+.sync-dot.syncing { background: var(--gold); animation: pulse-sync 1s infinite; }
+.sync-dot.synced { background: var(--leaf); }
+.sync-dot.error { background: var(--lava); }
+@keyframes pulse-sync { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+.sync-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
+.sync-modal-overlay.open { display: flex; }
+.sync-modal {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 28px 24px;
+  width: min(420px, 92vw);
+  box-shadow: var(--shadow-xl);
+}
+.sync-modal h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  margin-bottom: 6px;
+}
+.sync-modal p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+.sync-modal label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+.sync-modal input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid var(--sand-dark);
+  border-radius: var(--radius-xs);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  margin-bottom: 12px;
+  background: var(--sand-light);
+  transition: border-color 0.2s;
+}
+.sync-modal input:focus { outline: none; border-color: var(--canopy); }
+.sync-modal-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+.sync-modal-actions button {
+  padding: 9px 18px;
+  border-radius: var(--radius-xs);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+}
+.sync-modal-actions .btn-primary {
+  background: var(--canopy);
+  color: var(--white);
+}
+.sync-modal-actions .btn-primary:hover { background: var(--jungle-light); }
+.sync-modal-actions .btn-secondary {
+  background: var(--sand);
+  color: var(--text);
+}
+.sync-modal-actions .btn-secondary:hover { background: var(--sand-dark); }
+.sync-modal-actions .btn-danger {
+  background: none;
+  color: var(--lava);
+  border: 1.5px solid var(--lava);
+}
+.sync-modal-actions .btn-danger:hover { background: var(--lava); color: var(--white); }
+.sync-feedback {
+  font-size: 0.82rem;
+  margin-top: 10px;
+  padding: 8px 10px;
+  border-radius: var(--radius-xs);
+  display: none;
+}
+.sync-feedback.success { display: block; background: #e8f5e9; color: #2e7d32; }
+.sync-feedback.error { display: block; background: #fce4ec; color: #c62828; }
 </style>
 </head>
 <body>
@@ -1080,9 +1210,37 @@ body {
     <span class="section-tag">Planejamento</span>
     <h2 class="section-title">📝 Lista de Tarefas</h2>
   </div>
+  <div class="sync-row" id="syncRow">
+    <button class="sync-btn" onclick="openSyncModal()">🔄 Sincronizar entre dispositivos</button>
+    <span class="sync-indicator" id="syncIndicator" style="display:none;">
+      <span class="sync-dot" id="syncDot"></span>
+      <span id="syncLabel"></span>
+    </span>
+  </div>
   <div class="todo-grid" id="todoGrid"></div>
   <div id="todoSummary"></div>
 </section>
+
+<!-- Sync Modal -->
+<div class="sync-modal-overlay" id="syncModalOverlay" onclick="if(event.target===this)closeSyncModal()">
+  <div class="sync-modal">
+    <h3>🔄 Sincronizar TODOs</h3>
+    <p>Conecte um GitHub Gist privado para manter seus TODOs sincronizados entre dispositivos.</p>
+    <div id="syncFormFields">
+      <label for="syncGistId">Gist ID</label>
+      <input type="text" id="syncGistId" placeholder="cole o ID do Gist aqui">
+      <label for="syncPat">Personal Access Token</label>
+      <input type="password" id="syncPat" placeholder="ghp_...">
+    </div>
+    <div class="sync-modal-actions" id="syncModalActions">
+      <button class="btn-primary" id="syncTestBtn" onclick="testSyncConnection()">Testar conexão</button>
+      <button class="btn-primary" id="syncSaveBtn" onclick="saveSyncConfig()" style="display:none;">Salvar</button>
+      <button class="btn-secondary" onclick="closeSyncModal()">Fechar</button>
+      <button class="btn-danger" id="syncDisconnectBtn" onclick="disconnectSync()" style="display:none;">Desconectar</button>
+    </div>
+    <div class="sync-feedback" id="syncFeedback"></div>
+  </div>
+</div>
 
 <!-- ═══ CALENDAR ═══ -->
 <section class="section" id="calendar-section">
@@ -1122,6 +1280,7 @@ body {
   <p style="margin-top:12px"><a href="https://www.notion.so/31d95c7b3aae81fa8265c1d552486f7a" target="_blank">Ver roteiro completo no Notion →</a></p>
 </footer>
 
+<script src="gist-sync.js"></script>
 <script>
 // ─── DATA ───
 const days = [
@@ -1482,6 +1641,7 @@ function getTodos() {
 
 function saveTodos(todos) {
   localStorage.setItem('cr2026_todos', JSON.stringify(todos));
+  GistSync.debouncedSave();
 }
 
 function findMatchingBooking(item) {
@@ -1655,6 +1815,109 @@ function checkNavScroll() {
 navInner.addEventListener('scroll', checkNavScroll);
 window.addEventListener('resize', checkNavScroll);
 checkNavScroll();
+
+// ─── SYNC UI ───
+const syncStatusLabels = { idle: '', syncing: 'Sincronizando…', synced: 'Sincronizado', error: 'Erro no sync' };
+
+function updateSyncUI(status) {
+  const indicator = document.getElementById('syncIndicator');
+  const dot = document.getElementById('syncDot');
+  const label = document.getElementById('syncLabel');
+  if (!GistSync.isConfigured()) {
+    indicator.style.display = 'none';
+    return;
+  }
+  indicator.style.display = 'inline-flex';
+  dot.className = 'sync-dot ' + status;
+  label.textContent = syncStatusLabels[status] || '';
+}
+
+GistSync.onStatusChange(updateSyncUI);
+
+function openSyncModal() {
+  const overlay = document.getElementById('syncModalOverlay');
+  const fields = document.getElementById('syncFormFields');
+  const testBtn = document.getElementById('syncTestBtn');
+  const saveBtn = document.getElementById('syncSaveBtn');
+  const disconnectBtn = document.getElementById('syncDisconnectBtn');
+  const feedback = document.getElementById('syncFeedback');
+  feedback.className = 'sync-feedback';
+  feedback.textContent = '';
+
+  if (GistSync.isConfigured()) {
+    fields.style.display = 'none';
+    testBtn.style.display = 'none';
+    saveBtn.style.display = 'none';
+    disconnectBtn.style.display = 'inline-block';
+  } else {
+    fields.style.display = 'block';
+    testBtn.style.display = 'inline-block';
+    saveBtn.style.display = 'none';
+    disconnectBtn.style.display = 'none';
+    document.getElementById('syncGistId').value = '';
+    document.getElementById('syncPat').value = '';
+  }
+  overlay.classList.add('open');
+}
+
+function closeSyncModal() {
+  document.getElementById('syncModalOverlay').classList.remove('open');
+}
+
+async function testSyncConnection() {
+  const gistId = document.getElementById('syncGistId').value.trim();
+  const pat = document.getElementById('syncPat').value.trim();
+  const feedback = document.getElementById('syncFeedback');
+
+  if (!gistId || !pat) {
+    feedback.className = 'sync-feedback error';
+    feedback.textContent = 'Preencha ambos os campos.';
+    return;
+  }
+
+  feedback.className = 'sync-feedback';
+  feedback.style.display = 'block';
+  feedback.style.background = 'var(--sand)';
+  feedback.style.color = 'var(--text-muted)';
+  feedback.textContent = 'Testando conexão…';
+
+  // Salva temporariamente para testar
+  GistSync.saveCredentials(gistId, pat);
+
+  try {
+    await GistSync.testConnection();
+    feedback.className = 'sync-feedback success';
+    feedback.textContent = 'Conexão OK! Clique em Salvar para ativar o sync.';
+    document.getElementById('syncSaveBtn').style.display = 'inline-block';
+  } catch (e) {
+    GistSync.clearCredentials();
+    feedback.className = 'sync-feedback error';
+    feedback.textContent = 'Falha: verifique o Gist ID e o token. (' + e.message + ')';
+    document.getElementById('syncSaveBtn').style.display = 'none';
+  }
+}
+
+async function saveSyncConfig() {
+  // Credenciais já foram salvas no teste
+  closeSyncModal();
+  updateSyncUI('idle');
+  const synced = await GistSync.syncOnLoad();
+  if (synced) renderTodos();
+}
+
+function disconnectSync() {
+  GistSync.clearCredentials();
+  updateSyncUI('idle');
+  closeSyncModal();
+}
+
+// Inicializar sync ao carregar
+if (GistSync.isConfigured()) {
+  updateSyncUI('idle');
+  GistSync.syncOnLoad().then(synced => {
+    if (synced) renderTodos();
+  });
+}
 </script>
 <script src="currency.js"></script>
 
