@@ -1279,14 +1279,18 @@ days.forEach((d, i) => {
   calGrid.appendChild(el);
 });
 
+let initialLoad = true;
 function selectDay(i) {
   currentDayIndex = i;
   document.querySelectorAll('.cal-day').forEach(c => c.classList.remove('active'));
   document.querySelectorAll('.cal-day')[i].classList.add('active');
   renderDay(days[i]);
-  setTimeout(() => {
-    detailEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, 100);
+  if (!initialLoad) {
+    setTimeout(() => {
+      detailEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+  initialLoad = false;
 }
 
 function getBookings() {
