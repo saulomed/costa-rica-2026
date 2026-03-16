@@ -1443,6 +1443,7 @@ body {
   <p style="margin-top:12px"><a href="index.html">← Voltar ao roteiro completo</a></p>
 </footer>
 
+<script src="gist-sync.js"></script>
 <script>
 // ─── NAVIGATION ───
 function navigateTo(selector) {
@@ -1509,6 +1510,7 @@ function saveCarBooking(booking) {
   } else {
     localStorage.removeItem('cr2026_car_booking');
   }
+  GistSync.debouncedSave();
 }
 
 function toggleCarBooking(btn) {

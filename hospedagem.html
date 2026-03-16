@@ -1200,6 +1200,7 @@ body {
   <p style="margin-top:12px"><a href="index.html">← Voltar ao roteiro completo</a></p>
 </footer>
 
+<script src="gist-sync.js"></script>
 <script>
 // ─── BOOKING SYSTEM ───
 function getBookings() {
@@ -1217,6 +1218,7 @@ function getBookings() {
 
 function saveBookings(bookings) {
   localStorage.setItem('cr2026_bookings', JSON.stringify(bookings));
+  GistSync.debouncedSave();
 }
 
 function fmtDate(iso) {

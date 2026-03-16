@@ -1,10 +1,13 @@
 // ─── GIST SYNC MODULE ───
-// Sincroniza estado dos TODOs via GitHub Gist privado
+// Sincroniza estado completo (TODOs + bookings + car) via GitHub Gist privado
 
 const GistSync = (() => {
   const GIST_ID_KEY = 'cr2026_gist_id';
   const PAT_KEY = 'cr2026_gist_pat';
   const FILENAME = 'cr2026-state.json';
+
+  // Todas as keys do localStorage que devem ser sincronizadas
+  const SYNC_KEYS = ['cr2026_todos', 'cr2026_bookings', 'cr2026_car_booking'];
 
   let _debounceTimer = null;
   let _status = 'idle'; // idle | syncing | synced | error
@@ -42,6 +45,27 @@ const GistSync = (() => {
 
   function getStatus() {
     return _status;
+  }
+
+  // Coleta todos os dados locais num único objeto
+  function _getLocalState() {
+    const state = {};
+    SYNC_KEYS.forEach(key => {
+      try {
+        const raw = localStorage.getItem(key);
+        if (raw) state[key] = JSON.parse(raw);
+      } catch {}
+    });
+    return state;
+  }
+
+  // Aplica o estado remoto no localStorage
+  function _applyState(state) {
+    SYNC_KEYS.forEach(key => {
+      if (state[key] !== undefined && state[key] !== null) {
+        localStorage.setItem(key, JSON.stringify(state[key]));
+      }
+    });
   }
 
   async function gistLoad() {
@@ -101,14 +125,12 @@ const GistSync = (() => {
 
     _setStatus('syncing');
     try {
-      const local = JSON.parse(localStorage.getItem('cr2026_todos') || '{}');
+      const local = _getLocalState();
       const remote = await gistLoad();
       const merged = gistMerge(local, remote);
 
-      // Salva o estado mergeado localmente (sem _ts no localStorage)
-      const toStore = Object.assign({}, merged);
-      delete toStore._ts;
-      localStorage.setItem('cr2026_todos', JSON.stringify(toStore));
+      // Aplica o estado mergeado no localStorage
+      _applyState(merged);
 
       // Salva no Gist com _ts
       await gistSave(merged);
@@ -129,8 +151,8 @@ const GistSync = (() => {
     clearTimeout(_debounceTimer);
     _debounceTimer = setTimeout(async () => {
       try {
-        const local = JSON.parse(localStorage.getItem('cr2026_todos') || '{}');
-        const state = Object.assign({}, local, { _ts: Date.now() });
+        const state = _getLocalState();
+        state._ts = Date.now();
         await gistSave(state);
         _setStatus('synced');
       } catch (e) {
