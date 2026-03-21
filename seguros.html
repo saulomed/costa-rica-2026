@@ -306,6 +306,142 @@ body {
   flex-shrink: 0;
 }
 
+/* ─── COVERAGE TABLE ─── */
+.coverage-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  font-size: 0.85rem;
+}
+
+.coverage-table th {
+  text-align: left;
+  font-weight: 600;
+  color: var(--jungle);
+  padding: 8px 12px;
+  border-bottom: 2px solid var(--sand-dark);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.coverage-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--sand);
+  color: var(--text-muted);
+}
+
+.coverage-table tr:last-child td {
+  border-bottom: none;
+}
+
+.coverage-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 500;
+  color: var(--jungle) !important;
+  font-size: 0.82rem;
+}
+
+/* ─── CONTACT BOX ─── */
+.contact-box {
+  background: var(--sand);
+  border-radius: var(--radius-sm);
+  padding: 16px 20px;
+  margin-bottom: 20px;
+}
+
+.contact-box-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--jungle);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.84rem;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+  line-height: 1.5;
+}
+
+.contact-item:last-child {
+  margin-bottom: 0;
+}
+
+.contact-item .label {
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  min-width: 90px;
+}
+
+.contact-item a {
+  color: var(--ocean);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.contact-item a:hover {
+  text-decoration: underline;
+}
+
+/* ─── ALERT BOX ─── */
+.alert-box {
+  background: #fff3e0;
+  border: 1px solid #ffe0b2;
+  border-radius: var(--radius-xs);
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  font-size: 0.84rem;
+  color: #e65100;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  line-height: 1.5;
+}
+
+.alert-box.alert-info {
+  background: #e3f2fd;
+  border-color: #bbdefb;
+  color: #1565c0;
+}
+
+.alert-box.alert-warning {
+  background: #fff8e1;
+  border-color: #ffecb3;
+  color: #f57f17;
+}
+
+/* ─── PROVIDER BADGE ─── */
+.provider-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  padding: 4px 12px;
+  background: var(--sand);
+  border-radius: 100px;
+  margin-bottom: 12px;
+}
+
+/* ─── LINKS ROW ─── */
+.insurance-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
 /* ─── TIPS ─── */
 .tips-box {
   background: white;
@@ -416,25 +552,113 @@ body {
       <div class="insurance-icon-bar">
         <div class="insurance-emoji">🛡️</div>
         <div>
-          <div class="insurance-type">Cobertura Pessoal</div>
-          <div class="insurance-name">Seguro Viagem</div>
+          <div class="insurance-type">Benefício Cartão Visa Infinite</div>
+          <div class="insurance-name">Seguro Viagem Internacional</div>
         </div>
       </div>
       <div class="insurance-body">
+        <span class="provider-badge">AIG Seguros do Brasil &middot; Visa</span>
         <p class="insurance-desc">
-          Seguro viagem internacional com cobertura para despesas médicas, hospitalares e odontológicas.
-          Inclui assistência em caso de extravio de bagagem, atrasos de voo e suporte 24h em português.
+          Seguro viagem automático do cartão Visa Infinite com cobertura para despesas médicas,
+          hospitalares, odontológicas, repatriação, bagagem e mais. Válido por até 60 dias consecutivos
+          a partir do embarque. Vigência: 15/06/2025 a 15/06/2026.
         </p>
+
+        <table class="coverage-table">
+          <thead>
+            <tr>
+              <th>Cobertura</th>
+              <th>Valor</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Despesas médicas e hospitalares (DMHO)</td>
+              <td class="coverage-value">USD 175.000</td>
+            </tr>
+            <tr>
+              <td>Despesas odontológicas</td>
+              <td class="coverage-value">USD 7.500</td>
+            </tr>
+            <tr>
+              <td>Repatriação médica / Translado</td>
+              <td class="coverage-value">USD 100.000</td>
+            </tr>
+            <tr>
+              <td>Translado de corpo</td>
+              <td class="coverage-value">USD 100.000</td>
+            </tr>
+            <tr>
+              <td>Cancelamento de viagem</td>
+              <td class="coverage-value">USD 4.500</td>
+            </tr>
+            <tr>
+              <td>Perda / Roubo de bagagem</td>
+              <td class="coverage-value">USD 3.500</td>
+            </tr>
+            <tr>
+              <td>Atraso de bagagem (após 4h)</td>
+              <td class="coverage-value">USD 600</td>
+            </tr>
+            <tr>
+              <td>Prorrogação de estadia</td>
+              <td class="coverage-value">USD 2.000</td>
+            </tr>
+            <tr>
+              <td>Acompanhante em hospitalização</td>
+              <td class="coverage-value">USD 12.000</td>
+            </tr>
+          </tbody>
+        </table>
+
         <div class="insurance-features">
-          <span class="feature-tag">Despesas Médicas</span>
+          <span class="feature-tag">DMHO USD 175k</span>
+          <span class="feature-tag">Até 60 dias</span>
           <span class="feature-tag">Bagagem</span>
-          <span class="feature-tag">Assistência 24h</span>
-          <span class="feature-tag">Cobertura Internacional</span>
+          <span class="feature-tag">Repatriação</span>
+          <span class="feature-tag">COVID-19</span>
+          <span class="feature-tag">Cancelamento</span>
         </div>
-        <a class="insurance-link" href="https://drive.google.com/file/d/1HCJaMPkFQDJ4O0ttengE83g2yhb8oQle/view?usp=drive_link" target="_blank" rel="noopener">
-          Ver apólice
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        </a>
+
+        <div class="alert-box alert-warning">
+          <span>&#x26A0;&#xFE0F;</span>
+          <span>A apólice <strong>não menciona explicitamente</strong> cobertura para esportes de aventura (rafting, tirolesa, rapel). Consulte as Condições Gerais ou ligue para a central antes da viagem para confirmar.</span>
+        </div>
+
+        <div class="contact-box">
+          <div class="contact-box-title">&#x1F4DE; Central de Assistência — AIG / Visa</div>
+          <div class="contact-item">
+            <span class="label">EUA/Canadá:</span>
+            <span>+1 800 396 9665 (gratuito, 24h) — opção 1 Português, opção 3 Benefícios</span>
+          </div>
+          <div class="contact-item">
+            <span class="label">Internacional:</span>
+            <span>+1 303 967 1098 (a cobrar, 24h)</span>
+          </div>
+          <div class="contact-item">
+            <span class="label">Brasil:</span>
+            <span>0800 891 3679 (24h em português)</span>
+          </div>
+          <div class="contact-item">
+            <span class="label">E-mail:</span>
+            <span><a href="mailto:benefits@ap-visa.com">benefits@ap-visa.com</a></span>
+          </div>
+          <div class="contact-item">
+            <span class="label">Sinistros:</span>
+            <span><a href="mailto:visa_iemsclaims@axa-assistance.us">visa_iemsclaims@axa-assistance.us</a></span>
+          </div>
+        </div>
+
+        <div class="insurance-links">
+          <a class="insurance-link" href="https://drive.google.com/file/d/1HCJaMPkFQDJ4O0ttengE83g2yhb8oQle/view?usp=drive_link" target="_blank" rel="noopener">
+            Ver apólice
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+          <a class="insurance-link" href="https://www.visa.com.br/portaldebeneficos" target="_blank" rel="noopener" style="background: var(--canopy);">
+            Portal Visa
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+        </div>
       </div>
     </div>
 
@@ -443,25 +667,82 @@ body {
       <div class="insurance-icon-bar">
         <div class="insurance-emoji">🚗</div>
         <div>
-          <div class="insurance-type">Cobertura Veicular</div>
-          <div class="insurance-name">Seguro do Veículo Alugado</div>
+          <div class="insurance-type">Benefício Cartão Visa</div>
+          <div class="insurance-name">Seguro de Veículos de Locadora</div>
         </div>
       </div>
       <div class="insurance-body">
+        <span class="provider-badge">AIG Seguros do Brasil &middot; Visa</span>
         <p class="insurance-desc">
-          Seguro complementar do veículo alugado com cobertura da locadora. Protege contra danos ao
-          veículo, terceiros e roubo durante todo o período de locação na Costa Rica.
+          Cobertura automática do cartão Visa para veículos alugados. Para ter direito ao benefício,
+          é necessário pagar a locação integralmente com o cartão Visa e <strong>recusar o seguro
+          CDW/LDW oferecido pela locadora</strong>. Cobertura válida por até 31 dias consecutivos.
         </p>
+
+        <table class="coverage-table">
+          <thead>
+            <tr>
+              <th>Cobertura</th>
+              <th>Signature</th>
+              <th>Infinite</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Danos por colisão e avarias (CDW)</td>
+              <td class="coverage-value">USD 90.000</td>
+              <td class="coverage-value">USD 90.000</td>
+            </tr>
+            <tr>
+              <td>Roubo / Furto de bens no veículo</td>
+              <td class="coverage-value">USD 303</td>
+              <td class="coverage-value">USD 303</td>
+            </tr>
+          </tbody>
+        </table>
+
         <div class="insurance-features">
-          <span class="feature-tag">Danos ao Veículo</span>
-          <span class="feature-tag">Terceiros</span>
-          <span class="feature-tag">Roubo</span>
-          <span class="feature-tag">Cobertura Locadora</span>
+          <span class="feature-tag">CDW — Collision Damage Waiver</span>
+          <span class="feature-tag">Roubo / Furto</span>
+          <span class="feature-tag">Até 31 dias</span>
+          <span class="feature-tag">Viagens Internacionais</span>
         </div>
-        <a class="insurance-link" href="https://drive.google.com/file/d/1uEshMUo4X44v7IpjOxFq8i-z8ajg66Ee/view?usp=drive_link" target="_blank" rel="noopener">
-          Ver apólice
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        </a>
+
+        <div class="alert-box alert-warning">
+          <span>&#x26A0;&#xFE0F;</span>
+          <span>Este seguro <strong>não cobre danos a terceiros</strong>. Para cobertura de terceiros, contrate separadamente junto à locadora.</span>
+        </div>
+
+        <div class="contact-box">
+          <div class="contact-box-title">&#x1F4DE; Central de Assistência — Visa</div>
+          <div class="contact-item">
+            <span class="label">EUA/Canadá:</span>
+            <span>+1 800 396 9665 (gratuito) — opção 1 Português, opção 3 Benefícios</span>
+          </div>
+          <div class="contact-item">
+            <span class="label">Internacional:</span>
+            <span>+1 303 967 1098 (a cobrar)</span>
+          </div>
+          <div class="contact-item">
+            <span class="label">Brasil:</span>
+            <span>0800 891 3679</span>
+          </div>
+          <div class="contact-item">
+            <span class="label">E-mail:</span>
+            <a href="mailto:benefits@ap-visa.com">benefits@ap-visa.com</a>
+          </div>
+        </div>
+
+        <div class="insurance-links">
+          <a class="insurance-link" href="https://drive.google.com/file/d/1uEshMUo4X44v7IpjOxFq8i-z8ajg66Ee/view?usp=drive_link" target="_blank" rel="noopener">
+            Ver apólice
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+          <a class="insurance-link" href="https://visa.com.br/portaldebeneficos" target="_blank" rel="noopener" style="background: var(--canopy);">
+            Portal Visa
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+        </div>
       </div>
     </div>
 
@@ -479,10 +760,27 @@ body {
     <h3>Antes de viajar</h3>
     <ul>
       <li>Salve os documentos das apólices no celular para acesso offline</li>
-      <li>Anote os telefones de emergência das seguradoras em local de fácil acesso</li>
-      <li>Verifique se o cartão de crédito utilizado oferece cobertura adicional de viagem</li>
+      <li>Anote o telefone da Visa para o exterior: <strong>+1 303 967 1098</strong></li>
+      <li>Ligue para a central e confirme se o seguro viagem cobre rafting e tirolesa</li>
       <li>Leve cópias impressas das apólices na bagagem de mão</li>
-      <li>Confira se a cobertura do seguro viagem inclui atividades de aventura (rafting, tirolesa, etc.)</li>
+    </ul>
+  </div>
+
+  <div class="tips-box fade-in" style="margin-top: 16px; border-left-color: var(--lava);">
+    <h3>Na locadora</h3>
+    <ul>
+      <li>Pague o aluguel integralmente com o cartão Visa (Signature ou Infinite)</li>
+      <li><strong>Recuse o seguro CDW/LDW da locadora</strong> — o cartão já cobre</li>
+      <li>Considere contratar apenas a cobertura de terceiros (SLI), que o cartão não inclui</li>
+    </ul>
+  </div>
+
+  <div class="tips-box fade-in" style="margin-top: 16px; border-left-color: var(--ocean);">
+    <h3>Em caso de sinistro</h3>
+    <ul>
+      <li>Ligue para a central Visa o mais rápido possível: +1 303 967 1098 (internacional a cobrar)</li>
+      <li>Registre um boletim de ocorrência local se houver roubo ou acidente</li>
+      <li>Tire fotos de todos os danos e guarde todos os recibos</li>
     </ul>
   </div>
 </section>
