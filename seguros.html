@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<title>Seguros — Costa Rica 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --jungle: #1a3a2a;
+  --jungle-light: #2d5a3f;
+  --canopy: #3d7a5a;
+  --leaf: #5ca87a;
+  --sand: #f5e6c8;
+  --sand-light: #faf3e6;
+  --sand-dark: #e8d4a8;
+  --lava: #e85d3a;
+  --lava-dark: #c44a2d;
+  --ocean: #2a7ab5;
+  --ocean-light: #3d9ad8;
+  --sky: #87ceeb;
+  --gold: #d4a843;
+  --white: #fefdfb;
+  --text: #2a2520;
+  --text-muted: #6b6560;
+  --text-light: #9a9590;
+  --shadow-sm: 0 1px 3px rgba(26,58,42,0.08);
+  --shadow-md: 0 4px 16px rgba(26,58,42,0.1);
+  --shadow-lg: 0 12px 40px rgba(26,58,42,0.15);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --radius-xs: 6px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text);
+  background: var(--sand-light);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── HEADER ─── */
+.page-header {
+  background:
+    linear-gradient(175deg, rgba(26,58,42,0.85) 0%, rgba(26,58,42,0.6) 60%, rgba(42,122,181,0.2) 100%),
+    url('https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1600&q=80') center/cover no-repeat;
+  padding: 100px clamp(24px, 6vw, 80px) 60px;
+  position: relative;
+}
+
+.page-header::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 120px;
+  background: linear-gradient(to top, var(--sand-light), transparent);
+}
+
+.header-content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  animation: fadeUp 0.8s ease-out;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255,255,255,0.8);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 24px;
+  padding: 6px 16px;
+  border-radius: 100px;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.15);
+  transition: all 0.3s;
+}
+
+.back-link:hover {
+  background: rgba(255,255,255,0.2);
+  color: white;
+}
+
+.page-header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.2rem, 6vw, 3.5rem);
+  font-weight: 900;
+  color: white;
+  line-height: 1.1;
+  margin-bottom: 12px;
+}
+
+.page-header p {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: rgba(255,255,255,0.75);
+  font-weight: 300;
+}
+
+/* ─── NAV BAR ─── */
+.nav-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(254,253,251,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(26,58,42,0.08);
+  padding: 0 clamp(16px, 4vw, 60px);
+  transition: box-shadow 0.3s;
+}
+
+.nav-bar.scrolled { box-shadow: var(--shadow-md); }
+
+.nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 12px 0;
+}
+
+.nav-inner::-webkit-scrollbar { display: none; }
+
+.nav-btn {
+  flex-shrink: 0;
+  border: none;
+  background: transparent;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  padding: 8px 16px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all 0.25s;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.nav-btn:hover { background: var(--sand); color: var(--jungle); }
+.nav-btn.active { background: var(--jungle); color: white; }
+
+/* ─── SECTIONS ─── */
+.section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px clamp(16px, 4vw, 40px) 40px;
+}
+
+.section-header {
+  margin-bottom: 32px;
+}
+
+.section-tag {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--lava);
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+  font-weight: 700;
+  color: var(--jungle);
+  line-height: 1.15;
+}
+
+.section-desc {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-top: 8px;
+  max-width: 600px;
+}
+
+/* ─── INSURANCE CARDS ─── */
+.insurance-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 24px;
+}
+
+.insurance-card {
+  background: white;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 2px solid rgba(26,58,42,0.06);
+  transition: all 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+
+.insurance-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-4px);
+}
+
+.insurance-icon-bar {
+  padding: 32px 28px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.insurance-emoji {
+  font-size: 2.4rem;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--sand);
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+
+.insurance-type {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--ocean);
+  margin-bottom: 4px;
+}
+
+.insurance-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--jungle);
+  line-height: 1.2;
+}
+
+.insurance-body {
+  padding: 0 28px 28px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.insurance-desc {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 20px;
+  flex: 1;
+}
+
+.insurance-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 24px;
+}
+
+.feature-tag {
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 5px 12px;
+  border-radius: 100px;
+  background: var(--sand);
+  color: var(--jungle-light);
+  white-space: nowrap;
+}
+
+.insurance-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: var(--ocean);
+  color: white;
+  text-decoration: none;
+  border-radius: 100px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  transition: all 0.3s;
+  align-self: flex-start;
+}
+
+.insurance-link:hover {
+  background: var(--ocean-light);
+  transform: translateX(4px);
+}
+
+.insurance-link svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* ─── TIPS ─── */
+.tips-box {
+  background: white;
+  border-radius: var(--radius);
+  padding: 28px 32px;
+  border-left: 4px solid var(--gold);
+  margin-top: 12px;
+}
+
+.tips-box h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--jungle);
+  margin-bottom: 16px;
+}
+
+.tips-box ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tips-box li {
+  position: relative;
+  padding-left: 20px;
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.tips-box li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+  font-weight: 700;
+  font-size: 1.2rem;
+  line-height: 1.4;
+}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease-out;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 480px) {
+  .insurance-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .insurance-icon-bar {
+    padding: 24px 20px 16px;
+  }
+
+  .insurance-body {
+    padding: 0 20px 24px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<header class="page-header">
+  <div class="header-content">
+    <a href="index.html" class="back-link">← Voltar ao roteiro</a>
+    <h1>Seguros da Viagem</h1>
+    <p>Documentos e coberturas contratadas para a viagem</p>
+  </div>
+</header>
+
+<!-- ═══ NAV ═══ -->
+<nav class="nav-bar" id="navbar">
+  <div class="nav-inner">
+    <button class="nav-btn active" data-section="seguros" onclick="navigateTo('#seguros')">Seguros</button>
+    <button class="nav-btn" data-section="dicas" onclick="navigateTo('#dicas')">Dicas</button>
+    <a class="nav-btn" href="index.html">📅 Roteiro</a>
+  </div>
+</nav>
+
+<!-- ═══ SEGUROS ═══ -->
+<section class="section" id="seguros">
+  <div class="section-header fade-in">
+    <span class="section-tag">Proteção</span>
+    <h2 class="section-title">Seguros Contratados</h2>
+    <p class="section-desc">Coberturas contratadas para garantir tranquilidade durante toda a viagem.</p>
+  </div>
+
+  <div class="insurance-grid">
+
+    <!-- Seguro Viagem -->
+    <div class="insurance-card fade-in">
+      <div class="insurance-icon-bar">
+        <div class="insurance-emoji">🛡️</div>
+        <div>
+          <div class="insurance-type">Cobertura Pessoal</div>
+          <div class="insurance-name">Seguro Viagem</div>
+        </div>
+      </div>
+      <div class="insurance-body">
+        <p class="insurance-desc">
+          Seguro viagem internacional com cobertura para despesas médicas, hospitalares e odontológicas.
+          Inclui assistência em caso de extravio de bagagem, atrasos de voo e suporte 24h em português.
+        </p>
+        <div class="insurance-features">
+          <span class="feature-tag">Despesas Médicas</span>
+          <span class="feature-tag">Bagagem</span>
+          <span class="feature-tag">Assistência 24h</span>
+          <span class="feature-tag">Cobertura Internacional</span>
+        </div>
+        <a class="insurance-link" href="https://drive.google.com/file/d/1HCJaMPkFQDJ4O0ttengE83g2yhb8oQle/view?usp=drive_link" target="_blank" rel="noopener">
+          Ver apólice
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Seguro Veículo -->
+    <div class="insurance-card fade-in">
+      <div class="insurance-icon-bar">
+        <div class="insurance-emoji">🚗</div>
+        <div>
+          <div class="insurance-type">Cobertura Veicular</div>
+          <div class="insurance-name">Seguro do Veículo Alugado</div>
+        </div>
+      </div>
+      <div class="insurance-body">
+        <p class="insurance-desc">
+          Seguro complementar do veículo alugado com cobertura da locadora. Protege contra danos ao
+          veículo, terceiros e roubo durante todo o período de locação na Costa Rica.
+        </p>
+        <div class="insurance-features">
+          <span class="feature-tag">Danos ao Veículo</span>
+          <span class="feature-tag">Terceiros</span>
+          <span class="feature-tag">Roubo</span>
+          <span class="feature-tag">Cobertura Locadora</span>
+        </div>
+        <a class="insurance-link" href="https://drive.google.com/file/d/1uEshMUo4X44v7IpjOxFq8i-z8ajg66Ee/view?usp=drive_link" target="_blank" rel="noopener">
+          Ver apólice
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ DICAS ═══ -->
+<section class="section" id="dicas">
+  <div class="section-header fade-in">
+    <span class="section-tag">Importante</span>
+    <h2 class="section-title">Dicas sobre Seguros</h2>
+  </div>
+
+  <div class="tips-box fade-in">
+    <h3>Antes de viajar</h3>
+    <ul>
+      <li>Salve os documentos das apólices no celular para acesso offline</li>
+      <li>Anote os telefones de emergência das seguradoras em local de fácil acesso</li>
+      <li>Verifique se o cartão de crédito utilizado oferece cobertura adicional de viagem</li>
+      <li>Leve cópias impressas das apólices na bagagem de mão</li>
+      <li>Confira se a cobertura do seguro viagem inclui atividades de aventura (rafting, tirolesa, etc.)</li>
+    </ul>
+  </div>
+</section>
+
+<script>
+// ─── NAVIGATION ───
+function navigateTo(selector) {
+  const el = document.querySelector(selector);
+  if (el) {
+    const navHeight = document.getElementById('navbar').offsetHeight;
+    const top = el.getBoundingClientRect().top + window.pageYOffset - navHeight - 8;
+    window.scrollTo({ top: top, behavior: 'smooth' });
+  }
+}
+
+// Navbar shadow + active section tracking
+const navbar = document.getElementById('navbar');
+const navBtns = document.querySelectorAll('.nav-btn[data-section]');
+const sectionIds = ['seguros', 'dicas'];
+
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 50);
+
+  const navHeight = navbar.offsetHeight + 20;
+  let current = '';
+  sectionIds.forEach(id => {
+    const sec = document.getElementById(id);
+    if (sec && sec.getBoundingClientRect().top <= navHeight + 80) {
+      current = id;
+    }
+  });
+  navBtns.forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.section === current);
+  });
+});
+
+// Fade-in observer
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
