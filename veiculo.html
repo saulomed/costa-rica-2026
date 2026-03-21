@@ -513,6 +513,16 @@ body {
 }
 .rental-footer a:hover { text-decoration: underline; }
 
+.rental-extras {
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: rgba(92,168,122,0.08);
+  border-radius: var(--radius-xs);
+  font-size: 0.82rem;
+  color: var(--canopy);
+  font-weight: 500;
+}
+
 /* Booking overlay/modal */
 .booking-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(26,58,42,0.6); backdrop-filter: blur(8px); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
 .booking-overlay.active { opacity: 1; pointer-events: all; }
@@ -822,54 +832,17 @@ body {
   </div>
 
   <div class="rental-grid">
-    <!-- Adobe -->
-    <div class="rental-card fade-in" data-company="Adobe Rent a Car" data-type="4x2" data-total="~US$ 472">
+    <!-- Enterprise -->
+    <div class="rental-card fade-in" data-company="Enterprise" data-type="4x2" data-total="~US$ 480">
       <div class="rental-header">
-        <h3>Adobe Rent a Car</h3>
-        <span class="rental-type type-local">Local ⭐</span>
+        <h3>Enterprise</h3>
+        <span class="rental-type type-international">Internacional</span>
       </div>
       <div class="rental-body">
-        <div class="rental-vehicles">Hyundai Tucson, Suzuki Vitara ou similar</div>
+        <div class="rental-vehicles">Suzuki Vitara, Hyundai Tucson ou similar</div>
         <div class="price-row">
           <span class="price-label">Base (8 dias)</span>
-          <span class="price-value">~US$ 320</span>
-        </div>
-        <div class="price-row">
-          <span class="price-label">PLI obrigatório</span>
-          <span class="price-value">~US$ 152</span>
-        </div>
-        <div class="price-row dispensable">
-          <span class="price-label">CDW/LDW</span>
-          <span class="price-value">~US$ 150<span class="visa-tag">Visa cobre</span></span>
-        </div>
-        <div class="price-total">
-          <div class="total-with-visa">
-            <span class="price-label">💳 Total com Visa Infinite</span>
-            <span class="price-value">~US$ 472</span>
-          </div>
-          <div class="total-without-visa">
-            <span class="price-label">Total sem Visa (CDW incluso)</span>
-            <span class="price-value">~US$ 622</span>
-          </div>
-        </div>
-      </div>
-      <div class="rental-footer">
-        <div class="rental-footer-row">📞 +506 2442-2422 · <a href="https://www.adobecar.com" target="_blank">adobecar.com</a> <button class="btn-reservar-car" onclick="toggleCarBooking(this)">Reservar</button></div>
-        <div class="rental-footer-row">📍 Calle 42, La Uruca, San José (shuttle gratuito ao aeroporto)</div>
-      </div>
-    </div>
-
-    <!-- Vamos -->
-    <div class="rental-card fade-in" data-company="Vamos Rent-A-Car" data-type="4x2" data-total="~US$ 496">
-      <div class="rental-header">
-        <h3>Vamos Rent-A-Car</h3>
-        <span class="rental-type type-local">Local ⭐</span>
-      </div>
-      <div class="rental-body">
-        <div class="rental-vehicles">Hyundai Creta, Kia Seltos ou similar</div>
-        <div class="price-row">
-          <span class="price-label">Base (8 dias)</span>
-          <span class="price-value">~US$ 360</span>
+          <span class="price-value">~US$ 344</span>
         </div>
         <div class="price-row">
           <span class="price-label">PLI obrigatório</span>
@@ -877,96 +850,22 @@ body {
         </div>
         <div class="price-row dispensable">
           <span class="price-label">CDW/LDW</span>
-          <span class="price-value">~US$ 130<span class="visa-tag">Visa cobre</span></span>
+          <span class="price-value">~US$ 104<span class="visa-tag">Visa cobre</span></span>
         </div>
         <div class="price-total">
           <div class="total-with-visa">
             <span class="price-label">💳 Total com Visa Infinite</span>
-            <span class="price-value">~US$ 496</span>
+            <span class="price-value">~US$ 480</span>
           </div>
           <div class="total-without-visa">
             <span class="price-label">Total sem Visa (CDW incluso)</span>
-            <span class="price-value">~US$ 626</span>
+            <span class="price-value">~US$ 584</span>
           </div>
         </div>
       </div>
       <div class="rental-footer">
-        <div class="rental-footer-row">📞 +506 4000-0557 · <a href="https://vamosrentacar.com" target="_blank">vamosrentacar.com</a> <button class="btn-reservar-car" onclick="toggleCarBooking(this)">Reservar</button></div>
-        <div class="rental-footer-row">📍 800m norte del Aeropuerto SJO, Alajuela (shuttle gratuito)</div>
-      </div>
-    </div>
-
-    <!-- Enterprise -->
-    <div class="rental-card fade-in" data-company="Enterprise" data-type="4x2" data-total="~US$ 510">
-      <div class="rental-header">
-        <h3>Enterprise</h3>
-        <span class="rental-type type-international">Internacional</span>
-      </div>
-      <div class="rental-body">
-        <div class="rental-vehicles">Toyota RAV4, Nissan Qashqai ou similar</div>
-        <div class="price-row">
-          <span class="price-label">Base (8 dias)</span>
-          <span class="price-value">~US$ 350</span>
-        </div>
-        <div class="price-row">
-          <span class="price-label">PLI obrigatório</span>
-          <span class="price-value">~US$ 160</span>
-        </div>
-        <div class="price-row dispensable">
-          <span class="price-label">CDW/LDW</span>
-          <span class="price-value">~US$ 160<span class="visa-tag">Visa cobre</span></span>
-        </div>
-        <div class="price-total">
-          <div class="total-with-visa">
-            <span class="price-label">💳 Total com Visa Infinite</span>
-            <span class="price-value">~US$ 510</span>
-          </div>
-          <div class="total-without-visa">
-            <span class="price-label">Total sem Visa (CDW incluso)</span>
-            <span class="price-value">~US$ 670</span>
-          </div>
-        </div>
-      </div>
-      <div class="rental-footer">
-        <div class="rental-footer-row">📞 SJO Airport · <a href="https://www.enterprise.com" target="_blank">enterprise.com</a> <button class="btn-reservar-car" onclick="toggleCarBooking(this)">Reservar</button></div>
+        <div class="rental-footer-row">📞 +506 2242-7800 · <a href="https://www.enterprise.cr" target="_blank">enterprise.cr</a> <button class="btn-reservar-car" onclick="toggleCarBooking(this)">Reservar</button></div>
         <div class="rental-footer-row">📍 Aeroporto Juan Santamaría, Terminal Principal, Alajuela</div>
-      </div>
-    </div>
-
-    <!-- Hertz -->
-    <div class="rental-card fade-in" data-company="Hertz" data-type="4x2" data-total="~US$ 560">
-      <div class="rental-header">
-        <h3>Hertz</h3>
-        <span class="rental-type type-international">Internacional</span>
-      </div>
-      <div class="rental-body">
-        <div class="rental-vehicles">Hyundai Tucson, Kia Sportage ou similar</div>
-        <div class="price-row">
-          <span class="price-label">Base (8 dias)</span>
-          <span class="price-value">~US$ 400</span>
-        </div>
-        <div class="price-row">
-          <span class="price-label">PLI obrigatório</span>
-          <span class="price-value">~US$ 160</span>
-        </div>
-        <div class="price-row dispensable">
-          <span class="price-label">CDW/LDW</span>
-          <span class="price-value">~US$ 170<span class="visa-tag">Visa cobre</span></span>
-        </div>
-        <div class="price-total">
-          <div class="total-with-visa">
-            <span class="price-label">💳 Total com Visa Infinite</span>
-            <span class="price-value">~US$ 560</span>
-          </div>
-          <div class="total-without-visa">
-            <span class="price-label">Total sem Visa (CDW incluso)</span>
-            <span class="price-value">~US$ 730</span>
-          </div>
-        </div>
-      </div>
-      <div class="rental-footer">
-        <div class="rental-footer-row">📞 +506 4036-9513 · <a href="https://www.hertz.com" target="_blank">hertz.com</a> <button class="btn-reservar-car" onclick="toggleCarBooking(this)">Reservar</button></div>
-        <div class="rental-footer-row">📍 Aeroporto Juan Santamaría, Terminal de Llegadas, Alajuela</div>
       </div>
     </div>
 
@@ -977,7 +876,7 @@ body {
         <span class="rental-type type-international">Internacional</span>
       </div>
       <div class="rental-body">
-        <div class="rental-vehicles">Suzuki Vitara, Hyundai Creta ou similar</div>
+        <div class="rental-vehicles">Hyundai Tucson, Mitsubishi ASX ou similar</div>
         <div class="price-row">
           <span class="price-label">Base (8 dias)</span>
           <span class="price-value">~US$ 330</span>
@@ -1002,82 +901,84 @@ body {
         </div>
       </div>
       <div class="rental-footer">
-        <div class="rental-footer-row">📞 +506 4000-7498 · <a href="https://www.sixt.com" target="_blank">sixt.com</a> <button class="btn-reservar-car" onclick="toggleCarBooking(this)">Reservar</button></div>
-        <div class="rental-footer-row">📍 Aeroporto Juan Santamaría, Terminal de Llegadas, Alajuela</div>
+        <div class="rental-footer-row">📞 +506 2431-3803 · <a href="https://www.sixt.com" target="_blank">sixt.com</a> <button class="btn-reservar-car" onclick="toggleCarBooking(this)">Reservar</button></div>
+        <div class="rental-footer-row">📍 Oficentro Plaza Aeropuerto C3, Alajuela (próximo ao SJO)</div>
       </div>
     </div>
 
-    <!-- Avis -->
-    <div class="rental-card fade-in" data-company="Avis" data-type="4x2" data-total="~US$ 540">
+    <!-- Vamos -->
+    <div class="rental-card fade-in" data-company="Vamos Rent-A-Car" data-type="4x2" data-total="~US$ 591">
       <div class="rental-header">
-        <h3>Avis</h3>
-        <span class="rental-type type-international">Internacional</span>
+        <h3>Vamos Rent-A-Car</h3>
+        <span class="rental-type type-local">Local ⭐</span>
       </div>
       <div class="rental-body">
-        <div class="rental-vehicles">Hyundai Tucson, Nissan Kicks ou similar</div>
+        <div class="rental-vehicles">Compact Elite SUV 4x4 (todos os SUVs são 4x4)</div>
         <div class="price-row">
           <span class="price-label">Base (8 dias)</span>
-          <span class="price-value">~US$ 380</span>
+          <span class="price-value">~US$ 463</span>
         </div>
         <div class="price-row">
-          <span class="price-label">PLI obrigatório</span>
-          <span class="price-value">~US$ 160</span>
+          <span class="price-label">TPL obrigatório</span>
+          <span class="price-value">~US$ 128</span>
         </div>
         <div class="price-row dispensable">
-          <span class="price-label">CDW/LDW</span>
-          <span class="price-value">~US$ 165<span class="visa-tag">Visa cobre</span></span>
+          <span class="price-label">CDW básico</span>
+          <span class="price-value">~US$ 72<span class="visa-tag">Visa cobre</span></span>
         </div>
         <div class="price-total">
           <div class="total-with-visa">
             <span class="price-label">💳 Total com Visa Infinite</span>
-            <span class="price-value">~US$ 540</span>
+            <span class="price-value">~US$ 591</span>
           </div>
           <div class="total-without-visa">
             <span class="price-label">Total sem Visa (CDW incluso)</span>
-            <span class="price-value">~US$ 705</span>
+            <span class="price-value">~US$ 663</span>
           </div>
         </div>
+        <div class="rental-extras">✅ Motorista adicional, celular, cooler, cadeirinha e rack grátis</div>
       </div>
       <div class="rental-footer">
-        <div class="rental-footer-row">📞 +506 2293-2222 · <a href="https://www.avis.co.cr" target="_blank">avis.co.cr</a> <button class="btn-reservar-car" onclick="toggleCarBooking(this)">Reservar</button></div>
-        <div class="rental-footer-row">📍 Aeroporto Juan Santamaría, Terminal de Llegadas, Alajuela</div>
+        <div class="rental-footer-row">📞 +506 4000-0557 · <a href="https://vamosrentacar.com" target="_blank">vamosrentacar.com</a> <button class="btn-reservar-car" onclick="toggleCarBooking(this)">Reservar</button></div>
+        <div class="rental-footer-row">📍 Blvd Aeropuerto, Rio Segundo, Alajuela (shuttle gratuito)</div>
       </div>
     </div>
 
-    <!-- Budget -->
-    <div class="rental-card fade-in" data-company="Budget" data-type="4x2" data-total="~US$ 525">
+    <!-- Adobe -->
+    <div class="rental-card fade-in" data-company="Adobe Rent a Car" data-type="4x2" data-total="~US$ 668">
       <div class="rental-header">
-        <h3>Budget</h3>
-        <span class="rental-type type-international">Internacional</span>
+        <h3>Adobe Rent a Car</h3>
+        <span class="rental-type type-local">Local ⭐</span>
       </div>
       <div class="rental-body">
-        <div class="rental-vehicles">Kia Seltos, Hyundai Creta ou similar</div>
+        <div class="rental-vehicles">Hyundai Creta 2WD, Suzuki Vitara ou similar</div>
         <div class="price-row">
           <span class="price-label">Base (8 dias)</span>
-          <span class="price-value">~US$ 370</span>
+          <span class="price-value">~US$ 560</span>
         </div>
         <div class="price-row">
           <span class="price-label">PLI obrigatório</span>
-          <span class="price-value">~US$ 155</span>
+          <span class="price-value">~US$ 108</span>
         </div>
         <div class="price-row dispensable">
           <span class="price-label">CDW/LDW</span>
-          <span class="price-value">~US$ 155<span class="visa-tag">Visa cobre</span></span>
+          <span class="price-value">~US$ 136<span class="visa-tag">Visa cobre</span></span>
         </div>
         <div class="price-total">
           <div class="total-with-visa">
             <span class="price-label">💳 Total com Visa Infinite</span>
-            <span class="price-value">~US$ 525</span>
+            <span class="price-value">~US$ 668</span>
           </div>
           <div class="total-without-visa">
             <span class="price-label">Total sem Visa (CDW incluso)</span>
-            <span class="price-value">~US$ 680</span>
+            <span class="price-value">~US$ 804</span>
           </div>
         </div>
+        <div class="rental-extras">💡 Use código "PROMO" ou links de afiliados para 10% off na base</div>
       </div>
       <div class="rental-footer">
-        <div class="rental-footer-row">📞 +506 2436-2000 · <a href="https://www.budget.co.cr" target="_blank">budget.co.cr</a> <button class="btn-reservar-car" onclick="toggleCarBooking(this)">Reservar</button></div>
-        <div class="rental-footer-row">📍 Aeroporto Juan Santamaría, Terminal de Llegadas, Alajuela</div>
+        <div class="rental-footer-row">📞 +506 2442-2422 · <a href="https://www.adobecar.com" target="_blank">adobecar.com</a> <button class="btn-reservar-car" onclick="toggleCarBooking(this)">Reservar</button></div>
+        <div class="rental-footer-row">📍 Rio Segundo, Alajuela — 5 min do SJO (shuttle gratuito)</div>
       </div>
     </div>
   </div>
@@ -1100,91 +1001,17 @@ body {
   </div>
 
   <div class="rental-grid">
-    <!-- Adobe 4x4 -->
-    <div class="rental-card fade-in" data-company="Adobe Rent a Car" data-type="4x4" data-total="~US$ 562">
-      <div class="rental-header">
-        <h3>Adobe Rent a Car</h3>
-        <span class="rental-type type-local">Local ⭐</span>
-      </div>
-      <div class="rental-body">
-        <div class="rental-vehicles">Mitsubishi ASX 4x4, Hyundai Tucson 4WD ou similar</div>
-        <div class="price-row">
-          <span class="price-label">Base (8 dias)</span>
-          <span class="price-value">~US$ 410</span>
-        </div>
-        <div class="price-row">
-          <span class="price-label">PLI obrigatório</span>
-          <span class="price-value">~US$ 152</span>
-        </div>
-        <div class="price-row dispensable">
-          <span class="price-label">CDW/LDW</span>
-          <span class="price-value">~US$ 176<span class="visa-tag">Visa cobre</span></span>
-        </div>
-        <div class="price-total">
-          <div class="total-with-visa">
-            <span class="price-label">💳 Total com Visa Infinite</span>
-            <span class="price-value">~US$ 562</span>
-          </div>
-          <div class="total-without-visa">
-            <span class="price-label">Total sem Visa (CDW incluso)</span>
-            <span class="price-value">~US$ 738</span>
-          </div>
-        </div>
-      </div>
-      <div class="rental-footer">
-        <div class="rental-footer-row">📞 +506 2442-2422 · <a href="https://www.adobecar.com" target="_blank">adobecar.com</a> <button class="btn-reservar-car" onclick="toggleCarBooking(this)">Reservar</button></div>
-        <div class="rental-footer-row">📍 Calle 42, La Uruca, San José (shuttle gratuito ao aeroporto)</div>
-      </div>
-    </div>
-
-    <!-- Vamos 4x4 -->
-    <div class="rental-card fade-in" data-company="Vamos Rent-A-Car" data-type="4x4" data-total="~US$ 706">
-      <div class="rental-header">
-        <h3>Vamos Rent-A-Car</h3>
-        <span class="rental-type type-local">Local ⭐</span>
-      </div>
-      <div class="rental-body">
-        <div class="rental-vehicles">Hyundai Tucson 4WD, Mitsubishi Outlander ou similar</div>
-        <div class="price-row">
-          <span class="price-label">Base (8 dias)</span>
-          <span class="price-value">~US$ 570</span>
-        </div>
-        <div class="price-row">
-          <span class="price-label">PLI obrigatório</span>
-          <span class="price-value">~US$ 136</span>
-        </div>
-        <div class="price-row dispensable">
-          <span class="price-label">CDW/LDW</span>
-          <span class="price-value">~US$ 168<span class="visa-tag">Visa cobre</span></span>
-        </div>
-        <div class="price-total">
-          <div class="total-with-visa">
-            <span class="price-label">💳 Total com Visa Infinite</span>
-            <span class="price-value">~US$ 706</span>
-          </div>
-          <div class="total-without-visa">
-            <span class="price-label">Total sem Visa (CDW incluso)</span>
-            <span class="price-value">~US$ 874</span>
-          </div>
-        </div>
-      </div>
-      <div class="rental-footer">
-        <div class="rental-footer-row">📞 +506 4000-0557 · <a href="https://vamosrentacar.com" target="_blank">vamosrentacar.com</a> <button class="btn-reservar-car" onclick="toggleCarBooking(this)">Reservar</button></div>
-        <div class="rental-footer-row">📍 800m norte del Aeropuerto SJO, Alajuela (shuttle gratuito)</div>
-      </div>
-    </div>
-
     <!-- Enterprise 4x4 -->
-    <div class="rental-card fade-in" data-company="Enterprise" data-type="4x4" data-total="~US$ 660">
+    <div class="rental-card fade-in" data-company="Enterprise" data-type="4x4" data-total="~US$ 600">
       <div class="rental-header">
         <h3>Enterprise</h3>
         <span class="rental-type type-international">Internacional</span>
       </div>
       <div class="rental-body">
-        <div class="rental-vehicles">Toyota RAV4 4WD, Nissan X-Trail ou similar</div>
+        <div class="rental-vehicles">Toyota Fortuner, Toyota RAV4 4WD ou similar</div>
         <div class="price-row">
           <span class="price-label">Base (8 dias)</span>
-          <span class="price-value">~US$ 500</span>
+          <span class="price-value">~US$ 440</span>
         </div>
         <div class="price-row">
           <span class="price-label">PLI obrigatório</span>
@@ -1192,73 +1019,112 @@ body {
         </div>
         <div class="price-row dispensable">
           <span class="price-label">CDW/LDW</span>
-          <span class="price-value">~US$ 180<span class="visa-tag">Visa cobre</span></span>
+          <span class="price-value">~US$ 120<span class="visa-tag">Visa cobre</span></span>
         </div>
         <div class="price-total">
           <div class="total-with-visa">
             <span class="price-label">💳 Total com Visa Infinite</span>
-            <span class="price-value">~US$ 660</span>
+            <span class="price-value">~US$ 600</span>
           </div>
           <div class="total-without-visa">
             <span class="price-label">Total sem Visa (CDW incluso)</span>
-            <span class="price-value">~US$ 840</span>
+            <span class="price-value">~US$ 720</span>
           </div>
         </div>
       </div>
       <div class="rental-footer">
-        <div class="rental-footer-row">📞 SJO Airport · <a href="https://www.enterprise.com" target="_blank">enterprise.com</a> <button class="btn-reservar-car" onclick="toggleCarBooking(this)">Reservar</button></div>
+        <div class="rental-footer-row">📞 +506 2242-7800 · <a href="https://www.enterprise.cr" target="_blank">enterprise.cr</a> <button class="btn-reservar-car" onclick="toggleCarBooking(this)">Reservar</button></div>
         <div class="rental-footer-row">📍 Aeroporto Juan Santamaría, Terminal Principal, Alajuela</div>
       </div>
     </div>
 
-    <!-- Hertz 4x4 -->
-    <div class="rental-card fade-in" data-company="Hertz" data-type="4x4" data-total="~US$ 710">
+    <!-- Vamos 4x4 — Promo Especial -->
+    <div class="rental-card fade-in" data-company="Vamos Rent-A-Car" data-type="4x4" data-total="~US$ 560">
       <div class="rental-header">
-        <h3>Hertz</h3>
-        <span class="rental-type type-international">Internacional</span>
+        <h3>Vamos Rent-A-Car</h3>
+        <span class="rental-type type-local">Local ⭐</span>
       </div>
       <div class="rental-body">
-        <div class="rental-vehicles">Mitsubishi Montero Sport, Toyota Fortuner ou similar</div>
+        <div class="rental-vehicles">Mitsubishi Montero, Toyota Prado 4x4 (promo especial!)</div>
         <div class="price-row">
-          <span class="price-label">Base (8 dias)</span>
-          <span class="price-value">~US$ 550</span>
+          <span class="price-label">Base (8 dias) 🔥 promo</span>
+          <span class="price-value">~US$ 416</span>
         </div>
         <div class="price-row">
-          <span class="price-label">PLI obrigatório</span>
-          <span class="price-value">~US$ 160</span>
+          <span class="price-label">TPL obrigatório</span>
+          <span class="price-value">~US$ 144</span>
         </div>
         <div class="price-row dispensable">
-          <span class="price-label">CDW/LDW</span>
-          <span class="price-value">~US$ 190<span class="visa-tag">Visa cobre</span></span>
+          <span class="price-label">CDW básico</span>
+          <span class="price-value">~US$ 72<span class="visa-tag">Visa cobre</span></span>
         </div>
         <div class="price-total">
           <div class="total-with-visa">
             <span class="price-label">💳 Total com Visa Infinite</span>
-            <span class="price-value">~US$ 710</span>
+            <span class="price-value">~US$ 560</span>
           </div>
           <div class="total-without-visa">
             <span class="price-label">Total sem Visa (CDW incluso)</span>
-            <span class="price-value">~US$ 900</span>
+            <span class="price-value">~US$ 632</span>
           </div>
         </div>
+        <div class="rental-extras">✅ Motorista adicional, celular, cooler, cadeirinha e rack grátis</div>
       </div>
       <div class="rental-footer">
-        <div class="rental-footer-row">📞 +506 4036-9513 · <a href="https://www.hertz.com" target="_blank">hertz.com</a> <button class="btn-reservar-car" onclick="toggleCarBooking(this)">Reservar</button></div>
-        <div class="rental-footer-row">📍 Aeroporto Juan Santamaría, Terminal de Llegadas, Alajuela</div>
+        <div class="rental-footer-row">📞 +506 4000-0557 · <a href="https://vamosrentacar.com" target="_blank">vamosrentacar.com</a> <button class="btn-reservar-car" onclick="toggleCarBooking(this)">Reservar</button></div>
+        <div class="rental-footer-row">📍 Blvd Aeropuerto, Rio Segundo, Alajuela (shuttle gratuito)</div>
+      </div>
+    </div>
+
+    <!-- Vamos 4x4 — Full Size regular -->
+    <div class="rental-card fade-in" data-company="Vamos Rent-A-Car" data-type="4x4" data-total="~US$ 747">
+      <div class="rental-header">
+        <h3>Vamos Rent-A-Car</h3>
+        <span class="rental-type type-local">Local ⭐</span>
+      </div>
+      <div class="rental-body">
+        <div class="rental-vehicles">Toyota RAV4, Mitsubishi Outlander 4x4 ou similar</div>
+        <div class="price-row">
+          <span class="price-label">Base (8 dias)</span>
+          <span class="price-value">~US$ 619</span>
+        </div>
+        <div class="price-row">
+          <span class="price-label">TPL obrigatório</span>
+          <span class="price-value">~US$ 128</span>
+        </div>
+        <div class="price-row dispensable">
+          <span class="price-label">CDW básico</span>
+          <span class="price-value">~US$ 72<span class="visa-tag">Visa cobre</span></span>
+        </div>
+        <div class="price-total">
+          <div class="total-with-visa">
+            <span class="price-label">💳 Total com Visa Infinite</span>
+            <span class="price-value">~US$ 747</span>
+          </div>
+          <div class="total-without-visa">
+            <span class="price-label">Total sem Visa (CDW incluso)</span>
+            <span class="price-value">~US$ 819</span>
+          </div>
+        </div>
+        <div class="rental-extras">✅ Motorista adicional, celular, cooler, cadeirinha e rack grátis</div>
+      </div>
+      <div class="rental-footer">
+        <div class="rental-footer-row">📞 +506 4000-0557 · <a href="https://vamosrentacar.com" target="_blank">vamosrentacar.com</a> <button class="btn-reservar-car" onclick="toggleCarBooking(this)">Reservar</button></div>
+        <div class="rental-footer-row">📍 Blvd Aeropuerto, Rio Segundo, Alajuela (shuttle gratuito)</div>
       </div>
     </div>
 
     <!-- SIXT 4x4 -->
-    <div class="rental-card fade-in" data-company="SIXT" data-type="4x4" data-total="~US$ 632">
+    <div class="rental-card fade-in" data-company="SIXT" data-type="4x4" data-total="~US$ 712">
       <div class="rental-header">
         <h3>SIXT</h3>
         <span class="rental-type type-international">Internacional</span>
       </div>
       <div class="rental-body">
-        <div class="rental-vehicles">Suzuki Grand Vitara, Hyundai Tucson 4WD ou similar</div>
+        <div class="rental-vehicles">Mitsubishi Montero Sport 4WD, Chevrolet Trailblazer ou similar</div>
         <div class="price-row">
           <span class="price-label">Base (8 dias)</span>
-          <span class="price-value">~US$ 480</span>
+          <span class="price-value">~US$ 560</span>
         </div>
         <div class="price-row">
           <span class="price-label">PLI obrigatório</span>
@@ -1271,91 +1137,55 @@ body {
         <div class="price-total">
           <div class="total-with-visa">
             <span class="price-label">💳 Total com Visa Infinite</span>
-            <span class="price-value">~US$ 632</span>
+            <span class="price-value">~US$ 712</span>
           </div>
           <div class="total-without-visa">
             <span class="price-label">Total sem Visa (CDW incluso)</span>
-            <span class="price-value">~US$ 800</span>
+            <span class="price-value">~US$ 880</span>
           </div>
         </div>
       </div>
       <div class="rental-footer">
-        <div class="rental-footer-row">📞 +506 4000-7498 · <a href="https://www.sixt.com" target="_blank">sixt.com</a> <button class="btn-reservar-car" onclick="toggleCarBooking(this)">Reservar</button></div>
-        <div class="rental-footer-row">📍 Aeroporto Juan Santamaría, Terminal de Llegadas, Alajuela</div>
+        <div class="rental-footer-row">📞 +506 2431-3803 · <a href="https://www.sixt.com" target="_blank">sixt.com</a> <button class="btn-reservar-car" onclick="toggleCarBooking(this)">Reservar</button></div>
+        <div class="rental-footer-row">📍 Oficentro Plaza Aeropuerto C3, Alajuela (próximo ao SJO)</div>
       </div>
     </div>
 
-    <!-- Avis 4x4 -->
-    <div class="rental-card fade-in" data-company="Avis" data-type="4x4" data-total="~US$ 680">
+    <!-- Adobe 4x4 -->
+    <div class="rental-card fade-in" data-company="Adobe Rent a Car" data-type="4x4" data-total="~US$ 828">
       <div class="rental-header">
-        <h3>Avis</h3>
-        <span class="rental-type type-international">Internacional</span>
+        <h3>Adobe Rent a Car</h3>
+        <span class="rental-type type-local">Local ⭐</span>
       </div>
       <div class="rental-body">
-        <div class="rental-vehicles">Toyota RAV4 4WD, Hyundai Tucson 4WD ou similar</div>
+        <div class="rental-vehicles">Hyundai Tucson 4WD, Mitsubishi ASX 4x4 ou similar</div>
         <div class="price-row">
           <span class="price-label">Base (8 dias)</span>
-          <span class="price-value">~US$ 520</span>
+          <span class="price-value">~US$ 720</span>
         </div>
         <div class="price-row">
           <span class="price-label">PLI obrigatório</span>
-          <span class="price-value">~US$ 160</span>
+          <span class="price-value">~US$ 108</span>
         </div>
         <div class="price-row dispensable">
           <span class="price-label">CDW/LDW</span>
-          <span class="price-value">~US$ 185<span class="visa-tag">Visa cobre</span></span>
+          <span class="price-value">~US$ 162<span class="visa-tag">Visa cobre</span></span>
         </div>
         <div class="price-total">
           <div class="total-with-visa">
             <span class="price-label">💳 Total com Visa Infinite</span>
-            <span class="price-value">~US$ 680</span>
+            <span class="price-value">~US$ 828</span>
           </div>
           <div class="total-without-visa">
             <span class="price-label">Total sem Visa (CDW incluso)</span>
-            <span class="price-value">~US$ 865</span>
+            <span class="price-value">~US$ 990</span>
           </div>
         </div>
+        <div class="rental-extras">💡 Use código "PROMO" ou links de afiliados para 10% off na base</div>
       </div>
       <div class="rental-footer">
-        <div class="rental-footer-row">📞 +506 2293-2222 · <a href="https://www.avis.co.cr" target="_blank">avis.co.cr</a> <button class="btn-reservar-car" onclick="toggleCarBooking(this)">Reservar</button></div>
-        <div class="rental-footer-row">📍 Aeroporto Juan Santamaría, Terminal de Llegadas, Alajuela</div>
-      </div>
-    </div>
-
-    <!-- Budget 4x4 -->
-    <div class="rental-card fade-in" data-company="Budget" data-type="4x4" data-total="~US$ 655">
-      <div class="rental-header">
-        <h3>Budget</h3>
-        <span class="rental-type type-international">Internacional</span>
-      </div>
-      <div class="rental-body">
-        <div class="rental-vehicles">Mitsubishi ASX 4WD, Kia Sportage 4WD ou similar</div>
-        <div class="price-row">
-          <span class="price-label">Base (8 dias)</span>
-          <span class="price-value">~US$ 500</span>
-        </div>
-        <div class="price-row">
-          <span class="price-label">PLI obrigatório</span>
-          <span class="price-value">~US$ 155</span>
-        </div>
-        <div class="price-row dispensable">
-          <span class="price-label">CDW/LDW</span>
-          <span class="price-value">~US$ 175<span class="visa-tag">Visa cobre</span></span>
-        </div>
-        <div class="price-total">
-          <div class="total-with-visa">
-            <span class="price-label">💳 Total com Visa Infinite</span>
-            <span class="price-value">~US$ 655</span>
-          </div>
-          <div class="total-without-visa">
-            <span class="price-label">Total sem Visa (CDW incluso)</span>
-            <span class="price-value">~US$ 830</span>
-          </div>
-        </div>
-      </div>
-      <div class="rental-footer">
-        <div class="rental-footer-row">📞 +506 2436-2000 · <a href="https://www.budget.co.cr" target="_blank">budget.co.cr</a> <button class="btn-reservar-car" onclick="toggleCarBooking(this)">Reservar</button></div>
-        <div class="rental-footer-row">📍 Aeroporto Juan Santamaría, Terminal de Llegadas, Alajuela</div>
+        <div class="rental-footer-row">📞 +506 2442-2422 · <a href="https://www.adobecar.com" target="_blank">adobecar.com</a> <button class="btn-reservar-car" onclick="toggleCarBooking(this)">Reservar</button></div>
+        <div class="rental-footer-row">📍 Rio Segundo, Alajuela — 5 min do SJO (shuttle gratuito)</div>
       </div>
     </div>
   </div>
@@ -1441,7 +1271,7 @@ body {
 <footer class="footer">
   <p class="pura-vida">🌴 Pura Vida!</p>
   <p>Saulo & Lorena · Costa Rica · Abril 2026</p>
-  <p style="margin-top:8px;font-size:0.75rem;color:rgba(255,255,255,0.35);">Valores aproximados pesquisados em Mar/2026. Confirme diretamente com as locadoras.</p>
+  <p style="margin-top:8px;font-size:0.75rem;color:rgba(255,255,255,0.35);">Valores aproximados pesquisados em Mar/2026 via sites oficiais, Rentcars e agregadores. Confirme diretamente com as locadoras.</p>
   <p style="margin-top:12px"><a href="index.html">← Voltar ao roteiro completo</a></p>
 </footer>
 
