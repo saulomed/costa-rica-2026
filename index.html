@@ -1168,7 +1168,7 @@ body {
         <div class="alert-icon tickets">🎫</div>
         <h3>Ingressos Online</h3>
         <ul>
-          <li>Vulcão Poás — <a href="https://sinac.go.cr" target="_blank">sinac.go.cr</a> (limite diário!)</li>
+          <li>Vulcão Poás — ✅ Comprado! (<a href="documentos/ingressos/ingresso-vulcao-poa.pdf" target="_blank">ver comprovante</a>)</li>
           <li>Rio Celeste — <a href="https://sinac.go.cr" target="_blank">sinac.go.cr</a> (esgota semanas antes!)</li>
           <li>Manuel Antonio — <a href="https://sinac.go.cr" target="_blank">sinac.go.cr</a> (esgota todo dia!)</li>
           <li>Místico Bridges — <a href="https://misticopark.com" target="_blank">misticopark.com</a></li>
@@ -1264,14 +1264,14 @@ body {
   </div>
   <div class="cost-grid fade-in">
     <div class="cost-card"><div class="emoji">🚗</div><div class="category">Carro 4x4 + Seguro</div><div class="amount">US$ 500–800</div></div>
-    <div class="cost-card"><div class="emoji">🏨</div><div class="category">Hospedagem (8 noites)</div><div class="amount">US$ 550–850</div></div>
+    <div class="cost-card"><div class="emoji">🏨</div><div class="category">Hospedagem (7 de 8 noites)</div><div class="amount">US$ 928 <small style="font-size:0.7em;opacity:0.7">+ ~US$ 80 M. Antonio</small></div></div>
     <div class="cost-card"><div class="emoji">🍽️</div><div class="category">Alimentação (~US$ 50/dia)</div><div class="amount">US$ 400</div></div>
     <div class="cost-card"><div class="emoji">🎫</div><div class="category">Passeios e Entradas</div><div class="amount">US$ 450–550</div></div>
   </div>
   <div class="cost-total fade-in">
     <div class="label">Total estimado</div>
-    <div class="amount">US$ 1.900 – 2.600</div>
-    <div class="sub">Valores aproximados · Abril 2026</div>
+    <div class="amount">US$ 2.200 – 2.800</div>
+    <div class="sub">Hospedagem 7/8 noites confirmada · Manuel Antonio pendente · Abril 2026</div>
   </div>
 </section>
 
@@ -1300,7 +1300,7 @@ const days = [
       { name: 'Hampton Inn Alajuela', desc: 'Transfer aeroporto + café incluso', price: '~US$ 110/noite' },
       { name: 'Hotel Buena Vista', desc: 'Vista do vale + piscina', price: '~US$ 85/noite' },
       { name: 'Adventure Inn', desc: 'Piscina + shuttle aeroporto', price: '~US$ 75/noite' },
-      { name: 'Hotel 1915 INN & SUITES', desc: 'Hotel histórico + café incluso', price: '~US$ 65/noite' }
+      { name: 'Hotel 1915 INN & SUITES', desc: 'Hotel histórico + café incluso', price: 'US$ 95/noite', reserved: true }
     ]
   },
   {
@@ -1308,13 +1308,14 @@ const days = [
     title: 'Vulcão Poás + Blue Falls + La Fortuna',
     route: 'Alajuela → Vulcão Poás → Blue Falls → La Fortuna (~140 km)',
     blocks: [
-      { time: '06h – 08h30', title: '🌋 Vulcão Poás', items: ['Cratera de 1.350m com lago ácido — visão de outro planeta!', 'Trilha até a cratera: 1 km. Ingresso ~US$ 15 (sinac.go.cr)', '⚠️ Chegue na abertura — nuvens fecham após 10h!', '⚠️ Leve casaco (~11°C e muito vento)', 'Parada na Catarata La Paz (gratuita) na descida'], price: '~US$ 15', tip: 'Comprar online!' },
+      { time: '06h – 08h30', title: '🌋 Vulcão Poás', items: ['Cratera de 1.350m com lago ácido — visão de outro planeta!', 'Trilha até a cratera: 1 km. Ingresso ~US$ 15 (sinac.go.cr)', '✅ COMPRADO — Grupo 04, entrada 09:00 (US$ 33,90 total para 2)', '⚠️ Leve casaco (~11°C e muito vento)', 'Parada na Catarata La Paz (gratuita) na descida'], price: '~US$ 15', tip: 'Comprado ✅' },
       { time: '10h – 13h', title: '🌊 Blue Falls of Costa Rica', items: ['6 cachoeiras de águas azul turquesa', 'Pozo Azul — único local permitido para banho', 'Ingresso: ~US$ 19/pessoa. Reserve 2–3h', '⚠️ Sapatilha aquática obrigatória! Água ~16°C'], price: '~US$ 19' },
       { time: '14h – 16h30', title: '🚗 Rumo a La Fortuna', items: ['Almoço rápido em Bajos del Toro', 'Blue Falls → La Fortuna (~1h30–2h, Rota 4 pavimentada)', 'Chegada ~16h com sol!'] },
       { time: '17h+', title: '🌙 Escolha uma opção!', items: ['☕ OPÇÃO A: Tour de Café e Chocolate — North Fields (~2h, ~US$ 43)', '✨ OPÇÃO B: Termas gratuitas do Rio Tabacón — acesso público', '💡 Decidam na hora conforme o cansaço!'] }
     ],
     location: 'la-fortuna',
     hotels: [
+      { name: 'Lost Iguana Resort & Spa', desc: 'Resort premium + vista vulcão + café incluso', price: 'US$ 174/noite', reserved: true },
       { name: 'Hotel Lomas del Volcán', desc: 'Vista do vulcão + termas', price: '~US$ 95/noite' },
       { name: 'Arenal Backpackers Resort', desc: 'Piscina + quartos privados', price: '~US$ 70/noite' },
       { name: 'Hotel La Fortuna', desc: 'Centro, prático e econômico', price: '~US$ 55/noite' }
@@ -1332,6 +1333,7 @@ const days = [
     ],
     location: 'la-fortuna',
     hotels: [
+      { name: 'Lost Iguana Resort & Spa', desc: 'Resort premium + vista vulcão + café incluso', price: 'US$ 174/noite', reserved: true },
       { name: 'Hotel Lomas del Volcán', desc: 'Vista do vulcão + termas', price: '~US$ 95/noite' },
       { name: 'Arenal Backpackers Resort', desc: 'Piscina + quartos privados', price: '~US$ 70/noite' }
     ]
@@ -1346,7 +1348,7 @@ const days = [
     ],
     location: 'liberia',
     hotels: [
-      { name: 'Rinconcito Lodge', desc: 'Terraço + vista jardim + Wi-Fi', price: '~US$ 85/noite' }
+      { name: 'Rinconcito Lodge', desc: 'Terraço + vista jardim + Wi-Fi', price: 'US$ 85/noite', reserved: true }
     ]
   },
   {
@@ -1359,9 +1361,9 @@ const days = [
     ],
     location: 'tamarindo',
     hotels: [
+      { name: 'Wyndham Tamarindo', desc: 'Piscina infinita + café incluso + spa', price: 'US$ 153/noite', reserved: true },
       { name: 'Hotel Pasatiempo', desc: 'Piscina + 5 min da praia', price: '~US$ 95/noite' },
-      { name: 'Tamarindo Diria Beach Resort', desc: 'Pé na areia, café incluso', price: '~US$ 130/noite' },
-      { name: 'Wyndham Tamarindo', desc: 'Piscina infinita + café incluso + spa', price: '~US$ 150/noite' }
+      { name: 'Tamarindo Diria Beach Resort', desc: 'Pé na areia, café incluso', price: '~US$ 130/noite' }
     ]
   },
   {
@@ -1374,6 +1376,7 @@ const days = [
     ],
     location: 'tamarindo',
     hotels: [
+      { name: 'Wyndham Tamarindo', desc: 'Piscina infinita + café incluso + spa', price: 'US$ 153/noite', reserved: true },
       { name: 'Hotel Pasatiempo', desc: 'Última noite em Tamarindo', price: '~US$ 95/noite' }
     ]
   },
@@ -1407,7 +1410,7 @@ const days = [
       { name: 'Hampton Inn Alajuela', desc: 'Transfer aeroporto + café incluso', price: '~US$ 110/noite' },
       { name: 'Hotel Buena Vista', desc: 'Vista do vale + piscina', price: '~US$ 85/noite' },
       { name: 'Adventure Inn', desc: 'Piscina + shuttle aeroporto', price: '~US$ 75/noite' },
-      { name: 'Hotel 1915 INN & SUITES', desc: 'Hotel histórico + café incluso', price: '~US$ 65/noite' }
+      { name: 'Hotel 1915 INN & SUITES', desc: 'Hotel histórico + café incluso', price: 'US$ 95/noite', reserved: true }
     ]
   },
   {
@@ -1500,7 +1503,7 @@ function renderDay(d) {
 
   if (d.hotels.length) {
     const hotelCards = d.hotels.map(h => {
-      const isBooked = booked && booked.name === h.name;
+      const isBooked = (booked && booked.name === h.name) || h.reserved;
       return `
         <div class="hotel-card${isBooked ? ' hotel-booked' : ''}">
           ${isBooked ? '<span class="booked-badge">✓ Reservado</span>' : ''}
@@ -1588,8 +1591,8 @@ const todoData = [
     emoji: '✈️',
     subtitle: 'Dia 1 & 8',
     items: [
-      { id: 'alajuela-hotel-d1', text: 'Reservar hotel — Dia 1', autoKey: 'alajuela', autoType: 'booking', autoDate: '2026-04-09' },
-      { id: 'alajuela-hotel-d8', text: 'Reservar hotel — Dia 8', autoKey: 'alajuela', autoType: 'booking', autoDate: '2026-04-16' }
+      { id: 'alajuela-hotel-d1', text: 'Hotel 1915 INN & SUITES — Dia 1 (reservado ✅)', autoKey: 'alajuela', autoType: 'booking', autoDate: '2026-04-09' },
+      { id: 'alajuela-hotel-d8', text: 'Hotel 1915 INN & SUITES — Dia 8 (reservado ✅)', autoKey: 'alajuela', autoType: 'booking', autoDate: '2026-04-16' }
     ]
   },
   {
@@ -1597,8 +1600,8 @@ const todoData = [
     emoji: '🌋',
     subtitle: 'Dias 2–3',
     items: [
-      { id: 'lafortuna-hotel', text: 'Reservar hotel — 2 noites', autoKey: 'la-fortuna', autoType: 'booking' },
-      { id: 'lafortuna-poas', text: 'Ingresso Vulcão Poás — sinac.go.cr' },
+      { id: 'lafortuna-hotel', text: 'Lost Iguana Resort & Spa — 2 noites (reservado ✅)', autoKey: 'la-fortuna', autoType: 'booking' },
+      { id: 'lafortuna-poas', text: 'Ingresso Vulcão Poás (comprado ✅)' },
       { id: 'lafortuna-mistico', text: 'Ingresso Místico Bridges — misticopark.com' },
       { id: 'lafortuna-bluefalls', text: 'Ingresso Blue Falls' }
     ]
@@ -1618,7 +1621,7 @@ const todoData = [
     emoji: '🏖️',
     subtitle: 'Dias 5–6',
     items: [
-      { id: 'tamarindo-hotel', text: 'Reservar hotel — 2 noites', autoKey: 'tamarindo', autoType: 'booking' },
+      { id: 'tamarindo-hotel', text: 'Wyndham Tamarindo — 2 noites (reservado ✅)', autoKey: 'tamarindo', autoType: 'booking' },
       { id: 'tamarindo-surf', text: 'Aula de surf (opcional)' }
     ]
   },
@@ -1627,7 +1630,7 @@ const todoData = [
     emoji: '🐒',
     subtitle: 'Dia 7',
     items: [
-      { id: 'manuelantonio-hotel', text: 'Reservar hotel — 1 noite', autoKey: 'manuel-antonio', autoType: 'booking' },
+      { id: 'manuelantonio-hotel', text: '⚠️ Reservar hotel — 1 noite (PENDENTE)', autoKey: 'manuel-antonio', autoType: 'booking' },
       { id: 'manuelantonio-parque', text: 'Ingresso Manuel Antonio — sinac.go.cr' },
       { id: 'manuelantonio-rafting', text: 'Reservar rafting Rio Savegre' }
     ]
