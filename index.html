@@ -572,6 +572,43 @@ body {
   margin-left: 6px;
 }
 
+/* ─── DAY NAV ─── */
+.day-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--sand-dark);
+  gap: 16px;
+}
+
+.day-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  background: var(--jungle);
+  color: white;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.day-nav-btn:hover {
+  background: var(--jungle-light);
+  transform: translateY(-1px);
+}
+
+.day-nav-next { margin-left: auto; }
+
+@media (max-width: 600px) {
+  .day-nav { flex-direction: column; gap: 10px; }
+  .day-nav-btn { width: 100%; justify-content: center; text-align: center; }
+}
+
 /* ─── HOTEL CARDS ─── */
 .hotels {
   display: grid;
@@ -1455,7 +1492,7 @@ function selectDay(i) {
   currentDayIndex = i;
   document.querySelectorAll('.cal-day').forEach(c => c.classList.remove('active'));
   document.querySelectorAll('.cal-day')[i].classList.add('active');
-  renderDay(days[i]);
+  renderDay(days[i], i);
   if (!initialLoad) {
     setTimeout(() => {
       detailEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1503,7 +1540,7 @@ function _brlInline(t) {
 }
 function _wbrl(t) { return window.withBrl ? window.withBrl(t) : t; }
 
-function renderDay(d) {
+function renderDay(d, idx) {
   const bookings = getBookings();
   const booked = findBookingForDay(d, bookings);
   let hotelsHTML = '';
@@ -1577,6 +1614,10 @@ function renderDay(d) {
         `).join('')}
       </div>
       ${hotelsHTML}
+      <div class="day-nav">
+        ${idx > 0 ? `<a href="#" class="day-nav-btn day-nav-prev" onclick="event.preventDefault();selectDay(${idx - 1})">← Dia ${days[idx - 1].num}: ${days[idx - 1].title}</a>` : '<span></span>'}
+        ${idx < days.length - 1 ? `<a href="#" class="day-nav-btn day-nav-next" onclick="event.preventDefault();selectDay(${idx + 1})">Dia ${days[idx + 1].num}: ${days[idx + 1].title} →</a>` : '<span></span>'}
+      </div>
     </div>
   `;
 }
@@ -1587,7 +1628,7 @@ selectDay(0);
 
 // Re-render quando a cotação BRL carregar
 window.addEventListener('brl-ready', () => {
-  renderDay(days[currentDayIndex]);
+  renderDay(days[currentDayIndex], currentDayIndex);
   window.applyBrlConversion();
 });
 
@@ -1824,7 +1865,7 @@ renderTodos();
 window.addEventListener('storage', (e) => {
   if (e.key === 'cr2026_todos' || e.key === 'cr2026_bookings' || e.key === 'cr2026_car_booking') {
     renderTodos();
-    renderDay(days[currentDayIndex]);
+    renderDay(days[currentDayIndex], currentDayIndex);
   }
 });
 
@@ -1921,7 +1962,7 @@ async function testSyncConnection() {
 
 function refreshAfterSync() {
   renderTodos();
-  renderDay(days[currentDayIndex]);
+  renderDay(days[currentDayIndex], currentDayIndex);
 }
 
 async function saveSyncConfig() {
