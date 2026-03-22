@@ -291,7 +291,6 @@ body {
 
 .alert-icon.tickets { background: rgba(232,93,58,0.2); }
 .alert-icon.reservas { background: rgba(42,122,181,0.2); }
-.alert-icon.carro { background: rgba(92,168,122,0.2); }
 .alert-icon.dinheiro { background: rgba(212,168,67,0.2); }
 .alert-icon.mala { background: rgba(92,168,122,0.2); }
 
@@ -328,6 +327,100 @@ body {
   color: var(--sand);
   text-decoration: underline;
   text-underline-offset: 2px;
+}
+
+/* ─── RESERVAS ─── */
+.reserva-card {
+  background: white;
+  border-radius: var(--radius);
+  padding: 28px 32px;
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.reserva-card .reserva-icon {
+  width: 56px; height: 56px;
+  border-radius: 14px;
+  background: var(--jungle);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem;
+  flex-shrink: 0;
+}
+
+.reserva-card .reserva-body {
+  flex: 1;
+  min-width: 240px;
+}
+
+.reserva-card .reserva-body h3 {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--jungle);
+  margin-bottom: 4px;
+}
+
+.reserva-card .reserva-body .reserva-sub {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.reserva-card .reserva-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  font-size: 0.85rem;
+  color: var(--text);
+}
+
+.reserva-card .reserva-details span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.reserva-card .reserva-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(92,168,122,0.12);
+  color: var(--canopy);
+  font-weight: 600;
+  font-size: 0.8rem;
+  padding: 4px 14px;
+  border-radius: 100px;
+}
+
+.reserva-card .reserva-warn {
+  margin-top: 12px;
+  font-size: 0.82rem;
+  color: var(--lava);
+  font-weight: 500;
+}
+
+.reserva-card .reserva-link {
+  margin-left: auto;
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--jungle);
+  color: var(--sand);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 100px;
+  transition: background 0.3s;
+}
+
+.reserva-card .reserva-link:hover {
+  background: var(--jungle-light);
 }
 
 /* ─── CALENDAR ─── */
@@ -813,6 +906,8 @@ body {
   .timeline { padding-left: 28px; }
   .tl-dot { left: -21px; }
   .alert-grid { grid-template-columns: 1fr; }
+  .reserva-card { padding: 20px; }
+  .reserva-card .reserva-link { margin-left: 0; width: 100%; justify-content: center; }
 }
 
 @media (max-width: 480px) {
@@ -1223,20 +1318,6 @@ body {
         </ul>
       </div>
       <div class="alert-card fade-in">
-        <div class="alert-icon carro">🚗</div>
-        <h3>Aluguel de Carro — Sixt</h3>
-        <ul>
-          <li><strong style="color:var(--sand)">Mitsubishi Montero Sport 4WD</strong> (ou similar SUV)</li>
-          <li>Reserva: <strong style="color:var(--sand)">#9732041599</strong></li>
-          <li>Retirada: 09/04 às 10h — Aeroporto SJO</li>
-          <li>Devolução: 17/04 às 10h — Aeroporto SJO</li>
-          <li>8 diárias · US$ 495,98 · Km ilimitada</li>
-          <li>Depósito caução: <strong style="color:var(--lava)">US$ 2.000</strong> (bloqueio no cartão)</li>
-          <li>⚠️ Levar CNH + passaporte + cartão físico</li>
-          <li><a href="documentos/carro/reserva-carro.pdf" target="_blank">📄 Ver reserva completa</a></li>
-        </ul>
-      </div>
-      <div class="alert-card fade-in">
         <div class="alert-icon dinheiro">💵</div>
         <h3>Dinheiro em Espécie</h3>
         <ul>
@@ -1256,6 +1337,31 @@ body {
         </ul>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ═══ RESERVAS ═══ -->
+<section class="section" id="reservas-section">
+  <div class="section-header fade-in">
+    <span class="section-tag">Confirmado</span>
+    <h2 class="section-title">🚗 Aluguel de Carro</h2>
+  </div>
+  <div class="reserva-card fade-in" style="margin-top:32px;">
+    <div class="reserva-icon">🚙</div>
+    <div class="reserva-body">
+      <h3>Mitsubishi Montero Sport 4WD <span class="reserva-badge">✅ Reservado</span></h3>
+      <p class="reserva-sub">Sixt — Reserva #9732041599 · SUV 4x4 · Automático · 5 assentos · 6 malas</p>
+      <div class="reserva-details">
+        <span>📅 Retirada: <strong>09/04 às 10h</strong></span>
+        <span>📅 Devolução: <strong>17/04 às 10h</strong></span>
+        <span>⏱️ 8 diárias</span>
+        <span>💵 <strong>US$ 495,98</strong></span>
+        <span>🛣️ Km ilimitada</span>
+        <span>📍 Oficentro Plaza aeropuerto C3, Alajuela</span>
+      </div>
+      <p class="reserva-warn">⚠️ Depósito caução US$ 2.000 (bloqueio no cartão) · Levar CNH + passaporte + cartão de crédito físico</p>
+    </div>
+    <a class="reserva-link" href="documentos/carro/reserva-carro.pdf" target="_blank">📄 Ver reserva</a>
   </div>
 </section>
 
