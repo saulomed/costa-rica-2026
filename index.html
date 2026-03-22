@@ -1337,26 +1337,25 @@ const days = [
     ]
   },
   {
-    num: 4, weekday: 'Sáb', date: '12/04', emoji: '🔵', city: 'Tamarindo',
-    title: 'Rio Celeste + Deslocamento para Tamarindo',
-    route: 'La Fortuna → Rio Celeste → Tamarindo',
+    num: 4, weekday: 'Sáb', date: '12/04', emoji: '🔵', city: 'Rincón de la Vieja',
+    title: 'Rio Celeste + Rinconcito Lodge',
+    route: 'La Fortuna → Rio Celeste → Rinconcito Lodge',
     blocks: [
       { time: '07h30 – 11h', title: '🔵 Rio Celeste', items: ['A atração mais deslumbrante da Costa Rica!', 'Cor azul neon 100% natural — reação química de dois minerais', 'Trilha até a cachoeira: ~3,5 km, 2h. Ingresso: ~US$ 12', 'Banho fora do parque, embaixo de uma ponte na estrada', '⚠️ Compre ONLINE semanas antes em sinac.go.cr!'], price: '~US$ 12', tip: 'Comprar online!' },
-      { time: '14h – 17h', title: '🚗 Rumo a Tamarindo', items: ['Almoço nos restaurantes da estrada do parque', 'Rio Celeste → Tamarindo (~2,5–3h via Liberia)', 'Check-in à beira-mar. Jantar leve e descanso'] }
+      { time: '13h – 15h', title: '🚗 Rumo ao Rinconcito Lodge', items: ['Almoço nos restaurantes da estrada do parque', 'Rio Celeste → Rinconcito Lodge (~1h)', 'Check-in a partir das 15h. Descanso e jantar na região'] }
     ],
-    location: 'tamarindo',
+    location: 'liberia',
     hotels: [
-      { name: 'Hotel Pasatiempo', desc: 'Piscina + 5 min da praia', price: '~US$ 95/noite' },
-      { name: 'Tamarindo Diria Beach Resort', desc: 'Pé na areia, piscina + café', price: '~US$ 130/noite' },
-      { name: "Witch's Rock Surf Camp", desc: 'Na praia, vibe surf', price: '~US$ 75/noite' }
+      { name: 'Rinconcito Lodge', desc: 'Terraço + vista jardim + Wi-Fi', price: '~US$ 85/noite' }
     ]
   },
   {
-    num: 5, weekday: 'Dom', date: '13/04', emoji: '🪂', city: 'Tamarindo',
+    num: 5, weekday: 'Dom', date: '13/04', emoji: '🪂', city: 'Guanacaste',
     title: 'Hacienda Guachipelin — Aventura Total',
-    route: 'Excursão ida e volta de Tamarindo (~1h cada trecho)',
+    route: 'Rinconcito Lodge → Guachipelin (~15 min) → Tamarindo (~1h)',
     blocks: [
-      { time: 'Dia inteiro', title: '🏇 Hacienda Guachipelin', items: ['🪂 Canopy: 7 tirolesas + Tarzan Swing + Rapel (2h)', '🛟 Tubing: descida pelo rio em boias pelas corredeiras', '💧 Catarata Oropêndola: queda de 25m com poço azul', '🧖 Banho de lama vulcânica + Termas do Rio Negro (10 piscinas)', '💰 Combo: ~US$ 120–150/pessoa, almoço incluso!', '💪 Dia mais físico do roteiro — perfeito para vocês!'], price: '~US$ 120–150', tip: 'Reserve em guachipelin.com' }
+      { time: '08h – 16h', title: '🏇 Hacienda Guachipelin', items: ['🪂 Canopy: 7 tirolesas + Tarzan Swing + Rapel (2h)', '🛟 Tubing: descida pelo rio em boias pelas corredeiras', '💧 Catarata Oropêndola: queda de 25m com poço azul', '🧖 Banho de lama vulcânica + Termas do Rio Negro (10 piscinas)', '💰 Combo: ~US$ 120–150/pessoa, almoço incluso!', '💪 Dia mais físico do roteiro — perfeito para vocês!'], price: '~US$ 120–150', tip: 'Reserve em guachipelin.com' },
+      { time: '16h30 – 18h', title: '🚗 Rumo a Tamarindo', items: ['Guachipelin → Tamarindo (~1h via Liberia)', 'Check-in no hotel em Tamarindo. Jantar e descanso'] }
     ],
     location: 'tamarindo',
     hotels: [
@@ -1603,13 +1602,21 @@ const todoData = [
     ]
   },
   {
+    city: 'Rincón de la Vieja',
+    emoji: '🌿',
+    subtitle: 'Dia 4',
+    items: [
+      { id: 'rincon-hotel', text: 'Rinconcito Lodge — 1 noite (reservado ✅)', autoKey: 'liberia', autoType: 'booking' },
+      { id: 'rincon-celeste', text: 'Ingresso Rio Celeste — sinac.go.cr' },
+      { id: 'rincon-guachipelin', text: 'Reservar Hacienda Guachipelin — guachipelin.com' }
+    ]
+  },
+  {
     city: 'Tamarindo',
     emoji: '🏖️',
-    subtitle: 'Dias 4–6',
+    subtitle: 'Dias 5–6',
     items: [
-      { id: 'tamarindo-hotel', text: 'Reservar hotel — 3 noites', autoKey: 'tamarindo', autoType: 'booking' },
-      { id: 'tamarindo-celeste', text: 'Ingresso Rio Celeste — sinac.go.cr' },
-      { id: 'tamarindo-guachipelin', text: 'Reservar Hacienda Guachipelin — guachipelin.com' },
+      { id: 'tamarindo-hotel', text: 'Reservar hotel — 2 noites', autoKey: 'tamarindo', autoType: 'booking' },
       { id: 'tamarindo-surf', text: 'Aula de surf (opcional)' }
     ]
   },
