@@ -291,6 +291,7 @@ body {
 
 .alert-icon.tickets { background: rgba(232,93,58,0.2); }
 .alert-icon.reservas { background: rgba(42,122,181,0.2); }
+.alert-icon.carro { background: rgba(92,168,122,0.2); }
 .alert-icon.dinheiro { background: rgba(212,168,67,0.2); }
 .alert-icon.mala { background: rgba(92,168,122,0.2); }
 
@@ -1216,9 +1217,23 @@ body {
         <div class="alert-icon reservas">📋</div>
         <h3>Reservas Obrigatórias</h3>
         <ul>
-          <li><a href="veiculo.html" style="color:var(--sand)">Carro 4x4 + Seguro</a> — ver comparativo</li>
+          <li><a href="veiculo.html" style="color:var(--sand)">Carro 4x4</a> — ✅ Reservado! (<a href="documentos/carro/reserva-carro.pdf" target="_blank">ver reserva</a>)</li>
           <li>Rafting Rio Savegre — <a href="https://riostropicales.com" target="_blank">Ríos Tropicales</a></li>
           <li>Hacienda Guachipelin — <a href="https://guachipelin.com" target="_blank">guachipelin.com</a></li>
+        </ul>
+      </div>
+      <div class="alert-card fade-in">
+        <div class="alert-icon carro">🚗</div>
+        <h3>Aluguel de Carro — Sixt</h3>
+        <ul>
+          <li><strong style="color:var(--sand)">Mitsubishi Montero Sport 4WD</strong> (ou similar SUV)</li>
+          <li>Reserva: <strong style="color:var(--sand)">#9732041599</strong></li>
+          <li>Retirada: 09/04 às 10h — Aeroporto SJO</li>
+          <li>Devolução: 17/04 às 10h — Aeroporto SJO</li>
+          <li>8 diárias · US$ 495,98 · Km ilimitada</li>
+          <li>Depósito caução: <strong style="color:var(--lava)">US$ 2.000</strong> (bloqueio no cartão)</li>
+          <li>⚠️ Levar CNH + passaporte + cartão físico</li>
+          <li><a href="documentos/carro/reserva-carro.pdf" target="_blank">📄 Ver reserva completa</a></li>
         </ul>
       </div>
       <div class="alert-card fade-in">
@@ -1329,7 +1344,7 @@ const days = [
     title: 'Chegada + Passeio Cultural',
     route: 'Aeroporto (SJO) → Centro de San José → Alajuela',
     blocks: [
-      { time: '08h20 – 11h', title: '✈️ Chegada no Aeroporto', items: ['Pouso no Aeroporto Juan Santamaría', 'Retirada do carro alugado (~1h)', 'Café da manhã: Galo Pinto — arroz, feijão preto, ovo, tortilha (~US$ 8)'] },
+      { time: '08h20 – 11h', title: '✈️ Chegada no Aeroporto', items: ['Pouso no Aeroporto Juan Santamaría (voo CM 818)', 'Retirada do carro na Sixt — Oficentro Plaza aeropuerto C3, Alajuela', '✅ Reserva #9732041599 — Mitsubishi Montero Sport 4WD · <a href="documentos/carro/reserva-carro.pdf" target="_blank">📄 Reserva</a>', '⚠️ Levar CNH + passaporte + cartão de crédito físico (caução US$ 2.000)', 'Café da manhã: Galo Pinto — arroz, feijão preto, ovo, tortilha (~US$ 8)'] },
       { time: '11h – 11h15', title: '🚗 Aeroporto → Hotel', items: ['Aeroporto SJO → Hotel 1915 INN & SUITES (~5 min, 3 km)', 'Deixar malas no hotel', '📍 <a href="https://www.google.com/maps/dir/Aeropuerto+Internacional+Juan+Santamaría/Hotel+1915+INN+%26+Suites,+Alajuela,+Costa+Rica" target="_blank">Google Maps</a> · <a href="https://www.waze.com/live-map/directions?from=ll.9.9981%2C-84.2041&to=ll.10.0162%2C-84.2117" target="_blank">Waze</a>'] },
       { time: '12h – 12h30', title: '🚗 Alajuela → San José', items: ['Hotel 1915 → Centro de San José (~30 min, 22 km)', '📍 <a href="https://www.google.com/maps/dir/Hotel+1915+INN+%26+Suites,+Alajuela,+Costa+Rica/Teatro+Nacional+de+Costa+Rica,+San+José" target="_blank">Google Maps</a> · <a href="https://www.waze.com/live-map/directions?from=ll.10.0162%2C-84.2117&to=ll.9.9328%2C-84.0790" target="_blank">Waze</a>'] },
       { time: '13h – 17h', title: '🎭 Centro de San José', items: ['Teatro Nacional de Costa Rica — edifício de 1897, inspirado na Ópera de Paris', 'Café no salão dourado do Teatro', 'Museo del Oro Precolombino — 3 andares, 1.586 peças de ouro (~US$ 18)', 'Passeio pela Avenida Central e Plaza de la Democracia'], price: '~US$ 18' },
@@ -1471,7 +1486,7 @@ const days = [
     title: 'Voo de Volta — Pura Vida!',
     route: 'Alajuela → Aeroporto Juan Santamaría',
     blocks: [
-      { time: '~06h', title: '🚗 Devolução do carro', items: ['Acordar cedo, check-out do hotel', 'Hotel 1915 → Aeroporto SJO (~5 min, 3 km)', 'Devolução do carro no aeroporto', '📍 <a href="https://www.google.com/maps/dir/Hotel+1915+INN+%26+Suites,+Alajuela,+Costa+Rica/Aeropuerto+Internacional+Juan+Santamaría" target="_blank">Google Maps</a> · <a href="https://www.waze.com/live-map/directions?from=ll.10.0162%2C-84.2117&to=ll.9.9981%2C-84.2041" target="_blank">Waze</a>'] },
+      { time: '~06h', title: '🚗 Devolução do carro', items: ['Acordar cedo, check-out do hotel', 'Hotel 1915 → Aeroporto SJO (~5 min, 3 km)', 'Devolução na Sixt — Oficentro Plaza aeropuerto C3 (até 10h)', '📍 <a href="https://www.google.com/maps/dir/Hotel+1915+INN+%26+Suites,+Alajuela,+Costa+Rica/Aeropuerto+Internacional+Juan+Santamaría" target="_blank">Google Maps</a> · <a href="https://www.waze.com/live-map/directions?from=ll.10.0162%2C-84.2117&to=ll.9.9981%2C-84.2041" target="_blank">Waze</a>'] },
       { time: '08h13', title: '✈️ Voo de volta', items: ['Check-in e embarque', '🌴 Pura Vida! Até a próxima, Costa Rica!'] }
     ],
     hotels: []
@@ -1711,7 +1726,7 @@ const todoData = [
     emoji: '📦',
     subtitle: '',
     items: [
-      { id: 'geral-carro', text: 'Alugar carro 4x4 + seguro', autoType: 'car' },
+      { id: 'geral-carro', text: 'Alugar carro 4x4 — Sixt Montero Sport 4WD (reservado ✅)', autoType: 'car' },
       { id: 'geral-seguro', text: 'Seguro viagem para aventura' },
       { id: 'geral-esim', text: 'Comprar eSIM ou chip local' },
       { id: 'geral-dinheiro', text: 'Levar US$ 200–300 em espécie' },
