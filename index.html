@@ -1172,6 +1172,7 @@ body {
           <li>Rio Celeste — <a href="https://sinac.go.cr" target="_blank">sinac.go.cr</a> (esgota semanas antes!)</li>
           <li>Manuel Antonio — <a href="https://sinac.go.cr" target="_blank">sinac.go.cr</a> (esgota todo dia!)</li>
           <li>Místico Bridges — <a href="https://misticopark.com" target="_blank">misticopark.com</a></li>
+          <li>Blue Falls — ✅ Comprado! (<a href="documentos/ingressos/ingresso-bluefalls.pdf" target="_blank">🎟️ ticket</a> · <a href="documentos/ingressos/gmail-blue-falls.pdf" target="_blank">📧 email</a>)</li>
         </ul>
       </div>
       <div class="alert-card fade-in">
@@ -1310,7 +1311,7 @@ const days = [
     blocks: [
       { time: '07h – 08h30', title: '🚗 Saída de Alajuela', items: ['Saída ~07h para chegar com folga antes das 09h', 'Alajuela → Vulcão Poás (~1h–1h15 de estrada)', 'Subida por estrada sinuosa — manhã com menos neblina'] },
       { time: '09h – 10h30', title: '🌋 Vulcão Poás', items: ['Cratera de 1.350m com lago ácido — visão de outro planeta!', 'Trilha até a cratera: 1 km', '✅ COMPRADO — Grupo 04, entrada 09:00 (US$ 33,90 total para 2)', '⚠️ Leve casaco (~11°C e muito vento)', 'Parada na Catarata La Paz (gratuita) na descida'], price: '~US$ 15', tip: 'Comprado ✅' },
-      { time: '12h – 14h30', title: '🌊 Blue Falls of Costa Rica', items: ['6 cachoeiras de águas azul turquesa', 'Pozo Azul — único local permitido para banho', 'Ingresso: ~US$ 19/pessoa. Reserve 2–3h', '⚠️ Sapatilha aquática obrigatória! Água ~16°C'], price: '~US$ 19' },
+      { time: '12h – 14h30', title: '🌊 Blue Falls of Costa Rica', items: ['6 cachoeiras de águas azul turquesa', 'Pozo Azul — único local permitido para banho', '✅ COMPRADO — 2 adultos (US$ 40 total) · <a href="documentos/ingressos/ingresso-bluefalls.pdf" target="_blank">🎟️ Ticket</a> · <a href="documentos/ingressos/gmail-blue-falls.pdf" target="_blank">📧 Email</a>', '⚠️ Sapatilha aquática obrigatória! Água ~16°C', '⚠️ Apresentar ticket + documento de identificação na entrada'], price: 'US$ 40', tip: 'Comprado ✅' },
       { time: '15h30 – 17h30', title: '🚗 Rumo a La Fortuna', items: ['Almoço rápido em Bajos del Toro antes de pegar a estrada', 'Blue Falls → La Fortuna (~1h30–2h, Rota 4 pavimentada)', 'Chegada ~17h30'] },
       { time: '18h+', title: '🌙 Escolha uma opção!', items: ['☕ OPÇÃO A: Tour de Café e Chocolate — North Fields (~2h, ~US$ 43)', '✨ OPÇÃO B: Termas gratuitas do Rio Tabacón — acesso público', '💡 Decidam na hora conforme o cansaço!'] }
     ],
@@ -1518,7 +1519,7 @@ function renderDay(d) {
     hotelsHTML = `
       <div style="margin-top:40px;">
         <h3 style="font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--jungle);margin-bottom:16px;">
-          🏨 Hospedagem${booked ? ' <span style="font-size:0.75rem;color:var(--leaf);font-family:DM Sans,sans-serif;font-weight:600;vertical-align:middle;margin-left:8px;">✓ ${booked.name} reservado</span>' : ''}
+          🏨 Hospedagem${booked ? ` <span style="font-size:0.75rem;color:var(--leaf);font-family:DM Sans,sans-serif;font-weight:600;vertical-align:middle;margin-left:8px;">✓ ${booked.name} reservado</span>` : ''}
         </h3>
         <div class="hotels">
           ${booked
@@ -1604,7 +1605,7 @@ const todoData = [
       { id: 'lafortuna-hotel', text: 'Lost Iguana Resort & Spa — 2 noites (reservado ✅)', autoKey: 'la-fortuna', autoType: 'booking' },
       { id: 'lafortuna-poas', text: 'Ingresso Vulcão Poás (comprado ✅)' },
       { id: 'lafortuna-mistico', text: 'Ingresso Místico Bridges — misticopark.com' },
-      { id: 'lafortuna-bluefalls', text: 'Ingresso Blue Falls' }
+      { id: 'lafortuna-bluefalls', text: 'Ingresso Blue Falls (comprado ✅)' }
     ]
   },
   {
