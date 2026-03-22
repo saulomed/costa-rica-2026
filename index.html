@@ -1293,8 +1293,10 @@ const days = [
     route: 'Aeroporto (SJO) → Centro de San José → Alajuela',
     blocks: [
       { time: '08h20 – 11h', title: '✈️ Chegada no Aeroporto', items: ['Pouso no Aeroporto Juan Santamaría', 'Retirada do carro alugado (~1h)', 'Café da manhã: Galo Pinto — arroz, feijão preto, ovo, tortilha (~US$ 8)', 'Depositar malas no hotel de Alajuela'] },
+      { time: '12h – 12h30', title: '🚗 Alajuela → San José', items: ['Alajuela → Centro de San José (~30 min, 23 km)', '📍 <a href="https://www.google.com/maps/dir/Alajuela,+Costa+Rica/Teatro+Nacional+de+Costa+Rica,+San+José" target="_blank">Google Maps</a> · <a href="https://waze.com/ul?ll=9.9328,-84.0790&navigate=yes" target="_blank">Waze</a>'] },
       { time: '13h – 17h', title: '🎭 Centro de San José', items: ['Teatro Nacional de Costa Rica — edifício de 1897, inspirado na Ópera de Paris', 'Café no salão dourado do Teatro', 'Museo del Oro Precolombino — 3 andares, 1.586 peças de ouro (~US$ 18)', 'Passeio pela Avenida Central e Plaza de la Democracia'], price: '~US$ 18' },
-      { time: '17h+', title: '🏨 Check-in em Alajuela', items: ['Jantar: La Jarra (costarriquenha) ou El Chante Vegano', 'Cama cedo — amanhã começa a aventura!'] }
+      { time: '17h – 17h30', title: '🚗 Retorno a Alajuela', items: ['San José Centro → Alajuela (~30 min, 23 km)', '📍 <a href="https://www.google.com/maps/dir/Teatro+Nacional+de+Costa+Rica,+San+José/Alajuela,+Costa+Rica" target="_blank">Google Maps</a> · <a href="https://waze.com/ul?ll=10.0000,-84.2117&navigate=yes" target="_blank">Waze</a>'] },
+      { time: '18h+', title: '🏨 Check-in em Alajuela', items: ['Jantar: La Jarra (costarriquenha) ou El Chante Vegano', 'Cama cedo — amanhã começa a aventura!'] }
     ],
     location: 'alajuela',
     hotels: [
@@ -1309,10 +1311,10 @@ const days = [
     title: 'Vulcão Poás + Blue Falls + La Fortuna',
     route: 'Alajuela → Vulcão Poás → Blue Falls → La Fortuna (~140 km)',
     blocks: [
-      { time: '07h – 08h30', title: '🚗 Saída de Alajuela', items: ['Saída ~07h para chegar com folga antes das 09h', 'Alajuela → Vulcão Poás (~1h–1h15 de estrada)', 'Subida por estrada sinuosa — manhã com menos neblina'] },
+      { time: '07h – 08h30', title: '🚗 Saída de Alajuela', items: ['Saída ~07h para chegar com folga antes das 09h', 'Alajuela → Vulcão Poás (~1h–1h15 de estrada)', 'Subida por estrada sinuosa — manhã com menos neblina', '📍 <a href="https://www.google.com/maps/dir/Alajuela,+Costa+Rica/Parque+Nacional+Volcán+Poás" target="_blank">Google Maps</a> · <a href="https://waze.com/ul?ll=10.1960,-84.2317&navigate=yes" target="_blank">Waze</a>'] },
       { time: '09h – 10h30', title: '🌋 Vulcão Poás', items: ['Cratera de 1.350m com lago ácido — visão de outro planeta!', 'Trilha até a cratera: 1 km', '✅ COMPRADO — Grupo 04, entrada 09:00 (US$ 33,90 total para 2)', '⚠️ Leve casaco (~11°C e muito vento)', 'Parada na Catarata La Paz (gratuita) na descida'], price: '~US$ 15', tip: 'Comprado ✅' },
       { time: '12h – 14h30', title: '🌊 Blue Falls of Costa Rica', items: ['6 cachoeiras de águas azul turquesa', 'Pozo Azul — único local permitido para banho', '✅ COMPRADO — 2 adultos (US$ 40 total) · <a href="documentos/ingressos/ingresso-bluefalls.pdf" target="_blank">🎟️ Ticket</a> · <a href="documentos/ingressos/gmail-blue-falls.pdf" target="_blank">📧 Email</a>', '⚠️ Sapatilha aquática obrigatória! Água ~16°C', '⚠️ Apresentar ticket + documento de identificação na entrada'], price: 'US$ 40', tip: 'Comprado ✅' },
-      { time: '15h30 – 17h30', title: '🚗 Rumo a La Fortuna', items: ['Almoço rápido em Bajos del Toro antes de pegar a estrada', 'Blue Falls → La Fortuna (~1h30–2h, Rota 4 pavimentada)', 'Chegada ~17h30'] },
+      { time: '15h30 – 17h30', title: '🚗 Rumo a La Fortuna', items: ['Almoço rápido em Bajos del Toro antes de pegar a estrada', 'Blue Falls → La Fortuna (~1h30–2h, Rota 4 pavimentada)', 'Chegada ~17h30', '📍 <a href="https://www.google.com/maps/dir/Blue+Falls+of+Costa+Rica/La+Fortuna,+Alajuela" target="_blank">Google Maps</a> · <a href="https://waze.com/ul?ll=10.4679,-84.6426&navigate=yes" target="_blank">Waze</a>'] },
       { time: '18h+', title: '🌙 Escolha uma opção!', items: ['☕ OPÇÃO A: Tour de Café e Chocolate — North Fields (~2h, ~US$ 43)', '✨ OPÇÃO B: Termas gratuitas do Rio Tabacón — acesso público', '💡 Decidam na hora conforme o cansaço!'] }
     ],
     location: 'la-fortuna',
@@ -1345,8 +1347,9 @@ const days = [
     title: 'Rio Celeste + Rinconcito Lodge',
     route: 'La Fortuna → Rio Celeste → Rinconcito Lodge',
     blocks: [
-      { time: '07h30 – 11h', title: '🔵 Rio Celeste', items: ['A atração mais deslumbrante da Costa Rica!', 'Cor azul neon 100% natural — reação química de dois minerais', 'Trilha até a cachoeira: ~3,5 km, 2h. Ingresso: ~US$ 12', 'Banho fora do parque, embaixo de uma ponte na estrada', '⚠️ Compre ONLINE semanas antes em sinac.go.cr!'], price: '~US$ 12', tip: 'Comprar online!' },
-      { time: '13h – 15h', title: '🚗 Rumo ao Rinconcito Lodge', items: ['Almoço nos restaurantes da estrada do parque', 'Rio Celeste → Rinconcito Lodge (~1h)', 'Check-in a partir das 15h. Descanso e jantar na região'] }
+      { time: '05h30 – 08h', title: '🚗 La Fortuna → Rio Celeste', items: ['Saída cedo de La Fortuna para aproveitar a manhã no parque', 'La Fortuna → Parque Nacional Volcán Tenorio (~2h–2h30, 120 km)', 'Estrada pavimentada via Cañas (Rota 142 → Rota 1 → Rota 6)', '📍 <a href="https://www.google.com/maps/dir/La+Fortuna,+Alajuela/Parque+Nacional+Volcán+Tenorio" target="_blank">Google Maps</a> · <a href="https://waze.com/ul?ll=10.7083,-85.0194&navigate=yes" target="_blank">Waze</a>'] },
+      { time: '08h – 11h', title: '🔵 Rio Celeste', items: ['A atração mais deslumbrante da Costa Rica!', 'Cor azul neon 100% natural — reação química de dois minerais', 'Trilha até a cachoeira: ~3,5 km, 2h. Ingresso: ~US$ 12', 'Banho fora do parque, embaixo de uma ponte na estrada', '⚠️ Compre ONLINE semanas antes em sinac.go.cr!'], price: '~US$ 12', tip: 'Comprar online!' },
+      { time: '13h – 14h', title: '🚗 Rumo ao Rinconcito Lodge', items: ['Almoço nos restaurantes da estrada do parque', 'Rio Celeste → Rinconcito Lodge (~1h)', 'Check-in a partir das 15h. Descanso e jantar na região', '📍 <a href="https://www.google.com/maps/dir/Parque+Nacional+Volcán+Tenorio/Rinconcito+Lodge,+Rincón+de+la+Vieja" target="_blank">Google Maps</a> · <a href="https://waze.com/ul?ll=10.7636,-85.3411&navigate=yes" target="_blank">Waze</a>'] }
     ],
     location: 'liberia',
     hotels: [
@@ -1358,8 +1361,9 @@ const days = [
     title: 'Hacienda Guachipelin — Aventura Total',
     route: 'Rinconcito Lodge → Guachipelin (~15 min) → Tamarindo (~1h)',
     blocks: [
+      { time: '07h30 – 08h', title: '🚗 Rinconcito → Guachipelin', items: ['Rinconcito Lodge → Hacienda Guachipelin (~15 min, 7 km)', 'Estrada curta pela região de Rincón de la Vieja', '📍 <a href="https://www.google.com/maps/dir/Rinconcito+Lodge,+Rincón+de+la+Vieja/Hacienda+Guachipelin" target="_blank">Google Maps</a> · <a href="https://waze.com/ul?ll=10.7577,-85.3555&navigate=yes" target="_blank">Waze</a>'] },
       { time: '08h – 16h', title: '🏇 Hacienda Guachipelin', items: ['🪂 Canopy: 7 tirolesas + Tarzan Swing + Rapel (2h)', '🛟 Tubing: descida pelo rio em boias pelas corredeiras', '💧 Catarata Oropêndola: queda de 25m com poço azul', '🧖 Banho de lama vulcânica + Termas do Rio Negro (10 piscinas)', '💰 Combo: ~US$ 120–150/pessoa, almoço incluso!', '💪 Dia mais físico do roteiro — perfeito para vocês!'], price: '~US$ 120–150', tip: 'Reserve em guachipelin.com' },
-      { time: '16h30 – 18h', title: '🚗 Rumo a Tamarindo', items: ['Guachipelin → Tamarindo (~1h via Liberia)', 'Check-in no hotel em Tamarindo. Jantar e descanso'] }
+      { time: '16h30 – 18h', title: '🚗 Rumo a Tamarindo', items: ['Guachipelin → Tamarindo (~1h via Liberia)', 'Check-in no hotel em Tamarindo. Jantar e descanso', '📍 <a href="https://www.google.com/maps/dir/Hacienda+Guachipelin/Tamarindo,+Guanacaste" target="_blank">Google Maps</a> · <a href="https://waze.com/ul?ll=10.2996,-85.8375&navigate=yes" target="_blank">Waze</a>'] }
     ],
     location: 'tamarindo',
     hotels: [
@@ -1373,6 +1377,7 @@ const days = [
     title: 'Playa Conchal + Surf — Descanso',
     route: 'Dia relax em Tamarindo — recarregar as energias!',
     blocks: [
+      { time: '08h30 – 09h', title: '🚗 Tamarindo → Playa Conchal', items: ['Tamarindo → Brasilito/Playa Conchal (~20 min, 15 km)', 'Estacionamento em Brasilito, acesso à praia a pé', '📍 <a href="https://www.google.com/maps/dir/Tamarindo,+Guanacaste/Playa+Conchal,+Guanacaste" target="_blank">Google Maps</a> · <a href="https://waze.com/ul?ll=10.3617,-85.8208&navigate=yes" target="_blank">Waze</a>'] },
       { time: '09h – 12h', title: '🐚 Playa Conchal', items: ['Uma das praias mais bonitas da Costa Rica!', 'Areia formada por milhões de conchas moídas', 'Água azul cristalina — leve snorkel!', 'Acesso pela praia de Brasilito (~20 min ao norte)'] },
       { time: '14h+', title: '🏄 Surf + Tempo livre', items: ['Aula de surf em Tamarindo — ondas perfeitas (~US$ 50–80)', 'Tarde livre: caminhada, artesanato, compras', '🌅 Pôr do sol famoso em Tamarindo', 'Jantar no El Mercadito — complexo gastronômico ao ar livre'], price: '~US$ 50–80' }
     ],
@@ -1387,7 +1392,7 @@ const days = [
     title: 'Rafting Rio Savegre + Manuel Antonio',
     route: 'Tamarindo → Rafting → Manuel Antonio (~5–6h + atividade)',
     blocks: [
-      { time: '05h30 – 11h30', title: '🚗 Estrada', items: ['Saída às 5h30 de Tamarindo', 'Rota: Route 21 → Nicoya → Puntarenas → Route 34', 'Café da manhã na estrada ou do hotel'] },
+      { time: '05h30 – 11h30', title: '🚗 Tamarindo → Rafting Savegre', items: ['Saída às 5h30 de Tamarindo', 'Tamarindo → Quepos/Rio Savegre (~5h30, 320 km)', 'Rota: Route 21 → Nicoya → Puntarenas → Route 34', 'Café da manhã na estrada ou do hotel', '📍 <a href="https://www.google.com/maps/dir/Tamarindo,+Guanacaste/Quepos,+Puntarenas" target="_blank">Google Maps</a> · <a href="https://waze.com/ul?ll=9.4306,-84.1611&navigate=yes" target="_blank">Waze</a>'] },
       { time: '11h30 – 15h', title: '🌊 Rafting no Rio Savegre', items: ['O melhor rafting da Costa Rica!', 'Nível 3–4, percurso 14 km, ~3–4h no rio', 'Pausa em cachoeira + almoço na beira do rio', 'Operadoras: Ríos Tropicales ou Aguas Bravas', '⚠️ Confirme horário ao reservar — peça ~11h30'], price: '~US$ 110', tip: 'Reserve com antecedência!' },
       { time: '16h+', title: '🍽️ Manuel Antonio', items: ['Check-in no hotel (~30 min do rafting)', 'Jantar no El Avión — restaurante num avião de carga dos anos 80!', 'Vista panorâmica do pôr do sol — imperdível!'] }
     ],
@@ -1405,7 +1410,7 @@ const days = [
     blocks: [
       { time: '07h – 11h', title: '🐒 Parque Nacional Manuel Antonio', items: ['O parque mais visitado da Costa Rica', 'Trilhas leves (2–4 km): macacos, preguiças, quatis', 'Praias: Playa Manuel Antonio e Playa Espadilla Sur', '💡 Contrate guia local (~US$ 25–30) — sem guia você não vê as preguiças!', '⚠️ Ingresso ~US$ 18 — compre online, esgota todo dia!'], price: '~US$ 18', tip: 'Comprar online!' },
       { time: '11h – 12h30', title: '🏖️ Playa Biesanz', items: ['Praia escondida, água calma, perfeita para casal', 'Ótima para snorkel', 'Acesso por trilha curta (5 min). Leve lanche'] },
-      { time: '13h – 17h', title: '🚗 Retorno a Alajuela', items: ['Almoço rápido em Quepos', '🐊 Ponte dos Crocodilos (Rio Tárcoles) — no caminho!', 'Crocodilos de 4m+ visíveis da ponte. Parada 15–20 min', 'Chegada em Alajuela ~16–17h', '⚠️ Voo às 8h13 amanhã! Saída do hotel às ~6h'] }
+      { time: '13h – 17h', title: '🚗 Retorno a Alajuela', items: ['Manuel Antonio → Alajuela (~3h30, 180 km via Rota 34/27)', 'Almoço rápido em Quepos', '🐊 Ponte dos Crocodilos (Rio Tárcoles) — no caminho!', 'Crocodilos de 4m+ visíveis da ponte. Parada 15–20 min', 'Chegada em Alajuela ~16–17h', '⚠️ Voo às 8h13 amanhã! Saída do hotel às ~6h', '📍 <a href="https://www.google.com/maps/dir/Manuel+Antonio,+Puntarenas/Puente+Rio+Tárcoles/Alajuela,+Costa+Rica" target="_blank">Google Maps</a> · <a href="https://waze.com/ul?ll=10.0000,-84.2117&navigate=yes" target="_blank">Waze</a>'] }
     ],
     location: 'alajuela',
     hotels: [
@@ -1420,7 +1425,7 @@ const days = [
     title: 'Voo de Volta — Pura Vida!',
     route: 'Alajuela → Aeroporto Juan Santamaría',
     blocks: [
-      { time: '~06h', title: '🚗 Devolução do carro', items: ['Acordar cedo, check-out do hotel', 'Devolução do carro no aeroporto'] },
+      { time: '~06h', title: '🚗 Devolução do carro', items: ['Acordar cedo, check-out do hotel', 'Alajuela → Aeroporto SJO (~10 min, 3 km)', 'Devolução do carro no aeroporto', '📍 <a href="https://www.google.com/maps/dir/Alajuela,+Costa+Rica/Aeropuerto+Internacional+Juan+Santamaría" target="_blank">Google Maps</a> · <a href="https://waze.com/ul?ll=9.9981,-84.2041&navigate=yes" target="_blank">Waze</a>'] },
       { time: '08h13', title: '✈️ Voo de volta', items: ['Check-in e embarque', '🌴 Pura Vida! Até a próxima, Costa Rica!'] }
     ],
     hotels: []
