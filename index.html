@@ -1340,7 +1340,7 @@ const days = [
       { name: 'Hampton Inn Alajuela', desc: 'Transfer aeroporto + café incluso', price: '~US$ 110/noite' },
       { name: 'Hotel Buena Vista', desc: 'Vista do vale + piscina', price: '~US$ 85/noite' },
       { name: 'Adventure Inn', desc: 'Piscina + shuttle aeroporto', price: '~US$ 75/noite' },
-      { name: 'Hotel 1915 INN & SUITES', desc: 'Hotel histórico + café incluso', price: 'US$ 95/noite', reserved: true }
+      { name: 'Hotel 1915 INN & SUITES', desc: 'Hotel histórico + café incluso', price: 'US$ 95/noite', reserved: true, confirmationUrls: [{label: 'Confirmação Dia 1', url: 'documentos/hoteis/Alajuela-09-04.PDF'}, {label: 'Confirmação Dia 8', url: 'documentos/hoteis/Alajuela-16-04.PDF'}] }
     ]
   },
   {
@@ -1357,7 +1357,7 @@ const days = [
     ],
     location: 'la-fortuna',
     hotels: [
-      { name: 'Lost Iguana Resort & Spa', desc: 'Resort premium + vista vulcão + café incluso', price: 'US$ 174/noite', reserved: true },
+      { name: 'Lost Iguana Resort & Spa', desc: 'Resort premium + vista vulcão + café incluso', price: 'US$ 174/noite', reserved: true, confirmationUrls: [{label: 'Confirmação da reserva', url: 'documentos/hoteis/La%20Fortuna-10-04.pdf'}] },
       { name: 'Hotel Lomas del Volcán', desc: 'Vista do vulcão + termas', price: '~US$ 95/noite' },
       { name: 'Arenal Backpackers Resort', desc: 'Piscina + quartos privados', price: '~US$ 70/noite' },
       { name: 'Hotel La Fortuna', desc: 'Centro, prático e econômico', price: '~US$ 55/noite' }
@@ -1379,7 +1379,7 @@ const days = [
     ],
     location: 'la-fortuna',
     hotels: [
-      { name: 'Lost Iguana Resort & Spa', desc: 'Resort premium + vista vulcão + café incluso', price: 'US$ 174/noite', reserved: true },
+      { name: 'Lost Iguana Resort & Spa', desc: 'Resort premium + vista vulcão + café incluso', price: 'US$ 174/noite', reserved: true, confirmationUrls: [{label: 'Confirmação da reserva', url: 'documentos/hoteis/La%20Fortuna-10-04.pdf'}] },
       { name: 'Hotel Lomas del Volcán', desc: 'Vista do vulcão + termas', price: '~US$ 95/noite' },
       { name: 'Arenal Backpackers Resort', desc: 'Piscina + quartos privados', price: '~US$ 70/noite' }
     ]
@@ -1395,7 +1395,7 @@ const days = [
     ],
     location: 'liberia',
     hotels: [
-      { name: 'Rinconcito Lodge', desc: 'Terraço + vista jardim + Wi-Fi', price: 'US$ 85/noite', reserved: true }
+      { name: 'Rinconcito Lodge', desc: 'Terraço + vista jardim + Wi-Fi', price: 'US$ 85/noite', reserved: true, confirmationUrls: [{label: 'Confirmação da reserva', url: 'documentos/hoteis/Rinconcito%20Lodge-12-04.pdf'}] }
     ]
   },
   {
@@ -1409,7 +1409,7 @@ const days = [
     ],
     location: 'tamarindo',
     hotels: [
-      { name: 'Wyndham Tamarindo', desc: 'Piscina infinita + café incluso + spa', price: 'US$ 153/noite', reserved: true },
+      { name: 'Wyndham Tamarindo', desc: 'Piscina infinita + café incluso + spa', price: 'US$ 153/noite', reserved: true, confirmationUrls: [{label: 'Confirmação da reserva', url: 'documentos/hoteis/Wyndham%20Tamarindo-13-04.pdf'}] },
       { name: 'Hotel Pasatiempo', desc: 'Piscina + 5 min da praia', price: '~US$ 95/noite' },
       { name: 'Tamarindo Diria Beach Resort', desc: 'Pé na areia, café incluso', price: '~US$ 130/noite' }
     ]
@@ -1426,7 +1426,7 @@ const days = [
     ],
     location: 'tamarindo',
     hotels: [
-      { name: 'Wyndham Tamarindo', desc: 'Piscina infinita + café incluso + spa', price: 'US$ 153/noite', reserved: true },
+      { name: 'Wyndham Tamarindo', desc: 'Piscina infinita + café incluso + spa', price: 'US$ 153/noite', reserved: true, confirmationUrls: [{label: 'Confirmação da reserva', url: 'documentos/hoteis/Wyndham%20Tamarindo-13-04.pdf'}] },
       { name: 'Hotel Pasatiempo', desc: 'Última noite em Tamarindo', price: '~US$ 95/noite' }
     ]
   },
@@ -1442,7 +1442,7 @@ const days = [
     ],
     location: 'manuel-antonio',
     hotels: [
-      { name: 'La Vela Boutique Hotel', desc: 'Terraço + vista jardim + café incluso', price: 'US$ 180/noite', reserved: true },
+      { name: 'La Vela Boutique Hotel', desc: 'Terraço + vista jardim + café incluso', price: 'US$ 180/noite', reserved: true, confirmationUrls: [{label: 'Confirmação da reserva', url: 'documentos/hoteis/Manuel-Antonio.pdf'}] },
       { name: 'Hotel Playa Espadilla', desc: '2 min do parque + piscina', price: '~US$ 90/noite' },
       { name: 'Villas Lirio', desc: 'Piscina + ambiente tranquilo', price: '~US$ 80/noite' },
       { name: 'Hotel Manuel Antonio', desc: 'Econômico + perto do parque', price: '~US$ 65/noite' }
@@ -1462,7 +1462,7 @@ const days = [
       { name: 'Hampton Inn Alajuela', desc: 'Transfer aeroporto + café incluso', price: '~US$ 110/noite' },
       { name: 'Hotel Buena Vista', desc: 'Vista do vale + piscina', price: '~US$ 85/noite' },
       { name: 'Adventure Inn', desc: 'Piscina + shuttle aeroporto', price: '~US$ 75/noite' },
-      { name: 'Hotel 1915 INN & SUITES', desc: 'Hotel histórico + café incluso', price: 'US$ 95/noite', reserved: true }
+      { name: 'Hotel 1915 INN & SUITES', desc: 'Hotel histórico + café incluso', price: 'US$ 95/noite', reserved: true, confirmationUrls: [{label: 'Confirmação Dia 1', url: 'documentos/hoteis/Alajuela-09-04.PDF'}, {label: 'Confirmação Dia 8', url: 'documentos/hoteis/Alajuela-16-04.PDF'}] }
     ]
   },
   {
@@ -1551,14 +1551,14 @@ function _wbrl(t) { return window.withBrl ? window.withBrl(t) : t; }
 function renderDay(d, idx) {
   const bookings = getBookings();
   const booked = findBookingForDay(d, bookings);
+  const reservedHotel = !booked ? d.hotels.find(h => h.reserved) : null;
+  const activeBooking = booked || reservedHotel;
   let hotelsHTML = '';
 
   if (d.hotels.length) {
-    const hotelCards = d.hotels.map(h => {
-      const isBooked = (booked && booked.name === h.name) || h.reserved;
+    const hotelCards = d.hotels.filter(h => !h.reserved).map(h => {
       return `
-        <div class="hotel-card${isBooked ? ' hotel-booked' : ''}">
-          ${isBooked ? '<span class="booked-badge">✓ Reservado</span>' : ''}
+        <div class="hotel-card">
           <h4>${h.name}</h4>
           <p>${h.desc}</p>
           <div class="hotel-price">${h.price}${_brl(h.price)}</div>
@@ -1566,30 +1566,44 @@ function renderDay(d, idx) {
       `;
     }).join('');
 
-    hotelsHTML = `
-      <div style="margin-top:40px;">
-        <h3 style="font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--jungle);margin-bottom:16px;">
-          🏨 Hospedagem${booked ? ` <span style="font-size:0.75rem;color:var(--leaf);font-family:DM Sans,sans-serif;font-weight:600;vertical-align:middle;margin-left:8px;">✓ ${booked.name} reservado</span>` : ''}
-        </h3>
-        <div class="hotels">
-          ${booked
-            ? `<div class="hotel-card hotel-booked">
-                <span class="booked-badge">✓ Reservado</span>
-                <h4>${booked.name}</h4>
-                <p>${booked.desc}</p>
-                <div class="hotel-price">${booked.price}${_brl(booked.price)}</div>
-                <div class="booking-meta">
-                  ${booked.checkin && booked.checkout ? '<span class="meta-tag meta-dates">🗓 ' + booked.checkin.split('-').reverse().slice(0,2).join('/') + ' → ' + booked.checkout.split('-').reverse().slice(0,2).join('/') + '</span>' : ''}
-                  ${booked.pin ? '<span class="meta-tag meta-pin">🔑 PIN: ' + booked.pin + '</span>' : ''}
-                  ${booked.cancelDate ? '<span class="meta-tag meta-cancel">📅 Cancelar até: ' + booked.cancelDate.split('-').reverse().slice(0,2).join('/') + '</span>' : ''}
-                </div>
-              </div>`
-            : hotelCards
-          }
+    if (activeBooking) {
+      const ab = activeBooking;
+      const urls = ab.confirmationUrls || (reservedHotel && reservedHotel.confirmationUrls) || [];
+      const confirmLinks = urls.length ? '<div style="margin-top:8px;display:flex;gap:12px;flex-wrap:wrap;">' + urls.map(c => '<a href="' + c.url + '" target="_blank" style="font-size:0.82rem;color:var(--ocean);text-decoration:none;font-weight:500;">📄 ' + c.label + '</a>').join('') + '</div>' : '';
+
+      hotelsHTML = `
+        <div style="margin-top:40px;">
+          <h3 style="font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--jungle);margin-bottom:16px;">
+            🏨 Hospedagem <span style="font-size:0.75rem;color:var(--leaf);font-family:DM Sans,sans-serif;font-weight:600;vertical-align:middle;margin-left:8px;">✓ ${ab.name} reservado</span>
+          </h3>
+          <div class="hotels">
+            <div class="hotel-card hotel-booked">
+              <span class="booked-badge">✓ Reservado</span>
+              <h4>${ab.name}</h4>
+              <p>${ab.desc}</p>
+              <div class="hotel-price">${ab.price}${_brl(ab.price)}</div>
+              <div class="booking-meta">
+                ${ab.checkin && ab.checkout ? '<span class="meta-tag meta-dates">🗓 ' + ab.checkin.split('-').reverse().slice(0,2).join('/') + ' → ' + ab.checkout.split('-').reverse().slice(0,2).join('/') + '</span>' : ''}
+                ${ab.pin ? '<span class="meta-tag meta-pin">🔑 PIN: ' + ab.pin + '</span>' : ''}
+                ${ab.cancelDate ? '<span class="meta-tag meta-cancel">📅 Cancelar até: ' + ab.cancelDate.split('-').reverse().slice(0,2).join('/') + '</span>' : ''}
+              </div>
+              ${confirmLinks}
+            </div>
+          </div>
+          <a href="hospedagem.html" class="hotel-link">Ver detalhes da hospedagem →</a>
         </div>
-        ${!booked ? '<a href="hospedagem.html" class="hotel-link">Ver todas as opções e reservar →</a>' : '<a href="hospedagem.html" class="hotel-link">Alterar reserva →</a>'}
-      </div>
-    `;
+      `;
+    } else {
+      hotelsHTML = `
+        <div style="margin-top:40px;">
+          <h3 style="font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--jungle);margin-bottom:16px;">
+            🏨 Hospedagem
+          </h3>
+          <div class="hotels">${hotelCards}</div>
+          <a href="hospedagem.html" class="hotel-link">Ver todas as opções e reservar →</a>
+        </div>
+      `;
+    }
   }
 
   detailEl.innerHTML = `
