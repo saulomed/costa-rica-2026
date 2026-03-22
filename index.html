@@ -1568,7 +1568,8 @@ function renderDay(d, idx) {
 
     if (activeBooking) {
       const ab = activeBooking;
-      const urls = ab.confirmationUrls || (reservedHotel && reservedHotel.confirmationUrls) || [];
+      const dataHotel = d.hotels.find(h => h.reserved && h.confirmationUrls);
+      const urls = ab.confirmationUrls || (dataHotel && dataHotel.confirmationUrls) || [];
       const confirmLinks = urls.length ? '<div style="margin-top:8px;display:flex;gap:12px;flex-wrap:wrap;">' + urls.map(c => '<a href="' + c.url + '" target="_blank" style="font-size:0.82rem;color:var(--ocean);text-decoration:none;font-weight:500;">📄 ' + c.label + '</a>').join('') + '</div>' : '';
 
       hotelsHTML = `
