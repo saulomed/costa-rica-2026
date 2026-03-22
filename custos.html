@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<title>Custos — Costa Rica 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --jungle: #1a3a2a;
+  --jungle-light: #2d5a3f;
+  --canopy: #3d7a5a;
+  --leaf: #5ca87a;
+  --sand: #f5e6c8;
+  --sand-light: #faf3e6;
+  --sand-dark: #e8d4a8;
+  --lava: #e85d3a;
+  --lava-dark: #c44a2d;
+  --ocean: #2a7ab5;
+  --ocean-light: #3d9ad8;
+  --sky: #87ceeb;
+  --gold: #d4a843;
+  --white: #fefdfb;
+  --text: #2a2520;
+  --text-muted: #6b6560;
+  --text-light: #9a9590;
+  --shadow-sm: 0 1px 3px rgba(26,58,42,0.08);
+  --shadow-md: 0 4px 16px rgba(26,58,42,0.1);
+  --shadow-lg: 0 12px 40px rgba(26,58,42,0.15);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --radius-xs: 6px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text);
+  background: var(--sand-light);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── HEADER ─── */
+.page-header {
+  background:
+    linear-gradient(175deg, rgba(26,58,42,0.88) 0%, rgba(26,58,42,0.65) 60%, rgba(212,168,67,0.25) 100%),
+    url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1600&q=80') center/cover no-repeat;
+  padding: 100px clamp(24px, 6vw, 80px) 60px;
+  position: relative;
+}
+
+.page-header::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 120px;
+  background: linear-gradient(to top, var(--sand-light), transparent);
+}
+
+.header-content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  animation: fadeUp 0.8s ease-out;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255,255,255,0.8);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 24px;
+  padding: 6px 16px;
+  border-radius: 100px;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.15);
+  transition: all 0.3s;
+}
+
+.back-link:hover {
+  background: rgba(255,255,255,0.2);
+  color: white;
+}
+
+.page-header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.2rem, 6vw, 3.5rem);
+  font-weight: 900;
+  color: white;
+  line-height: 1.1;
+  margin-bottom: 12px;
+}
+
+.page-header p {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: rgba(255,255,255,0.75);
+  font-weight: 300;
+}
+
+/* ─── NAV BAR ─── */
+.nav-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(254,253,251,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(26,58,42,0.08);
+  padding: 0 clamp(16px, 4vw, 60px);
+  transition: box-shadow 0.3s;
+}
+
+.nav-bar.scrolled { box-shadow: var(--shadow-md); }
+
+.nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 12px 0;
+}
+
+.nav-inner::-webkit-scrollbar { display: none; }
+
+.nav-btn {
+  flex-shrink: 0;
+  border: none;
+  background: transparent;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  padding: 8px 16px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all 0.25s;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.nav-btn:hover { background: var(--sand); color: var(--jungle); }
+.nav-btn.active { background: var(--jungle); color: white; }
+
+/* ─── SECTIONS ─── */
+.section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px clamp(16px, 4vw, 40px) 40px;
+}
+
+.section-header { margin-bottom: 32px; }
+
+.section-tag {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--lava);
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+  font-weight: 700;
+  color: var(--jungle);
+  line-height: 1.15;
+}
+
+.section-desc {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-top: 8px;
+  max-width: 600px;
+}
+
+/* ─── SUMMARY CARDS ─── */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 48px;
+}
+
+.summary-card {
+  background: white;
+  border-radius: var(--radius);
+  padding: 24px;
+  text-align: center;
+  border: 2px solid rgba(26,58,42,0.06);
+  transition: all 0.3s;
+}
+
+.summary-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.summary-card .emoji { font-size: 2rem; margin-bottom: 10px; }
+
+.summary-card .label {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.summary-card .value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--jungle);
+}
+
+.summary-card .value .brl {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--ocean);
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+.summary-card.total {
+  background: var(--jungle);
+  border-color: var(--jungle);
+}
+
+.summary-card.total .label { color: rgba(255,255,255,0.7); }
+.summary-card.total .value { color: var(--sand); }
+.summary-card.total .value .brl { color: var(--sky); }
+
+/* ─── CATEGORY TABLE ─── */
+.category-section {
+  margin-bottom: 48px;
+}
+
+.category-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid rgba(26,58,42,0.08);
+}
+
+.category-emoji { font-size: 1.5rem; }
+
+.category-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--jungle);
+}
+
+.category-total {
+  margin-left: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--lava);
+}
+
+.cost-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.cost-table thead th {
+  text-align: left;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-light);
+  padding: 10px 16px;
+  border-bottom: 1px solid rgba(26,58,42,0.08);
+}
+
+.cost-table thead th:last-child,
+.cost-table thead th:nth-child(3) {
+  text-align: right;
+}
+
+.cost-table tbody tr {
+  transition: background 0.2s;
+}
+
+.cost-table tbody tr:hover {
+  background: rgba(26,58,42,0.02);
+}
+
+.cost-table td {
+  padding: 14px 16px;
+  font-size: 0.92rem;
+  border-bottom: 1px solid rgba(26,58,42,0.04);
+  vertical-align: middle;
+}
+
+.cost-table td:last-child,
+.cost-table td:nth-child(3) {
+  text-align: right;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.cost-table td:nth-child(3) {
+  color: var(--jungle);
+}
+
+.cost-table td:last-child {
+  color: var(--text-light);
+  font-weight: 500;
+  font-size: 0.82rem;
+}
+
+.item-name {
+  font-weight: 500;
+  color: var(--text);
+}
+
+.item-detail {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 100px;
+  white-space: nowrap;
+}
+
+.status-confirmed {
+  background: rgba(92,168,122,0.15);
+  color: var(--canopy);
+}
+
+.status-estimated {
+  background: rgba(212,168,67,0.15);
+  color: var(--gold);
+}
+
+.status-bought {
+  background: rgba(42,122,181,0.15);
+  color: var(--ocean);
+}
+
+/* Subtotal row */
+.cost-table .subtotal-row td {
+  border-top: 2px solid rgba(26,58,42,0.08);
+  border-bottom: none;
+  padding-top: 16px;
+  font-weight: 700;
+}
+
+.cost-table .subtotal-row td:nth-child(3) {
+  color: var(--lava);
+  font-size: 1rem;
+}
+
+/* ─── GRAND TOTAL ─── */
+.grand-total {
+  background: var(--jungle);
+  border-radius: var(--radius);
+  padding: 40px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.grand-total .label {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.6);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+
+.grand-total .amount {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-weight: 700;
+  color: var(--sand);
+}
+
+.grand-total .amount .brl {
+  display: block;
+  font-size: 0.5em;
+  color: var(--sky);
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+.grand-total .sub {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.5);
+  margin-top: 12px;
+}
+
+.grand-total .breakdown {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+
+.grand-total .breakdown-item {
+  text-align: center;
+}
+
+.grand-total .breakdown-item .b-label {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 4px;
+}
+
+.grand-total .breakdown-item .b-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--leaf);
+}
+
+.grand-total .breakdown-item .b-value.estimated {
+  color: var(--gold);
+}
+
+/* ─── NOTES ─── */
+.notes-section {
+  background: white;
+  border-radius: var(--radius);
+  padding: 32px;
+  margin-top: 48px;
+  border: 2px solid rgba(26,58,42,0.06);
+}
+
+.notes-section h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  color: var(--jungle);
+  margin-bottom: 16px;
+}
+
+.notes-section ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.notes-section li {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  padding-left: 20px;
+  position: relative;
+  line-height: 1.6;
+}
+
+.notes-section li::before {
+  content: '•';
+  position: absolute;
+  left: 4px;
+  color: var(--gold);
+  font-weight: 700;
+}
+
+/* ─── FOOTER ─── */
+.footer {
+  background: var(--jungle);
+  padding: 48px clamp(16px, 4vw, 40px);
+  text-align: center;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.footer p { color: rgba(255,255,255,0.5); font-size: 0.85rem; }
+.footer a { color: var(--sand); text-decoration: none; }
+.footer .pura-vida {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--sand);
+  margin-bottom: 8px;
+}
+
+/* ─── BRL ─── */
+.brl {
+  font-size: 0.82em;
+  color: var(--ocean);
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+.rate-bar {
+  text-align: center;
+  font-size: 0.72rem;
+  color: var(--text-light);
+  padding: 6px;
+  background: var(--sand);
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.5px;
+  display: none;
+}
+.rate-bar.visible { display: block; }
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 768px) {
+  .page-header { padding: 80px 20px 40px; }
+  .summary-grid { grid-template-columns: repeat(2, 1fr); }
+  .cost-table { font-size: 0.85rem; }
+  .cost-table td { padding: 10px 8px; }
+  .cost-table thead th { padding: 8px; font-size: 0.68rem; }
+  .grand-total { padding: 28px 20px; }
+  .grand-total .breakdown { gap: 20px; }
+
+  /* Hide detail column on mobile */
+  .cost-table td:nth-child(2),
+  .cost-table thead th:nth-child(2) { display: none; }
+}
+
+@media (max-width: 480px) {
+  .summary-grid { grid-template-columns: 1fr 1fr; }
+  .summary-card { padding: 16px 12px; }
+  .summary-card .value { font-size: 1.1rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<header class="page-header">
+  <div class="header-content">
+    <a href="index.html" class="back-link">← Voltar ao Roteiro</a>
+    <h1>💰 Custos da Viagem</h1>
+    <p>Controle detalhado de todos os gastos — confirmados e estimados.</p>
+  </div>
+</header>
+
+<!-- ═══ NAV ═══ -->
+<nav class="nav-bar" id="navbar">
+  <div class="nav-inner">
+    <button class="nav-btn active" data-section="resumo" onclick="navigateTo('#resumo')">Resumo</button>
+    <button class="nav-btn" data-section="hospedagem" onclick="navigateTo('#hospedagem')">Hospedagem</button>
+    <button class="nav-btn" data-section="passeios" onclick="navigateTo('#passeios')">Passeios</button>
+    <button class="nav-btn" data-section="transporte" onclick="navigateTo('#transporte')">Transporte</button>
+    <button class="nav-btn" data-section="alimentacao" onclick="navigateTo('#alimentacao')">Alimentacao</button>
+    <a class="nav-btn" href="index.html">📅 Roteiro</a>
+    <a class="nav-btn" href="hospedagem.html">🏨 Hoteis</a>
+  </div>
+</nav>
+<div class="rate-bar" id="rate-bar"></div>
+
+<!-- ═══ RESUMO ═══ -->
+<section class="section" id="resumo">
+  <div class="section-header fade-in">
+    <span class="section-tag">Visao Geral</span>
+    <h2 class="section-title">Resumo dos Custos</h2>
+    <p class="section-desc">Valores para 2 pessoas. Hospedagem 100% confirmada, demais categorias com estimativas.</p>
+  </div>
+
+  <div class="summary-grid fade-in" id="summaryGrid">
+    <!-- Populated by JS -->
+  </div>
+</section>
+
+<!-- ═══ HOSPEDAGEM ═══ -->
+<section class="section" id="hospedagem">
+  <div class="category-section fade-in">
+    <div class="category-header">
+      <span class="category-emoji">🏨</span>
+      <span class="category-title">Hospedagem</span>
+      <span class="category-total" id="totalHospedagem"></span>
+    </div>
+    <table class="cost-table">
+      <thead>
+        <tr>
+          <th>Hotel</th>
+          <th>Detalhes</th>
+          <th>Valor</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="tbHospedagem"></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══ PASSEIOS ═══ -->
+<section class="section" id="passeios">
+  <div class="category-section fade-in">
+    <div class="category-header">
+      <span class="category-emoji">🎫</span>
+      <span class="category-title">Passeios e Entradas</span>
+      <span class="category-total" id="totalPasseios"></span>
+    </div>
+    <table class="cost-table">
+      <thead>
+        <tr>
+          <th>Atividade</th>
+          <th>Dia</th>
+          <th>Valor (p/ 2)</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="tbPasseios"></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══ TRANSPORTE ═══ -->
+<section class="section" id="transporte">
+  <div class="category-section fade-in">
+    <div class="category-header">
+      <span class="category-emoji">🚗</span>
+      <span class="category-title">Transporte</span>
+      <span class="category-total" id="totalTransporte"></span>
+    </div>
+    <table class="cost-table">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Detalhes</th>
+          <th>Valor</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="tbTransporte"></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══ ALIMENTACAO ═══ -->
+<section class="section" id="alimentacao">
+  <div class="category-section fade-in">
+    <div class="category-header">
+      <span class="category-emoji">🍽️</span>
+      <span class="category-title">Alimentacao</span>
+      <span class="category-total" id="totalAlimentacao"></span>
+    </div>
+    <table class="cost-table">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Detalhes</th>
+          <th>Valor</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="tbAlimentacao"></tbody>
+    </table>
+  </div>
+
+  <!-- GRAND TOTAL -->
+  <div class="grand-total fade-in" id="grandTotal">
+    <!-- Populated by JS -->
+  </div>
+
+  <div class="notes-section fade-in">
+    <h3>Observacoes</h3>
+    <ul>
+      <li>Valores de passeios sao por pessoa — a tabela ja mostra o total para 2</li>
+      <li>Hospedagem 100% confirmada e paga/reservada</li>
+      <li>Carro: faixa de preco depende da locadora e tipo de veiculo — <a href="veiculo.html" style="color:var(--ocean);">ver comparativo</a></li>
+      <li>Alimentacao estimada em ~US$ 50/dia para o casal (cafe geralmente incluso no hotel)</li>
+      <li>Nao inclui: passagens aereas, souvenirs, gorjetas e extras</li>
+      <li>Conversao BRL automatica com cotacao atualizada a cada 4h</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <p class="pura-vida">🌴 Pura Vida!</p>
+  <p>Saulo & Lorena · Costa Rica · Abril 2026</p>
+</footer>
+
+<script src="currency.js"></script>
+<script>
+// ─── DATA ───
+const hospedagem = [
+  { name: 'Hotel 1915 INN & SUITES', detail: 'Alajuela — Dia 1 (09/04)', nights: 1, unitPrice: 95, total: 95, status: 'confirmed' },
+  { name: 'Lost Iguana Resort & Spa', detail: 'La Fortuna — Dias 2–3 (10–11/04)', nights: 2, unitPrice: 174, total: 348.67, status: 'confirmed' },
+  { name: 'Rinconcito Lodge', detail: 'Rincon de la Vieja — Dia 4 (12/04)', nights: 1, unitPrice: 85, total: 84.56, status: 'confirmed' },
+  { name: 'Wyndham Tamarindo', detail: 'Tamarindo — Dias 5–6 (13–14/04)', nights: 2, unitPrice: 153, total: 305.15, status: 'confirmed' },
+  { name: 'La Vela Boutique Hotel', detail: 'Manuel Antonio — Dia 7 (15/04)', nights: 1, unitPrice: 180, total: 180, status: 'confirmed' },
+  { name: 'Hotel 1915 INN & SUITES', detail: 'Alajuela — Dia 8 (16/04)', nights: 1, unitPrice: 95, total: 95, status: 'confirmed' }
+];
+
+const passeios = [
+  { name: 'Museo del Oro Precolombino', day: 'Dia 1', pp: 18, total: 36, status: 'estimated' },
+  { name: 'Vulcao Poas', day: 'Dia 2', pp: 16.95, total: 33.90, status: 'bought' },
+  { name: 'Blue Falls of Costa Rica', day: 'Dia 2', pp: 20, total: 40, status: 'bought' },
+  { name: 'Mistico Hanging Bridges', day: 'Dia 3', pp: 28, total: 56, status: 'estimated' },
+  { name: 'Parque Nacional Vulcao Arenal', day: 'Dia 3', pp: 17, total: 34, status: 'estimated' },
+  { name: 'Catarata La Fortuna', day: 'Dia 3', pp: 17, total: 34, status: 'estimated' },
+  { name: 'Baldi Hot Springs', day: 'Dia 3', pp: 50, total: 100, status: 'estimated' },
+  { name: 'Parque Nacional Vulcao Tenorio (Rio Celeste)', day: 'Dia 4', pp: 12, total: 24, status: 'estimated' },
+  { name: 'Hacienda Guachipelin — Combo Aventura', day: 'Dia 5', pp: 135, total: 270, status: 'estimated' },
+  { name: 'Aula de Surf — Tamarindo', day: 'Dia 6', pp: 65, total: 130, status: 'estimated' },
+  { name: 'Rafting Rio Savegre', day: 'Dia 7', pp: 110, total: 220, status: 'estimated' },
+  { name: 'Parque Nacional Manuel Antonio', day: 'Dia 8', pp: 18, total: 36, status: 'estimated' },
+  { name: 'Guia local — Manuel Antonio', day: 'Dia 8', pp: 15, total: 30, status: 'estimated' }
+];
+
+const transporte = [
+  { name: 'Aluguel de carro (8 dias)', detail: 'SUV/4x4 + PLI obrigatorio', min: 500, max: 700, avg: 600, status: 'estimated' },
+  { name: 'Combustivel', detail: '~1.600 km totais, ~US$ 1.30/litro', min: 120, max: 160, avg: 140, status: 'estimated' }
+];
+
+const alimentacao = [
+  { name: 'Alimentacao (8 dias)', detail: '~US$ 50/dia para o casal (cafe incluso nos hoteis)', total: 400, status: 'estimated' }
+];
+
+// ─── HELPERS ───
+function fmt(v) { return 'US$ ' + v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+function fmtInt(v) { return 'US$ ' + Math.round(v).toLocaleString('pt-BR'); }
+function brl(v) {
+  if (!window.BRL_RATE) return '';
+  var r = v * window.BRL_RATE;
+  return '<span class="brl">~R$ ' + r.toLocaleString('pt-BR', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + '</span>';
+}
+function statusBadge(s) {
+  if (s === 'confirmed') return '<span class="status-badge status-confirmed">✓ Confirmado</span>';
+  if (s === 'bought') return '<span class="status-badge status-bought">✓ Comprado</span>';
+  return '<span class="status-badge status-estimated">~ Estimado</span>';
+}
+
+// ─── RENDER ───
+function render() {
+  // Hospedagem
+  var totalH = 0;
+  var rowsH = hospedagem.map(function(h) {
+    totalH += h.total;
+    return '<tr>' +
+      '<td><div class="item-name">' + h.name + '</div></td>' +
+      '<td><div class="item-detail">' + h.detail + ' · ' + h.nights + ' noite' + (h.nights > 1 ? 's' : '') + '</div></td>' +
+      '<td>' + fmt(h.total) + ' ' + brl(h.total) + '</td>' +
+      '<td>' + statusBadge(h.status) + '</td></tr>';
+  }).join('');
+  rowsH += '<tr class="subtotal-row"><td colspan="2"><strong>Total Hospedagem (8 noites)</strong></td><td>' + fmt(totalH) + ' ' + brl(totalH) + '</td><td></td></tr>';
+  document.getElementById('tbHospedagem').innerHTML = rowsH;
+  document.getElementById('totalHospedagem').innerHTML = fmt(totalH);
+
+  // Passeios
+  var totalP = 0;
+  var rowsP = passeios.map(function(p) {
+    totalP += p.total;
+    return '<tr>' +
+      '<td><div class="item-name">' + p.name + '</div></td>' +
+      '<td>' + p.day + '</td>' +
+      '<td>' + fmt(p.total) + ' ' + brl(p.total) + '</td>' +
+      '<td>' + statusBadge(p.status) + '</td></tr>';
+  }).join('');
+  rowsP += '<tr class="subtotal-row"><td colspan="2"><strong>Total Passeios</strong></td><td>' + fmt(totalP) + ' ' + brl(totalP) + '</td><td></td></tr>';
+  document.getElementById('tbPasseios').innerHTML = rowsP;
+  document.getElementById('totalPasseios').innerHTML = '~' + fmtInt(totalP);
+
+  // Transporte
+  var totalTMin = 0, totalTMax = 0, totalTAvg = 0;
+  var rowsT = transporte.map(function(t) {
+    totalTMin += t.min;
+    totalTMax += t.max;
+    totalTAvg += t.avg;
+    return '<tr>' +
+      '<td><div class="item-name">' + t.name + '</div></td>' +
+      '<td><div class="item-detail">' + t.detail + '</div></td>' +
+      '<td>' + fmtInt(t.min) + ' – ' + fmtInt(t.max) + ' ' + brl(t.avg) + '</td>' +
+      '<td>' + statusBadge(t.status) + '</td></tr>';
+  }).join('');
+  rowsT += '<tr class="subtotal-row"><td colspan="2"><strong>Total Transporte</strong></td><td>' + fmtInt(totalTMin) + ' – ' + fmtInt(totalTMax) + ' ' + brl(totalTAvg) + '</td><td></td></tr>';
+  document.getElementById('tbTransporte').innerHTML = rowsT;
+  document.getElementById('totalTransporte').innerHTML = '~' + fmtInt(totalTAvg);
+
+  // Alimentacao
+  var totalA = alimentacao.reduce(function(s, a) { return s + a.total; }, 0);
+  var rowsA = alimentacao.map(function(a) {
+    return '<tr>' +
+      '<td><div class="item-name">' + a.name + '</div></td>' +
+      '<td><div class="item-detail">' + a.detail + '</div></td>' +
+      '<td>~' + fmtInt(a.total) + ' ' + brl(a.total) + '</td>' +
+      '<td>' + statusBadge(a.status) + '</td></tr>';
+  }).join('');
+  rowsA += '<tr class="subtotal-row"><td colspan="2"><strong>Total Alimentacao</strong></td><td>~' + fmtInt(totalA) + ' ' + brl(totalA) + '</td><td></td></tr>';
+  document.getElementById('tbAlimentacao').innerHTML = rowsA;
+  document.getElementById('totalAlimentacao').innerHTML = '~' + fmtInt(totalA);
+
+  // Summary cards
+  var confirmed = totalH + 33.90 + 40; // hospedagem + ingressos comprados
+  var estimatedTotal = totalH + totalP + totalTAvg + totalA;
+  var grid = document.getElementById('summaryGrid');
+  grid.innerHTML =
+    '<div class="summary-card"><div class="emoji">🏨</div><div class="label">Hospedagem</div><div class="value">' + fmt(totalH) + brl(totalH) + '</div></div>' +
+    '<div class="summary-card"><div class="emoji">🎫</div><div class="label">Passeios</div><div class="value">~' + fmtInt(totalP) + brl(totalP) + '</div></div>' +
+    '<div class="summary-card"><div class="emoji">🚗</div><div class="label">Transporte</div><div class="value">~' + fmtInt(totalTAvg) + brl(totalTAvg) + '</div></div>' +
+    '<div class="summary-card"><div class="emoji">🍽️</div><div class="label">Alimentacao</div><div class="value">~' + fmtInt(totalA) + brl(totalA) + '</div></div>' +
+    '<div class="summary-card total"><div class="emoji">💰</div><div class="label">Total Estimado</div><div class="value">~' + fmtInt(estimatedTotal) + brl(estimatedTotal) + '</div></div>';
+
+  // Grand total
+  var gt = document.getElementById('grandTotal');
+  gt.innerHTML =
+    '<div class="label">Total Estimado da Viagem</div>' +
+    '<div class="amount">~' + fmtInt(estimatedTotal) + brl(estimatedTotal) + '</div>' +
+    '<div class="sub">Para 2 pessoas · 9 dias · Abril 2026</div>' +
+    '<div class="breakdown">' +
+      '<div class="breakdown-item"><div class="b-label">Confirmado</div><div class="b-value">' + fmt(confirmed) + '</div></div>' +
+      '<div class="breakdown-item"><div class="b-label">Estimado</div><div class="b-value estimated">~' + fmtInt(estimatedTotal - confirmed) + '</div></div>' +
+      '<div class="breakdown-item"><div class="b-label">Por pessoa</div><div class="b-value">' + '~' + fmtInt(estimatedTotal / 2) + '</div></div>' +
+    '</div>';
+}
+
+render();
+
+// ─── NAV SCROLL ───
+var navbar = document.getElementById('navbar');
+window.addEventListener('scroll', function() {
+  navbar.classList.toggle('scrolled', window.scrollY > 10);
+});
+
+function navigateTo(hash) {
+  var el = document.querySelector(hash);
+  if (el) el.scrollIntoView({ behavior: 'smooth' });
+}
+
+// Active nav on scroll
+var sectionIds = ['resumo', 'hospedagem', 'passeios', 'transporte', 'alimentacao'];
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      document.querySelectorAll('.nav-btn[data-section]').forEach(function(btn) {
+        btn.classList.toggle('active', btn.dataset.section === entry.target.id);
+      });
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+
+sectionIds.forEach(function(id) {
+  var el = document.getElementById(id);
+  if (el) observer.observe(el);
+});
+
+// Fade-in
+var fadeObserver = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.fade-in').forEach(function(el) { fadeObserver.observe(el); });
+
+// Re-render on BRL rate
+window.addEventListener('brl-ready', function() {
+  render();
+  var bar = document.getElementById('rate-bar');
+  bar.classList.add('visible');
+  bar.textContent = 'USD → BRL: ' + window.BRL_RATE.toFixed(2);
+});
+</script>
+</body>
+</html>

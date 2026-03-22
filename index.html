@@ -1183,7 +1183,7 @@ body {
     <button class="nav-btn active" data-section="alerts-section" onclick="navigateTo('#alerts-section')">⚠️ Atenção</button>
     <button class="nav-btn" data-section="todo-section" onclick="navigateTo('#todo-section')">📝 TODO</button>
     <button class="nav-btn" data-section="calendar-section" onclick="navigateTo('#calendar-section')">🗓️ Calendário</button>
-    <button class="nav-btn" data-section="costs-section" onclick="navigateTo('#costs-section')">💰 Custos</button>
+    <a class="nav-btn" href="custos.html">💰 Custos</a>
     <a class="nav-btn" href="hospedagem.html">🏨 Hospedagem</a>
     <a class="nav-btn" href="veiculo.html">🚗 Veículo</a>
     <a class="nav-btn" href="mapa.html">🌍 Mapa</a>
@@ -1301,15 +1301,15 @@ body {
     <h2 class="section-title">💰 Estimativa de Custos</h2>
   </div>
   <div class="cost-grid fade-in">
-    <div class="cost-card"><div class="emoji">🚗</div><div class="category">Carro 4x4 + Seguro</div><div class="amount">US$ 500–800</div></div>
     <div class="cost-card"><div class="emoji">🏨</div><div class="category">Hospedagem (8 noites)</div><div class="amount">US$ 1.108</div></div>
-    <div class="cost-card"><div class="emoji">🍽️</div><div class="category">Alimentação (~US$ 50/dia)</div><div class="amount">US$ 400</div></div>
-    <div class="cost-card"><div class="emoji">🎫</div><div class="category">Passeios e Entradas</div><div class="amount">US$ 450–550</div></div>
+    <div class="cost-card"><div class="emoji">🎫</div><div class="category">Passeios e Entradas</div><div class="amount">~US$ 1.044</div></div>
+    <div class="cost-card"><div class="emoji">🚗</div><div class="category">Transporte</div><div class="amount">~US$ 740</div></div>
+    <div class="cost-card"><div class="emoji">🍽️</div><div class="category">Alimentação</div><div class="amount">~US$ 400</div></div>
   </div>
   <div class="cost-total fade-in">
     <div class="label">Total estimado</div>
-    <div class="amount">US$ 2.200 – 2.800</div>
-    <div class="sub">Hospedagem 8/8 noites confirmada · Abril 2026</div>
+    <div class="amount">~US$ 3.292</div>
+    <div class="sub">Hospedagem 8/8 noites confirmada · <a href="custos.html" style="color:var(--ocean-light);text-decoration:none;font-weight:600;">Ver detalhes completos →</a></div>
   </div>
 </section>
 
@@ -1850,7 +1850,7 @@ function navigateTo(selector) {
 // Navbar shadow + active section tracking
 const navbar = document.getElementById('navbar');
 const navBtns = document.querySelectorAll('.nav-btn[data-section]');
-const sections = ['alerts-section', 'todo-section', 'calendar-section', 'costs-section'];
+const sections = ['alerts-section', 'todo-section', 'calendar-section'];
 
 window.addEventListener('scroll', () => {
   navbar.classList.toggle('scrolled', window.scrollY > 100);
