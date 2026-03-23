@@ -1314,7 +1314,7 @@ body {
         <ul>
           <li><a href="veiculo.html" style="color:var(--sand)">Carro 4x4</a> — ✅ Reservado! (<a href="documentos/carro/reserva-carro.pdf" target="_blank">ver reserva</a>)</li>
           <li>Rafting Rio Savegre — <a href="https://riostropicales.com" target="_blank">Ríos Tropicales</a></li>
-          <li>Hacienda Guachipelin — <a href="https://guachipelin.com" target="_blank">guachipelin.com</a></li>
+          <li>Hacienda Guachipelin — ✅ Comprado! (<a href="documentos/ingressos/tickets%20_%20Hacienda%20Guachipel%C3%ADn%2C%20Costa%20Rica.pdf" target="_blank">ver tickets</a>)</li>
         </ul>
       </div>
       <div class="alert-card fade-in">
@@ -1526,7 +1526,7 @@ const days = [
     route: 'Rinconcito Lodge → Guachipelin (~30 min) → Tamarindo (~2h)',
     blocks: [
       { time: '08h30 – 09h', title: '🚗 Rinconcito → Guachipelin', items: ['Rinconcito Lodge → Hacienda Guachipelin (~27 min, 25 km)', 'Setores diferentes do parque — rota via Liberia/Curubandé', '📍 <a href="https://www.google.com/maps/dir/Rinconcito+Lodge,+Rincón+de+la+Vieja/Hacienda+Guachipelin" target="_blank">Google Maps</a> · <a href="https://www.waze.com/live-map/directions?from=ll.10.7636%2C-85.3411&to=ll.10.7577%2C-85.3555" target="_blank">Waze</a>'] },
-      { time: '09h15 – 17h15', title: '🏇 Hacienda Guachipelin', items: ['🪂 Canopy: 7 tirolesas + Tarzan Swing + Rapel (2h)', '🛟 Tubing: descida pelo rio em boias pelas corredeiras', '💧 Catarata Oropêndola: queda de 25m com poço azul', '🧖 Banho de lama vulcânica + Termas do Rio Negro (10 piscinas)', '💰 US$ 318,92 total (2 adultos) — ✅ Comprado!', '💪 Dia mais físico do roteiro — perfeito para vocês!'], price: 'US$ 318,92', tip: '✅ Reserva #339808430 · Assinar waiver antes!' },
+      { time: '09h15 – 17h15', title: '🏇 Hacienda Guachipelin', items: ['🪂 Canopy: 7 tirolesas + Tarzan Swing + Rapel (2h)', '🛟 Tubing: descida pelo rio em boias pelas corredeiras', '💧 Catarata Oropêndola: queda de 25m com poço azul (entrada inclusa)', '🧖 Banho de lama vulcânica + Termas do Rio Negro (10 piscinas)', '💰 US$ 318,92 total (2 adultos) — ✅ Comprado!', '👟 Levar: calça comprida, roupa de banho, troca de roupa, sapato fechado que possa molhar', '⚠️ Check-in: apresentar cartão de crédito usado na compra + documento com foto', '📄 <a href="documentos/ingressos/tickets%20_%20Hacienda%20Guachipel%C3%ADn%2C%20Costa%20Rica.pdf" target="_blank">Tickets (QR Code)</a> · <a href="documentos/ingressos/Costa%20Rica%20Adventures%20_%20Hacienda%20Guachipel%C3%ADn%2C%20Costa%20Rica.pdf" target="_blank">Confirmação</a>'], price: 'US$ 318,92', tip: '✅ Reserva #339808430 · Assinar waiver obrigatório antes!' },
       { time: '17h30 – 19h30', title: '🚗 Rumo a Tamarindo', items: ['Guachipelin → Wyndham Tamarindo (~2h, 96 km via Liberia)', 'Check-in no hotel. Jantar e descanso', '📍 <a href="https://www.google.com/maps/dir/Hacienda+Guachipelin/Wyndham+Tamarindo,+Costa+Rica" target="_blank">Google Maps</a> · <a href="https://www.waze.com/live-map/directions?from=ll.10.7577%2C-85.3555&to=ll.10.2996%2C-85.8375" target="_blank">Waze</a>'] }
     ],
     location: 'tamarindo',
@@ -1806,7 +1806,8 @@ const todoData = [
     items: [
       { id: 'rincon-hotel', text: 'Rinconcito Lodge — 1 noite (reservado ✅)', autoKey: 'liberia', autoType: 'booking' },
       { id: 'rincon-celeste', text: 'Ingresso Rio Celeste — ✅ Comprado!' },
-      { id: 'rincon-guachipelin', text: 'Ingresso Hacienda Guachipelin — ✅ Comprado!' }
+      { id: 'rincon-guachipelin', text: 'Ingresso Hacienda Guachipelin — ✅ Comprado!' },
+      { id: 'rincon-guachipelin-waiver', text: 'Assinar Liability Waiver da Guachipelin (obrigatório)' }
     ]
   },
   {
