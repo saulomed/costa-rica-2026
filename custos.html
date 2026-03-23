@@ -793,7 +793,8 @@ body {
 <script>
 // ─── ACCESS GATE ───
 (function() {
-  if (GistSync.isConfigured()) {
+  var ALLOWED_GIST = '7c52197305cc203188629ddfafbce468';
+  if (GistSync.isConfigured() && localStorage.getItem('cr2026_gist_id') === ALLOWED_GIST) {
     document.getElementById('pageContent').classList.add('unlocked');
     document.getElementById('lockScreen').style.display = 'none';
   }
