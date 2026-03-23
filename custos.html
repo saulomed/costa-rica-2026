@@ -740,7 +740,7 @@ const passeios = [
 ];
 
 const transporte = [
-  { name: 'Aluguel de carro (8 dias)', detail: 'SUV/4x4 + PLI obrigatorio', min: 500, max: 700, avg: 600, status: 'estimated' },
+  { name: 'Aluguel de carro (8 dias)', detail: 'Sixt — Mitsubishi Montero Sport 4WD · Reserva #9732041599', min: 495.98, max: 495.98, avg: 495.98, status: 'confirmed' },
   { name: 'Combustivel', detail: '~1.600 km totais, ~US$ 1.30/litro', min: 120, max: 160, avg: 140, status: 'estimated' }
 ];
 
@@ -822,7 +822,7 @@ function render() {
   document.getElementById('totalAlimentacao').innerHTML = '~' + fmtInt(totalA);
 
   // Summary cards
-  var confirmed = totalH + 33.90 + 40 + 56 + 27.12 + 36.16; // hospedagem + ingressos comprados (Poas + BlueFalls + Mistico + Tenorio + ManuelAntonio)
+  var confirmed = totalH + 33.90 + 40 + 56 + 27.12 + 36.16 + 495.98; // hospedagem + ingressos comprados + carro Sixt
   var estimatedTotal = totalH + totalP + totalTAvg + totalA;
   var grid = document.getElementById('summaryGrid');
   grid.innerHTML =
