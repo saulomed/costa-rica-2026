@@ -45,6 +45,70 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* ─── LOCK SCREEN ─── */
+.lock-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 40px 24px;
+  text-align: center;
+  animation: fadeUp 0.6s ease-out;
+}
+
+.lock-icon {
+  font-size: 4rem;
+  margin-bottom: 24px;
+  opacity: 0.8;
+}
+
+.lock-screen h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  font-weight: 700;
+  color: var(--jungle);
+  margin-bottom: 12px;
+}
+
+.lock-screen p {
+  font-size: 1rem;
+  color: var(--text-muted);
+  max-width: 440px;
+  line-height: 1.7;
+  margin-bottom: 8px;
+}
+
+.lock-screen .lock-hint {
+  font-size: 0.85rem;
+  color: var(--text-light);
+  margin-top: 8px;
+  margin-bottom: 28px;
+}
+
+.lock-screen .lock-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  background: var(--jungle);
+  color: white;
+  text-decoration: none;
+  border-radius: 100px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.lock-screen .lock-btn:hover {
+  background: var(--jungle-light);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.page-content { display: none; }
+.page-content.unlocked { display: block; }
+
 /* ─── HEADER ─── */
 .page-header {
   background:
@@ -564,6 +628,18 @@ body {
 </head>
 <body>
 
+<!-- ═══ LOCK SCREEN ═══ -->
+<div class="lock-screen" id="lockScreen">
+  <div class="lock-icon">🔒</div>
+  <h1>Acesso Restrito</h1>
+  <p>A planilha de custos da viagem requer sincronismo configurado para ser visualizada.</p>
+  <p class="lock-hint">Configure o Gist Sync no roteiro principal para desbloquear esta pagina.</p>
+  <a href="index.html" class="lock-btn">← Voltar ao Roteiro</a>
+</div>
+
+<!-- ═══ PAGE CONTENT (hidden until sync verified) ═══ -->
+<div class="page-content" id="pageContent">
+
 <!-- ═══ HEADER ═══ -->
 <header class="page-header">
   <div class="header-content">
@@ -710,6 +786,19 @@ body {
   <p class="pura-vida">🌴 Pura Vida!</p>
   <p>Saulo & Lorena · Costa Rica · Abril 2026</p>
 </footer>
+
+</div><!-- /page-content -->
+
+<script src="gist-sync.js"></script>
+<script>
+// ─── ACCESS GATE ───
+(function() {
+  if (GistSync.isConfigured()) {
+    document.getElementById('pageContent').classList.add('unlocked');
+    document.getElementById('lockScreen').style.display = 'none';
+  }
+})();
+</script>
 
 <script src="currency.js"></script>
 <script>
