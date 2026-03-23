@@ -731,11 +731,11 @@ const passeios = [
   { name: 'Parque Nacional Vulcao Arenal', day: 'Dia 3', pp: 17, total: 34, status: 'estimated' },
   { name: 'Catarata La Fortuna', day: 'Dia 3', pp: 17, total: 34, status: 'estimated' },
   { name: 'Baldi Hot Springs', day: 'Dia 3', pp: 50, total: 100, status: 'estimated' },
-  { name: 'Parque Nacional Vulcao Tenorio (Rio Celeste)', day: 'Dia 4', pp: 12, total: 24, status: 'estimated' },
+  { name: 'Parque Nacional Vulcao Tenorio (Rio Celeste)', day: 'Dia 4', pp: 13.56, total: 27.12, status: 'bought' },
   { name: 'Hacienda Guachipelin — Combo Aventura', day: 'Dia 5', pp: 135, total: 270, status: 'estimated' },
   { name: 'Aula de Surf — Tamarindo', day: 'Dia 6', pp: 65, total: 130, status: 'estimated' },
   { name: 'Rafting Rio Savegre', day: 'Dia 7', pp: 110, total: 220, status: 'estimated' },
-  { name: 'Parque Nacional Manuel Antonio', day: 'Dia 8', pp: 18, total: 36, status: 'estimated' },
+  { name: 'Parque Nacional Manuel Antonio', day: 'Dia 8', pp: 18.08, total: 36.16, status: 'bought' },
   { name: 'Guia local — Manuel Antonio', day: 'Dia 8', pp: 15, total: 30, status: 'estimated' }
 ];
 
@@ -822,7 +822,7 @@ function render() {
   document.getElementById('totalAlimentacao').innerHTML = '~' + fmtInt(totalA);
 
   // Summary cards
-  var confirmed = totalH + 33.90 + 40; // hospedagem + ingressos comprados
+  var confirmed = totalH + 33.90 + 40 + 56 + 27.12 + 36.16; // hospedagem + ingressos comprados (Poas + BlueFalls + Mistico + Tenorio + ManuelAntonio)
   var estimatedTotal = totalH + totalP + totalTAvg + totalA;
   var grid = document.getElementById('summaryGrid');
   grid.innerHTML =
