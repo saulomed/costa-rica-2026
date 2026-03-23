@@ -1148,7 +1148,7 @@ body {
     <p class="location-dates">1 noite · Rafting Rio Savegre, Parque Nacional, Playa Biesanz</p>
 
     <div class="hotels-grid">
-      <div class="hotel-card fade-in booked" data-location="manuel-antonio" data-hotel='{"name":"La Vela Boutique Hotel","price":"US$ 180/noite","desc":"Terraço + vista jardim + café incluso","checkin":"2026-04-15","checkout":"2026-04-16","pin":"3414","cancelDate":"2026-03-22"}'>
+      <div class="hotel-card fade-in booked" data-location="manuel-antonio" data-hotel='{"name":"La Vela Boutique Hotel","price":"US$ 180/noite","desc":"Terraço + vista jardim + café incluso","checkin":"2026-04-15","checkout":"2026-04-16","pin":"3414","cancelDate":null}'>
         <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600&q=80')">
           <span class="hotel-pick">✅ Reservado</span>
           <span class="hotel-tier tier-premium">Boutique</span>
@@ -1558,7 +1558,7 @@ function navigateTo(selector) {
 // Navbar shadow + active section tracking
 const navbar = document.getElementById('navbar');
 const navBtns = document.querySelectorAll('.nav-btn[data-section]');
-const sectionIds = ['alajuela', 'la-fortuna', 'tamarindo', 'manuel-antonio', 'dicas'];
+const sectionIds = ['alajuela', 'la-fortuna', 'rincon', 'tamarindo', 'manuel-antonio', 'dicas'];
 
 window.addEventListener('scroll', () => {
   navbar.classList.toggle('scrolled', window.scrollY > 50);

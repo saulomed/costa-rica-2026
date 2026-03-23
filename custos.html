@@ -580,7 +580,7 @@ body {
     <button class="nav-btn" data-section="hospedagem" onclick="navigateTo('#hospedagem')">Hospedagem</button>
     <button class="nav-btn" data-section="passeios" onclick="navigateTo('#passeios')">Passeios</button>
     <button class="nav-btn" data-section="transporte" onclick="navigateTo('#transporte')">Transporte</button>
-    <button class="nav-btn" data-section="alimentacao" onclick="navigateTo('#alimentacao')">Alimentacao</button>
+    <button class="nav-btn" data-section="alimentacao" onclick="navigateTo('#alimentacao')">Alimentação</button>
     <a class="nav-btn" href="index.html">📅 Roteiro</a>
     <a class="nav-btn" href="hospedagem.html">🏨 Hoteis</a>
   </div>
@@ -590,7 +590,7 @@ body {
 <!-- ═══ RESUMO ═══ -->
 <section class="section" id="resumo">
   <div class="section-header fade-in">
-    <span class="section-tag">Visao Geral</span>
+    <span class="section-tag">Visão Geral</span>
     <h2 class="section-title">Resumo dos Custos</h2>
     <p class="section-desc">Valores para 2 pessoas. Hospedagem 100% confirmada, demais categorias com estimativas.</p>
   </div>
@@ -671,7 +671,7 @@ body {
   <div class="category-section fade-in">
     <div class="category-header">
       <span class="category-emoji">🍽️</span>
-      <span class="category-title">Alimentacao</span>
+      <span class="category-title">Alimentação</span>
       <span class="category-total" id="totalAlimentacao"></span>
     </div>
     <table class="cost-table">
@@ -693,7 +693,7 @@ body {
   </div>
 
   <div class="notes-section fade-in">
-    <h3>Observacoes</h3>
+    <h3>Observações</h3>
     <ul>
       <li>Valores de passeios sao por pessoa — a tabela ja mostra o total para 2</li>
       <li>Hospedagem 100% confirmada e paga/reservada</li>
@@ -732,7 +732,7 @@ const passeios = [
   { name: 'Catarata La Fortuna', day: 'Dia 3', pp: 17, total: 34, status: 'estimated' },
   { name: 'Baldi Hot Springs', day: 'Dia 3', pp: 50, total: 100, status: 'estimated' },
   { name: 'Parque Nacional Vulcao Tenorio (Rio Celeste)', day: 'Dia 4', pp: 13.56, total: 27.12, status: 'bought' },
-  { name: 'Hacienda Guachipelin — Combo Aventura', day: 'Dia 5', pp: 135, total: 270, status: 'estimated' },
+  { name: 'Hacienda Guachipelin — One Day Adventure Pass', day: 'Dia 5', pp: 159.46, total: 318.92, status: 'bought' },
   { name: 'Rafting Rio Savegre', day: 'Dia 7', pp: 110, total: 220, status: 'estimated' },
   { name: 'Parque Nacional Manuel Antonio', day: 'Dia 8', pp: 18.08, total: 36.16, status: 'bought' },
   { name: 'Guia local — Manuel Antonio', day: 'Dia 8', pp: 15, total: 30, status: 'estimated' }
@@ -816,19 +816,21 @@ function render() {
       '<td>~' + fmtInt(a.total) + ' ' + brl(a.total) + '</td>' +
       '<td>' + statusBadge(a.status) + '</td></tr>';
   }).join('');
-  rowsA += '<tr class="subtotal-row"><td colspan="2"><strong>Total Alimentacao</strong></td><td>~' + fmtInt(totalA) + ' ' + brl(totalA) + '</td><td></td></tr>';
+  rowsA += '<tr class="subtotal-row"><td colspan="2"><strong>Total Alimentação</strong></td><td>~' + fmtInt(totalA) + ' ' + brl(totalA) + '</td><td></td></tr>';
   document.getElementById('tbAlimentacao').innerHTML = rowsA;
   document.getElementById('totalAlimentacao').innerHTML = '~' + fmtInt(totalA);
 
   // Summary cards
-  var confirmed = totalH + 33.90 + 40 + 56 + 27.12 + 36.16 + 495.98; // hospedagem + ingressos comprados + carro Sixt
+  var confirmedPasseios = passeios.filter(function(p) { return p.status === 'bought'; }).reduce(function(s, p) { return s + p.total; }, 0);
+  var confirmedTransporte = transporte.filter(function(t) { return t.status === 'confirmed'; }).reduce(function(s, t) { return s + t.avg; }, 0);
+  var confirmed = totalH + confirmedPasseios + confirmedTransporte;
   var estimatedTotal = totalH + totalP + totalTAvg + totalA;
   var grid = document.getElementById('summaryGrid');
   grid.innerHTML =
     '<div class="summary-card"><div class="emoji">🏨</div><div class="label">Hospedagem</div><div class="value">' + fmt(totalH) + brl(totalH) + '</div></div>' +
     '<div class="summary-card"><div class="emoji">🎫</div><div class="label">Passeios</div><div class="value">~' + fmtInt(totalP) + brl(totalP) + '</div></div>' +
     '<div class="summary-card"><div class="emoji">🚗</div><div class="label">Transporte</div><div class="value">~' + fmtInt(totalTAvg) + brl(totalTAvg) + '</div></div>' +
-    '<div class="summary-card"><div class="emoji">🍽️</div><div class="label">Alimentacao</div><div class="value">~' + fmtInt(totalA) + brl(totalA) + '</div></div>' +
+    '<div class="summary-card"><div class="emoji">🍽️</div><div class="label">Alimentação</div><div class="value">~' + fmtInt(totalA) + brl(totalA) + '</div></div>' +
     '<div class="summary-card total"><div class="emoji">💰</div><div class="label">Total Estimado</div><div class="value">~' + fmtInt(estimatedTotal) + brl(estimatedTotal) + '</div></div>';
 
   // Grand total
