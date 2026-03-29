@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<title>eSIM GigSky — Costa Rica 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --jungle: #1a3a2a;
+  --jungle-light: #2d5a3f;
+  --canopy: #3d7a5a;
+  --leaf: #5ca87a;
+  --sand: #f5e6c8;
+  --sand-light: #faf3e6;
+  --sand-dark: #e8d4a8;
+  --lava: #e85d3a;
+  --lava-dark: #c44a2d;
+  --ocean: #2a7ab5;
+  --ocean-light: #3d9ad8;
+  --sky: #87ceeb;
+  --gold: #d4a843;
+  --white: #fefdfb;
+  --text: #2a2520;
+  --text-muted: #6b6560;
+  --text-light: #9a9590;
+  --shadow-sm: 0 1px 3px rgba(26,58,42,0.08);
+  --shadow-md: 0 4px 16px rgba(26,58,42,0.1);
+  --shadow-lg: 0 12px 40px rgba(26,58,42,0.15);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --radius-xs: 6px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text);
+  background: var(--sand-light);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── HEADER ─── */
+.page-header {
+  background:
+    linear-gradient(175deg, rgba(26,58,42,0.85) 0%, rgba(26,58,42,0.6) 60%, rgba(42,122,181,0.2) 100%),
+    url('https://images.unsplash.com/photo-1556656793-08538906a9f8?w=1600&q=80') center/cover no-repeat;
+  padding: 100px clamp(24px, 6vw, 80px) 60px;
+  position: relative;
+}
+
+.page-header::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 120px;
+  background: linear-gradient(to top, var(--sand-light), transparent);
+}
+
+.header-content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  animation: fadeUp 0.8s ease-out;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255,255,255,0.8);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 24px;
+  padding: 6px 16px;
+  border-radius: 100px;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.15);
+  transition: all 0.3s;
+}
+
+.back-link:hover {
+  background: rgba(255,255,255,0.2);
+  color: white;
+}
+
+.page-header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.2rem, 6vw, 3.5rem);
+  font-weight: 900;
+  color: white;
+  line-height: 1.1;
+  margin-bottom: 12px;
+}
+
+.page-header p {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: rgba(255,255,255,0.75);
+  font-weight: 300;
+}
+
+/* ─── NAV BAR ─── */
+.nav-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(254,253,251,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(26,58,42,0.08);
+  padding: 0 clamp(16px, 4vw, 60px);
+  transition: box-shadow 0.3s;
+}
+
+.nav-bar.scrolled { box-shadow: var(--shadow-md); }
+
+.nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 12px 0;
+}
+
+.nav-inner::-webkit-scrollbar { display: none; }
+
+.nav-btn {
+  flex-shrink: 0;
+  border: none;
+  background: transparent;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  padding: 8px 16px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all 0.25s;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.nav-btn:hover { background: var(--sand); color: var(--jungle); }
+.nav-btn.active { background: var(--jungle); color: white; }
+
+/* ─── SECTIONS ─── */
+.section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px clamp(16px, 4vw, 40px) 40px;
+}
+
+.section-header {
+  margin-bottom: 32px;
+}
+
+.section-tag {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--lava);
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+  font-weight: 700;
+  color: var(--jungle);
+  line-height: 1.15;
+}
+
+.section-desc {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-top: 8px;
+  max-width: 600px;
+}
+
+/* ─── ESIM CARD ─── */
+.esim-card {
+  background: white;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 2px solid rgba(26,58,42,0.06);
+  max-width: 800px;
+}
+
+.esim-card-header {
+  padding: 32px 28px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.esim-emoji {
+  font-size: 2.4rem;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--sand);
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+
+.esim-type {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--ocean);
+  margin-bottom: 4px;
+}
+
+.esim-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--jungle);
+  line-height: 1.2;
+}
+
+.esim-body {
+  padding: 0 28px 28px;
+}
+
+.esim-desc {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.esim-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 24px;
+}
+
+.feature-tag {
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 5px 12px;
+  border-radius: 100px;
+  background: var(--sand);
+  color: var(--jungle-light);
+  white-space: nowrap;
+}
+
+/* ─── STEPS ─── */
+.steps-container {
+  background: white;
+  border-radius: var(--radius);
+  padding: 32px;
+  border: 2px solid rgba(26,58,42,0.06);
+  max-width: 800px;
+}
+
+.steps-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--jungle);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.step {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.step:last-child { margin-bottom: 0; }
+
+.step-number {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--jungle);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 600;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.step:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: 17px;
+  top: 36px;
+  bottom: -24px;
+  width: 2px;
+  background: var(--sand-dark);
+}
+
+.step-content {
+  flex: 1;
+  padding-top: 6px;
+}
+
+.step-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.step-detail {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.step-detail a {
+  color: var(--ocean);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.step-detail a:hover {
+  text-decoration: underline;
+}
+
+.step-detail code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  background: var(--sand);
+  padding: 2px 8px;
+  border-radius: 4px;
+  color: var(--jungle);
+}
+
+/* ─── ALERT BOX ─── */
+.alert-box {
+  background: #fff3e0;
+  border: 1px solid #ffe0b2;
+  border-radius: var(--radius-xs);
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  font-size: 0.84rem;
+  color: #e65100;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  line-height: 1.5;
+}
+
+.alert-box.alert-info {
+  background: #e3f2fd;
+  border-color: #bbdefb;
+  color: #1565c0;
+}
+
+.alert-box.alert-success {
+  background: #e8f5e9;
+  border-color: #c8e6c9;
+  color: #2e7d32;
+}
+
+.alert-box.alert-warning {
+  background: #fff8e1;
+  border-color: #ffecb3;
+  color: #f57f17;
+}
+
+/* ─── ACTIVATION BOX ─── */
+.activation-box {
+  background: linear-gradient(135deg, var(--jungle) 0%, var(--jungle-light) 100%);
+  border-radius: var(--radius);
+  padding: 28px 32px;
+  color: white;
+  max-width: 800px;
+  margin-bottom: 24px;
+}
+
+.activation-box h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.activation-box p {
+  font-size: 0.92rem;
+  line-height: 1.7;
+  opacity: 0.9;
+}
+
+.activation-box .highlight {
+  display: inline-block;
+  background: rgba(255,255,255,0.15);
+  padding: 2px 10px;
+  border-radius: 4px;
+  font-weight: 600;
+  color: var(--sand);
+}
+
+.activation-dates {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.activation-date-item {
+  background: rgba(255,255,255,0.1);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  border: 1px solid rgba(255,255,255,0.15);
+}
+
+.activation-date-item .label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  opacity: 0.7;
+  margin-bottom: 6px;
+}
+
+.activation-date-item .date {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+/* ─── TIPS ─── */
+.tips-box {
+  background: white;
+  border-radius: var(--radius);
+  padding: 28px 32px;
+  border-left: 4px solid var(--gold);
+  max-width: 800px;
+}
+
+.tips-box h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--jungle);
+  margin-bottom: 16px;
+}
+
+.tips-box ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tips-box li {
+  position: relative;
+  padding-left: 20px;
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.tips-box li::before {
+  content: '\2022';
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+  font-weight: 700;
+  font-size: 1.2rem;
+  line-height: 1.4;
+}
+
+/* ─── PROVIDER BADGE ─── */
+.provider-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  padding: 4px 12px;
+  background: var(--sand);
+  border-radius: 100px;
+  margin-bottom: 12px;
+}
+
+/* ─── PLAN TABLE ─── */
+.plan-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  font-size: 0.85rem;
+}
+
+.plan-table th {
+  text-align: left;
+  font-weight: 600;
+  color: var(--jungle);
+  padding: 8px 12px;
+  border-bottom: 2px solid var(--sand-dark);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.plan-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--sand);
+  color: var(--text-muted);
+}
+
+.plan-table tr:last-child td {
+  border-bottom: none;
+}
+
+.plan-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 500;
+  color: var(--jungle) !important;
+  font-size: 0.82rem;
+}
+
+.plan-recommended {
+  background: rgba(92,168,122,0.08);
+}
+
+.plan-recommended td:first-child::after {
+  content: ' (recomendado)';
+  color: var(--leaf);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease-out;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 480px) {
+  .esim-card-header {
+    padding: 24px 20px 16px;
+  }
+
+  .esim-body {
+    padding: 0 20px 24px;
+  }
+
+  .steps-container {
+    padding: 24px 20px;
+  }
+
+  .activation-box {
+    padding: 24px 20px;
+  }
+
+  .activation-dates {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<header class="page-header">
+  <div class="header-content">
+    <a href="index.html" class="back-link">&larr; Voltar ao roteiro</a>
+    <h1>eSIM &mdash; Internet na Viagem</h1>
+    <p>Chip virtual GigSky com beneficio Visa Infinite para ter internet na Costa Rica</p>
+  </div>
+</header>
+
+<!-- ═══ NAV ═══ -->
+<nav class="nav-bar" id="navbar">
+  <div class="nav-inner">
+    <button class="nav-btn active" data-section="sobre" onclick="navigateTo('#sobre')">Sobre</button>
+    <button class="nav-btn" data-section="quando-ativar" onclick="navigateTo('#quando-ativar')">Quando Ativar</button>
+    <button class="nav-btn" data-section="ativacao" onclick="navigateTo('#ativacao')">Ativar eSIM</button>
+    <button class="nav-btn" data-section="reembolso" onclick="navigateTo('#reembolso')">Reembolso Visa</button>
+    <button class="nav-btn" data-section="dicas" onclick="navigateTo('#dicas')">Dicas</button>
+    <a class="nav-btn" href="index.html">&#x1F4C5; Roteiro</a>
+  </div>
+</nav>
+
+<!-- ═══ SOBRE O ESIM ═══ -->
+<section class="section" id="sobre">
+  <div class="section-header fade-in">
+    <span class="section-tag">Conectividade</span>
+    <h2 class="section-title">O que e o eSIM GigSky?</h2>
+    <p class="section-desc">Chip virtual que funciona direto no celular, sem precisar trocar o chip fisico. Basta instalar o perfil e ativar.</p>
+  </div>
+
+  <div class="esim-card fade-in">
+    <div class="esim-card-header">
+      <div class="esim-emoji">&#x1F4F6;</div>
+      <div>
+        <div class="esim-type">eSIM Internacional</div>
+        <div class="esim-name">GigSky &mdash; Costa Rica</div>
+      </div>
+    </div>
+    <div class="esim-body">
+      <span class="provider-badge">GigSky &middot; Beneficio Visa Infinite</span>
+      <p class="esim-desc">
+        O GigSky e um provedor de eSIM que oferece planos de dados internacionais.
+        Portadores do cartao <strong>Visa Infinite</strong> tem direito a um plano gratuito
+        de dados a cada 180 dias, como beneficio do cartao. O plano cobre dados moveis
+        em mais de 190 paises, incluindo a Costa Rica.
+      </p>
+
+      <table class="plan-table">
+        <thead>
+          <tr>
+            <th>Plano</th>
+            <th>Dados</th>
+            <th>Validade</th>
+            <th>Custo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="plan-recommended">
+            <td>Visa Infinite (beneficio)</td>
+            <td class="plan-value">2 GB</td>
+            <td class="plan-value">30 dias</td>
+            <td class="plan-value">Gratuito</td>
+          </tr>
+          <tr>
+            <td>Americas 5 GB</td>
+            <td class="plan-value">5 GB</td>
+            <td class="plan-value">30 dias</td>
+            <td class="plan-value">~US$ 30</td>
+          </tr>
+          <tr>
+            <td>Americas 10 GB</td>
+            <td class="plan-value">10 GB</td>
+            <td class="plan-value">30 dias</td>
+            <td class="plan-value">~US$ 50</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="esim-features">
+        <span class="feature-tag">2 GB gratis (Visa Infinite)</span>
+        <span class="feature-tag">Sem troca de chip</span>
+        <span class="feature-tag">190+ paises</span>
+        <span class="feature-tag">Ativa em minutos</span>
+        <span class="feature-tag">Validade 30 dias</span>
+      </div>
+
+      <div class="alert-box alert-info">
+        <span>&#x2139;&#xFE0F;</span>
+        <span>O plano gratuito do Visa Infinite oferece <strong>2 GB por 30 dias</strong>. Pode ser resgatado a cada 180 dias. Para uma viagem de 9 dias, 2 GB e suficiente para uso moderado (mapas, mensagens, redes sociais).</span>
+      </div>
+
+      <div class="alert-box alert-warning">
+        <span>&#x26A0;&#xFE0F;</span>
+        <span>O eSIM funciona apenas para <strong>dados moveis</strong>. Nao inclui chamadas nem SMS. Use WhatsApp ou apps de VoIP para ligacoes.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ QUANDO ATIVAR ═══ -->
+<section class="section" id="quando-ativar">
+  <div class="section-header fade-in">
+    <span class="section-tag">Planejamento</span>
+    <h2 class="section-title">Quando ativar o plano?</h2>
+    <p class="section-desc">Timing ideal para nao desperdicar dias do plano.</p>
+  </div>
+
+  <div class="activation-box fade-in">
+    <h3>&#x1F4C5; Datas recomendadas</h3>
+    <p>
+      O plano GigSky comeca a contar a validade de 30 dias a partir da <strong>primeira conexao a rede</strong> no pais de destino.
+      Voce pode instalar o perfil eSIM antes da viagem (no Wi-Fi de casa), mas so ativar os dados moveis ao chegar na Costa Rica.
+    </p>
+
+    <div class="activation-dates">
+      <div class="activation-date-item">
+        <div class="label">Instalar o perfil eSIM</div>
+        <div class="date">07 ou 08/Abr</div>
+      </div>
+      <div class="activation-date-item">
+        <div class="label">Ativar dados moveis</div>
+        <div class="date">09/Abr (ao pousar)</div>
+      </div>
+      <div class="activation-date-item">
+        <div class="label">Plano expira em</div>
+        <div class="date">09/Mai</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert-box alert-success fade-in" style="max-width:800px;">
+    <span>&#x2705;</span>
+    <span><strong>Dica:</strong> Instale o perfil eSIM 1-2 dias antes da viagem enquanto estiver no Wi-Fi. Assim voce garante que tudo funciona sem estresse. Apenas <strong>nao ative os dados moveis</strong> ate pousar na Costa Rica.</span>
+  </div>
+</section>
+
+<!-- ═══ PASSO A PASSO ATIVAÇÃO ═══ -->
+<section class="section" id="ativacao">
+  <div class="section-header fade-in">
+    <span class="section-tag">Tutorial</span>
+    <h2 class="section-title">Como ativar o eSIM GigSky</h2>
+    <p class="section-desc">Passo a passo para instalar e configurar o eSIM no celular.</p>
+  </div>
+
+  <div class="steps-container fade-in">
+    <div class="steps-title">&#x1F4F1; Instalacao do eSIM</div>
+
+    <div class="step">
+      <div class="step-number">1</div>
+      <div class="step-content">
+        <div class="step-label">Baixe o app GigSky</div>
+        <div class="step-detail">
+          Procure por <strong>&ldquo;GigSky&rdquo;</strong> na App Store (iPhone) ou Google Play (Android) e instale o aplicativo.
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">2</div>
+      <div class="step-content">
+        <div class="step-label">Crie uma conta</div>
+        <div class="step-detail">
+          Abra o app e crie uma conta com seu e-mail. Voce tambem pode entrar com Apple ID ou Google.
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">3</div>
+      <div class="step-content">
+        <div class="step-label">Verifique compatibilidade do celular</div>
+        <div class="step-detail">
+          No app, va em <code>Settings</code> &rarr; <code>Check eSIM Compatibility</code>.
+          Modelos compativeis: iPhone XS ou superior, Samsung Galaxy S20+, Pixel 3 ou superior, entre outros.
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">4</div>
+      <div class="step-content">
+        <div class="step-label">Resgate o plano Visa Infinite</div>
+        <div class="step-detail">
+          No app GigSky, procure a secao <strong>&ldquo;Visa Benefit&rdquo;</strong> ou <strong>&ldquo;Redeem Visa Offer&rdquo;</strong>.
+          Insira os <strong>6 primeiros digitos</strong> (BIN) do seu cartao Visa Infinite para validar o beneficio.
+          O plano de 2 GB gratuito sera adicionado a sua conta.
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">5</div>
+      <div class="step-content">
+        <div class="step-label">Instale o perfil eSIM</div>
+        <div class="step-detail">
+          Apos resgatar o plano, o app ira guiar a instalacao do perfil eSIM.
+          <strong>Voce precisa estar conectado ao Wi-Fi</strong> para este passo.
+          No iPhone: ira aparecer uma tela &ldquo;Adicionar Plano Celular&rdquo;. Confirme a instalacao.
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">6</div>
+      <div class="step-content">
+        <div class="step-label">Configure como linha secundaria</div>
+        <div class="step-detail">
+          Apos instalar, va em <strong>Ajustes &rarr; Celular &rarr; Planos Celulares</strong>.
+          Renomeie a linha para &ldquo;GigSky&rdquo; ou &ldquo;Costa Rica&rdquo;.
+          Deixe o <strong>Dados Moveis desligado</strong> para o eSIM por enquanto.
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">7</div>
+      <div class="step-content">
+        <div class="step-label">Ao pousar na Costa Rica: ative!</div>
+        <div class="step-detail">
+          Va em <strong>Ajustes &rarr; Celular &rarr; Dados Celulares</strong> e selecione a linha GigSky.
+          Ative o <strong>Roaming de Dados</strong> se solicitado. Em poucos segundos voce estara conectado.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ REEMBOLSO VISA ═══ -->
+<section class="section" id="reembolso">
+  <div class="section-header fade-in">
+    <span class="section-tag">Beneficio Visa</span>
+    <h2 class="section-title">Como recuperar o beneficio Visa Infinite</h2>
+    <p class="section-desc">Passo a passo para resgatar o plano gratuito de dados pelo cartao.</p>
+  </div>
+
+  <div class="steps-container fade-in">
+    <div class="steps-title">&#x1F4B3; Resgate do beneficio</div>
+
+    <div class="step">
+      <div class="step-number">1</div>
+      <div class="step-content">
+        <div class="step-label">Acesse o Portal de Beneficios Visa</div>
+        <div class="step-detail">
+          Acesse <strong>visa.com.br/portaldebeneficos</strong> e faca login com seus dados.
+          Localize o beneficio <strong>&ldquo;GigSky eSIM&rdquo;</strong> na lista de beneficios disponiveis para o Visa Infinite.
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">2</div>
+      <div class="step-content">
+        <div class="step-label">Abra o app GigSky</div>
+        <div class="step-detail">
+          No app GigSky, toque em <strong>&ldquo;Get Free Data&rdquo;</strong> ou <strong>&ldquo;Visa Benefit&rdquo;</strong> na tela principal.
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">3</div>
+      <div class="step-content">
+        <div class="step-label">Informe o BIN do cartao</div>
+        <div class="step-detail">
+          Digite os <strong>6 primeiros digitos</strong> do numero do seu cartao Visa Infinite.
+          O sistema ira validar automaticamente que seu cartao e elegivel ao beneficio.
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">4</div>
+      <div class="step-content">
+        <div class="step-label">Escolha a regiao</div>
+        <div class="step-detail">
+          Selecione a regiao <strong>&ldquo;Americas&rdquo;</strong> ou <strong>&ldquo;Central America&rdquo;</strong> que inclui a Costa Rica.
+          Confirme o resgate do plano de 2 GB / 30 dias.
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">5</div>
+      <div class="step-content">
+        <div class="step-label">Pronto! Plano resgatado</div>
+        <div class="step-detail">
+          O plano sera associado ao seu eSIM. Lembre-se: a validade de 30 dias comeca a contar
+          a partir da <strong>primeira conexao no destino</strong>, nao do resgate.
+          Voce pode resgatar novamente apos 180 dias.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert-box alert-info fade-in" style="max-width:800px;margin-top:24px;">
+    <span>&#x2139;&#xFE0F;</span>
+    <span><strong>Importante:</strong> Caso voce ja tenha resgatado o beneficio nos ultimos 180 dias, sera necessario comprar um plano avulso no app GigSky. Planos para Americas a partir de ~US$ 30 (5 GB).</span>
+  </div>
+</section>
+
+<!-- ═══ DICAS ═══ -->
+<section class="section" id="dicas">
+  <div class="section-header fade-in">
+    <span class="section-tag">Importante</span>
+    <h2 class="section-title">Dicas de uso</h2>
+  </div>
+
+  <div class="tips-box fade-in">
+    <h3>Antes da viagem</h3>
+    <ul>
+      <li>Instale o eSIM <strong>1-2 dias antes</strong> no Wi-Fi de casa para garantir que funciona</li>
+      <li>Verifique se seu celular e compativel com eSIM antes de contar com esse plano</li>
+      <li>Desative o <strong>roaming do chip brasileiro</strong> para evitar cobranças inesperadas</li>
+      <li>Anote os 6 primeiros digitos do cartao Visa Infinite para o resgate</li>
+    </ul>
+  </div>
+
+  <div class="tips-box fade-in" style="margin-top: 16px; border-left-color: var(--lava);">
+    <h3>Durante a viagem</h3>
+    <ul>
+      <li>Use Wi-Fi dos hoteis/restaurantes sempre que possivel para economizar dados</li>
+      <li>Baixe mapas offline do <strong>Google Maps</strong> da Costa Rica antes de viajar</li>
+      <li>2 GB duram ~9 dias com uso moderado (mapas, WhatsApp, redes sociais basico)</li>
+      <li>Evite assistir videos em alta qualidade ou fazer videochamadas longas no 4G</li>
+      <li>Se os dados acabarem, voce pode comprar mais pelo app GigSky</li>
+    </ul>
+  </div>
+
+  <div class="tips-box fade-in" style="margin-top: 16px; border-left-color: var(--ocean);">
+    <h3>Economia de dados</h3>
+    <ul>
+      <li><strong>WhatsApp:</strong> desative download automatico de midias em dados moveis</li>
+      <li><strong>Instagram/TikTok:</strong> evite rolar feed no 4G &mdash; consome dados rapidamente</li>
+      <li><strong>Spotify:</strong> baixe playlists no Wi-Fi antes de sair</li>
+      <li><strong>Google Maps:</strong> baixe mapa offline da Costa Rica &mdash; funciona sem internet</li>
+      <li><strong>iPhone:</strong> em Ajustes &rarr; Celular, veja quais apps mais consomem e restrinja</li>
+    </ul>
+  </div>
+</section>
+
+<script>
+// ─── NAVIGATION ───
+function navigateTo(selector) {
+  const el = document.querySelector(selector);
+  if (el) {
+    const navHeight = document.getElementById('navbar').offsetHeight;
+    const top = el.getBoundingClientRect().top + window.pageYOffset - navHeight - 8;
+    window.scrollTo({ top: top, behavior: 'smooth' });
+  }
+}
+
+// Navbar shadow + active section tracking
+const navbar = document.getElementById('navbar');
+const navBtns = document.querySelectorAll('.nav-btn[data-section]');
+const sectionIds = ['sobre', 'quando-ativar', 'ativacao', 'reembolso', 'dicas'];
+
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 50);
+
+  const navHeight = navbar.offsetHeight + 20;
+  let current = '';
+  sectionIds.forEach(id => {
+    const sec = document.getElementById(id);
+    if (sec && sec.getBoundingClientRect().top <= navHeight + 80) {
+      current = id;
+    }
+  });
+  navBtns.forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.section === current);
+  });
+});
+
+// Fade-in observer
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
