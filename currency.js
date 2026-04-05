@@ -24,6 +24,7 @@
   }
 
   window.BRL_RATE = null;
+  window.CRC_RATE = null;
 
   // Retorna texto BRL puro: "~US$ 110/noite" → "~R$ 638/noite"
   window.toBrlText = function(t) {
@@ -114,10 +115,10 @@
 
   // Busca e cacheia a cotação
   async function init() {
-    var rate = null;
+    var rate = null, crcRate = null;
     try {
       var c = JSON.parse(localStorage.getItem(CK));
-      if (c && Date.now() - c.ts < TTL) rate = c.rate;
+      if (c && Date.now() - c.ts < TTL) { rate = c.rate; crcRate = c.crc || null; }
     } catch(e) {}
 
     if (!rate) {
@@ -125,12 +126,14 @@
         var res = await fetch('https://open.er-api.com/v6/latest/USD');
         var d = await res.json();
         rate = d.rates && d.rates.BRL;
-        if (rate) localStorage.setItem(CK, JSON.stringify({ rate: rate, ts: Date.now() }));
+        crcRate = d.rates && d.rates.CRC;
+        if (rate) localStorage.setItem(CK, JSON.stringify({ rate: rate, crc: crcRate || null, ts: Date.now() }));
       } catch(e) {}
     }
 
     if (rate) {
       window.BRL_RATE = rate;
+      window.CRC_RATE = crcRate;
       window.applyBrlConversion();
       window.dispatchEvent(new CustomEvent('brl-ready'));
     }
