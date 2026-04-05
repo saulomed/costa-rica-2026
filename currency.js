@@ -121,7 +121,7 @@
       if (c && Date.now() - c.ts < TTL) { rate = c.rate; crcRate = c.crc || null; }
     } catch(e) {}
 
-    if (!rate) {
+    if (!rate || !crcRate) {
       try {
         var res = await fetch('https://open.er-api.com/v6/latest/USD');
         var d = await res.json();
