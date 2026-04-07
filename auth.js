@@ -334,7 +334,7 @@
       ? '<span class="auth-badge auth-badge-full">🔓 ' + label + '</span>'
       : '<span class="auth-badge auth-badge-readonly">👁️ ' + label + '</span>';
 
-    var adminBtn = permission === 'full' && firestoreAvailable
+    var adminBtn = permission === 'full'
       ? '<button class="auth-admin-btn" title="Gerenciar usuários">👥</button>'
       : '';
 
@@ -361,13 +361,31 @@
   // ══════════════════════════════════════════════════════
   //  PAINEL DE ADMINISTRAÇÃO DE USUÁRIOS
   // ══════════════════════════════════════════════════════
+  function ensureFirestore() {
+    if (firestoreAvailable && db) return Promise.resolve(true);
+    if (typeof firebase.firestore === 'function') {
+      db = firebase.firestore();
+      firestoreAvailable = true;
+      return loadUsersFromFirestore().then(function () { return true; });
+    }
+    return Promise.resolve(false);
+  }
+
   function toggleAdminPanel() {
     var existing = document.getElementById('admin-panel');
     if (existing) {
       existing.remove();
       return;
     }
-    createAdminPanel();
+    ensureFirestore().then(function (ok) {
+      if (!ok) {
+        showRestrictedToast();
+        var toast = document.getElementById('auth-toast');
+        if (toast) toast.textContent = '⚠️ Firestore indisponível — recarregue a página';
+        return;
+      }
+      createAdminPanel();
+    });
   }
 
   function createAdminPanel() {
