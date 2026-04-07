@@ -28,7 +28,9 @@
     'lorenatablada@gmail.com':       'full',
     'devcansadosaulo@gmail.com':     'readonly',
     'wifesa@gmail.com': 'readonly' ,
-    'victormop10@gmail.com': 'readonly' 
+    'victormop10@gmail.com': 'readonly',
+    'micheledevasconcelos@gmail.com': 'readonly',
+    'ricardoteix@gmail.com': 'readonly' 
     // Adicione mais emails conforme necessário
   };
 
