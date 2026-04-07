@@ -5,7 +5,12 @@
  *   'full'     → acesso total (todos os links e documentos)
  *   'readonly' → visualiza o site, mas links de documentos ficam desabilitados
  *
- * Uso: incluir Firebase SDK + este script em cada página HTML
+ * Gestão de usuários:
+ *   Usuários com 'full' podem adicionar/remover outros usuários via painel admin.
+ *   A whitelist é armazenada no Firestore (coleção 'authorized_users').
+ *   Fallback para lista hardcoded caso Firestore esteja indisponível.
+ *
+ * Uso: incluir Firebase SDK (app + auth + firestore) + este script em cada página HTML
  */
 (function () {
   // ╔════════════════════════════════════════════════════════╗
@@ -21,17 +26,16 @@
   };
 
   // ╔════════════════════════════════════════════════════════╗
-  // ║  WHITELIST — emails autorizados e nível de acesso     ║
+  // ║  WHITELIST FALLBACK — usado se Firestore indisponível ║
   // ╚════════════════════════════════════════════════════════╝
-  const ALLOWED_USERS = {
-    'saulomed@gmail.com':       'full',
-    'lorenatablada@gmail.com':       'full',
-    'devcansadosaulo@gmail.com':     'readonly',
-    'wifesa@gmail.com': 'readonly' ,
-    'victormop10@gmail.com': 'readonly',
-    'micheledevasconcelos@gmail.com': 'readonly',
-    'ricardoteix@gmail.com': 'readonly' 
-    // Adicione mais emails conforme necessário
+  const FALLBACK_USERS = {
+    'saulomed@gmail.com':              'full',
+    'lorenatablada@gmail.com':         'full',
+    'devcansadosaulo@gmail.com':       'readonly',
+    'wifesa@gmail.com':                'readonly',
+    'victormop10@gmail.com':           'readonly',
+    'micheledevasconcelos@gmail.com':  'readonly',
+    'ricardoteix@gmail.com':           'readonly'
   };
 
   // ── Padrões de links restritos para 'readonly' ──
@@ -45,6 +49,9 @@
   // ── Estado ──
   let currentUser = null;
   let currentPermission = null;
+  let allowedUsers = Object.assign({}, FALLBACK_USERS);
+  let firestoreAvailable = false;
+  let db = null;
 
   // ══════════════════════════════════════════════════════
   //  INICIALIZAÇÃO
@@ -60,16 +67,96 @@
       firebase.initializeApp(FIREBASE_CONFIG);
     }
 
+    // Inicializa Firestore se disponível
+    if (typeof firebase.firestore === 'function') {
+      db = firebase.firestore();
+      firestoreAvailable = true;
+    }
+
     injectStyles();
     createOverlay();
 
-    // Escuta mudanças de autenticação
-    firebase.auth().onAuthStateChanged(function (user) {
-      if (user) {
-        handleSignedIn(user);
-      } else {
-        showLogin();
-      }
+    // Carrega usuários do Firestore e depois escuta auth
+    loadUsersFromFirestore().then(function () {
+      firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+          handleSignedIn(user);
+        } else {
+          showLogin();
+        }
+      });
+    });
+  }
+
+  // ══════════════════════════════════════════════════════
+  //  FIRESTORE — GESTÃO DE USUÁRIOS
+  // ══════════════════════════════════════════════════════
+  function loadUsersFromFirestore() {
+    if (!firestoreAvailable) return Promise.resolve();
+
+    return db.collection('authorized_users').get()
+      .then(function (snapshot) {
+        if (snapshot.empty) {
+          // Primeira vez: popula Firestore com a lista fallback
+          return seedFirestoreUsers();
+        }
+        // Carrega usuários do Firestore
+        allowedUsers = {};
+        snapshot.forEach(function (doc) {
+          var data = doc.data();
+          allowedUsers[doc.id] = data.permission || 'readonly';
+        });
+      })
+      .catch(function (err) {
+        console.warn('[auth] Firestore indisponível, usando lista local:', err.message);
+        firestoreAvailable = false;
+      });
+  }
+
+  function seedFirestoreUsers() {
+    var batch = db.batch();
+    Object.keys(FALLBACK_USERS).forEach(function (email) {
+      var ref = db.collection('authorized_users').doc(email);
+      batch.set(ref, {
+        permission: FALLBACK_USERS[email],
+        addedBy: 'system',
+        addedAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+    });
+    return batch.commit().then(function () {
+      allowedUsers = Object.assign({}, FALLBACK_USERS);
+    });
+  }
+
+  function addUserToFirestore(email, permission) {
+    if (!firestoreAvailable) return Promise.reject(new Error('Firestore indisponível'));
+    var ref = db.collection('authorized_users').doc(email);
+    return ref.set({
+      permission: permission,
+      addedBy: currentUser.email,
+      addedAt: firebase.firestore.FieldValue.serverTimestamp()
+    }).then(function () {
+      allowedUsers[email] = permission;
+    });
+  }
+
+  function updateUserInFirestore(email, permission) {
+    if (!firestoreAvailable) return Promise.reject(new Error('Firestore indisponível'));
+    var ref = db.collection('authorized_users').doc(email);
+    return ref.update({
+      permission: permission,
+      updatedBy: currentUser.email,
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    }).then(function () {
+      allowedUsers[email] = permission;
+    });
+  }
+
+  function removeUserFromFirestore(email) {
+    if (!firestoreAvailable) return Promise.reject(new Error('Firestore indisponível'));
+    var ref = db.collection('authorized_users').doc(email);
+    return ref.delete().then(function () {
+      delete allowedUsers[email];
     });
   }
 
@@ -78,7 +165,7 @@
   // ══════════════════════════════════════════════════════
   function handleSignedIn(user) {
     var email = user.email.toLowerCase();
-    var permission = ALLOWED_USERS[email];
+    var permission = allowedUsers[email];
 
     if (!permission) {
       showAccessDenied(email);
@@ -212,6 +299,9 @@
     // Remove user bar se existir
     var bar = document.getElementById('auth-user-bar');
     if (bar) bar.remove();
+    // Remove admin panel se existir
+    var panel = document.getElementById('admin-panel');
+    if (panel) panel.remove();
   }
 
   function showAccessDenied(email) {
@@ -244,6 +334,10 @@
       ? '<span class="auth-badge auth-badge-full">🔓 ' + label + '</span>'
       : '<span class="auth-badge auth-badge-readonly">👁️ ' + label + '</span>';
 
+    var adminBtn = permission === 'full' && firestoreAvailable
+      ? '<button class="auth-admin-btn" title="Gerenciar usuários">👥</button>'
+      : '';
+
     var bar = document.createElement('div');
     bar.id = 'auth-user-bar';
     bar.innerHTML =
@@ -251,11 +345,169 @@
         '<img class="auth-avatar" src="' + (user.photoURL || '') + '" alt="" referrerpolicy="no-referrer">' +
         '<span class="auth-bar-name">' + (user.displayName || user.email) + '</span>' +
         badge +
+        adminBtn +
         '<button class="auth-logout-btn" title="Sair">Sair</button>' +
       '</div>';
 
     document.body.appendChild(bar);
     bar.querySelector('.auth-logout-btn').addEventListener('click', signOut);
+
+    var adminBtnEl = bar.querySelector('.auth-admin-btn');
+    if (adminBtnEl) {
+      adminBtnEl.addEventListener('click', toggleAdminPanel);
+    }
+  }
+
+  // ══════════════════════════════════════════════════════
+  //  PAINEL DE ADMINISTRAÇÃO DE USUÁRIOS
+  // ══════════════════════════════════════════════════════
+  function toggleAdminPanel() {
+    var existing = document.getElementById('admin-panel');
+    if (existing) {
+      existing.remove();
+      return;
+    }
+    createAdminPanel();
+  }
+
+  function createAdminPanel() {
+    var panel = document.createElement('div');
+    panel.id = 'admin-panel';
+
+    var html =
+      '<div class="admin-panel-inner">' +
+        '<div class="admin-header">' +
+          '<h2 class="admin-title">Gerenciar Usuários</h2>' +
+          '<button class="admin-close-btn" title="Fechar">&times;</button>' +
+        '</div>' +
+        '<div class="admin-add-form">' +
+          '<input type="email" id="admin-email-input" class="admin-input" placeholder="email@exemplo.com">' +
+          '<select id="admin-permission-select" class="admin-select">' +
+            '<option value="readonly">Somente leitura</option>' +
+            '<option value="full">Acesso total</option>' +
+          '</select>' +
+          '<button id="admin-add-btn" class="admin-add-btn">Adicionar</button>' +
+        '</div>' +
+        '<p id="admin-feedback" class="admin-feedback"></p>' +
+        '<div class="admin-user-list" id="admin-user-list"></div>' +
+      '</div>';
+
+    panel.innerHTML = html;
+    document.body.appendChild(panel);
+
+    panel.querySelector('.admin-close-btn').addEventListener('click', function () {
+      panel.remove();
+    });
+
+    document.getElementById('admin-add-btn').addEventListener('click', handleAddUser);
+    document.getElementById('admin-email-input').addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') handleAddUser();
+    });
+
+    renderUserList();
+  }
+
+  function renderUserList() {
+    var container = document.getElementById('admin-user-list');
+    if (!container) return;
+
+    var emails = Object.keys(allowedUsers).sort();
+    var html = '';
+
+    emails.forEach(function (email) {
+      var perm = allowedUsers[email];
+      var isSelf = currentUser && email === currentUser.email.toLowerCase();
+      var permLabel = perm === 'full' ? 'Acesso total' : 'Somente leitura';
+      var permClass = perm === 'full' ? 'admin-perm-full' : 'admin-perm-readonly';
+
+      html +=
+        '<div class="admin-user-row" data-email="' + email + '">' +
+          '<div class="admin-user-info">' +
+            '<span class="admin-user-email">' + email + (isSelf ? ' (você)' : '') + '</span>' +
+            '<span class="admin-user-perm ' + permClass + '">' + permLabel + '</span>' +
+          '</div>' +
+          '<div class="admin-user-actions">' +
+            (isSelf ? '' :
+              '<select class="admin-change-perm" data-email="' + email + '">' +
+                '<option value="readonly"' + (perm === 'readonly' ? ' selected' : '') + '>Somente leitura</option>' +
+                '<option value="full"' + (perm === 'full' ? ' selected' : '') + '>Acesso total</option>' +
+              '</select>' +
+              '<button class="admin-remove-btn" data-email="' + email + '" title="Remover usuário">🗑️</button>'
+            ) +
+          '</div>' +
+        '</div>';
+    });
+
+    container.innerHTML = html;
+
+    // Bind change permission events
+    container.querySelectorAll('.admin-change-perm').forEach(function (select) {
+      select.addEventListener('change', function () {
+        var email = this.getAttribute('data-email');
+        var newPerm = this.value;
+        showAdminFeedback('Atualizando...', 'info');
+        updateUserInFirestore(email, newPerm).then(function () {
+          showAdminFeedback('Permissão de ' + email + ' atualizada para "' + (newPerm === 'full' ? 'Acesso total' : 'Somente leitura') + '"', 'success');
+          renderUserList();
+        }).catch(function (err) {
+          showAdminFeedback('Erro ao atualizar: ' + err.message, 'error');
+        });
+      });
+    });
+
+    // Bind remove events
+    container.querySelectorAll('.admin-remove-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var email = this.getAttribute('data-email');
+        if (!confirm('Remover acesso de ' + email + '?')) return;
+        showAdminFeedback('Removendo...', 'info');
+        removeUserFromFirestore(email).then(function () {
+          showAdminFeedback(email + ' removido com sucesso', 'success');
+          renderUserList();
+        }).catch(function (err) {
+          showAdminFeedback('Erro ao remover: ' + err.message, 'error');
+        });
+      });
+    });
+  }
+
+  function handleAddUser() {
+    var emailInput = document.getElementById('admin-email-input');
+    var permSelect = document.getElementById('admin-permission-select');
+    var email = (emailInput.value || '').trim().toLowerCase();
+    var permission = permSelect.value;
+
+    if (!email) {
+      showAdminFeedback('Digite um email válido', 'error');
+      return;
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showAdminFeedback('Formato de email inválido', 'error');
+      return;
+    }
+
+    if (allowedUsers[email]) {
+      showAdminFeedback('Este email já está cadastrado', 'error');
+      return;
+    }
+
+    showAdminFeedback('Adicionando...', 'info');
+    addUserToFirestore(email, permission).then(function () {
+      emailInput.value = '';
+      var permLabel = permission === 'full' ? 'Acesso total' : 'Somente leitura';
+      showAdminFeedback(email + ' adicionado com "' + permLabel + '"', 'success');
+      renderUserList();
+    }).catch(function (err) {
+      showAdminFeedback('Erro ao adicionar: ' + err.message, 'error');
+    });
+  }
+
+  function showAdminFeedback(msg, type) {
+    var el = document.getElementById('admin-feedback');
+    if (!el) return;
+    el.textContent = msg;
+    el.className = 'admin-feedback admin-feedback-' + type;
   }
 
   // ══════════════════════════════════════════════════════
@@ -357,6 +609,13 @@
       '.auth-badge-full { background: rgba(92,168,122,0.3); color: #a8e6c3; }' +
       '.auth-badge-readonly { background: rgba(212,168,67,0.3); color: #f5e6c8; }' +
 
+      '.auth-admin-btn {' +
+        'background: rgba(255,255,255,0.15); border: none; color: #fefdfb;' +
+        'border-radius: 50px; padding: 0.2rem 0.5rem; font-size: 0.8rem;' +
+        'cursor: pointer; transition: background 0.2s; line-height: 1;' +
+      '}' +
+      '.auth-admin-btn:hover { background: rgba(255,255,255,0.3); }' +
+
       '.auth-logout-btn {' +
         'background: rgba(255,255,255,0.15); border: none; color: #fefdfb;' +
         'border-radius: 50px; padding: 0.2rem 0.6rem; font-size: 0.75rem;' +
@@ -380,10 +639,116 @@
       '}' +
       '#auth-toast.visible { opacity: 1; transform: translateX(-50%) translateY(0); }' +
 
+      /* ── Admin Panel ── */
+      '#admin-panel {' +
+        'position: fixed; top: 3.5rem; right: 1rem; z-index: 99998;' +
+        'font-family: "DM Sans", sans-serif;' +
+      '}' +
+
+      '.admin-panel-inner {' +
+        'background: #fefdfb; border-radius: 16px; padding: 1.5rem;' +
+        'width: 380px; max-width: calc(100vw - 2rem);' +
+        'max-height: calc(100vh - 5rem); overflow-y: auto;' +
+        'box-shadow: 0 8px 40px rgba(0,0,0,0.25);' +
+        'border: 1px solid rgba(26,58,42,0.1);' +
+      '}' +
+
+      '.admin-header {' +
+        'display: flex; justify-content: space-between; align-items: center;' +
+        'margin-bottom: 1rem; padding-bottom: 0.75rem;' +
+        'border-bottom: 1px solid #e8e5e1;' +
+      '}' +
+
+      '.admin-title {' +
+        'font-family: "Playfair Display", serif; font-size: 1.1rem;' +
+        'color: #1a3a2a; margin: 0;' +
+      '}' +
+
+      '.admin-close-btn {' +
+        'background: none; border: none; font-size: 1.4rem; color: #6b6560;' +
+        'cursor: pointer; padding: 0 0.25rem; line-height: 1;' +
+      '}' +
+      '.admin-close-btn:hover { color: #1a3a2a; }' +
+
+      '.admin-add-form {' +
+        'display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.5rem;' +
+      '}' +
+
+      '.admin-input {' +
+        'flex: 1; min-width: 150px; padding: 0.5rem 0.75rem; border: 1px solid #dadce0;' +
+        'border-radius: 8px; font-size: 0.85rem; font-family: "DM Sans", sans-serif;' +
+        'outline: none; transition: border-color 0.2s;' +
+      '}' +
+      '.admin-input:focus { border-color: #2d5a3f; }' +
+
+      '.admin-select {' +
+        'padding: 0.5rem 0.5rem; border: 1px solid #dadce0; border-radius: 8px;' +
+        'font-size: 0.8rem; font-family: "DM Sans", sans-serif;' +
+        'background: #fff; cursor: pointer; outline: none;' +
+      '}' +
+
+      '.admin-add-btn {' +
+        'background: #1a3a2a; color: #fff; border: none; border-radius: 8px;' +
+        'padding: 0.5rem 1rem; font-size: 0.85rem; cursor: pointer;' +
+        'font-family: "DM Sans", sans-serif; font-weight: 500; transition: background 0.2s;' +
+      '}' +
+      '.admin-add-btn:hover { background: #2d5a3f; }' +
+
+      '.admin-feedback {' +
+        'font-size: 0.8rem; margin: 0.25rem 0 0.75rem; min-height: 1.2em;' +
+      '}' +
+      '.admin-feedback-success { color: #2d7a4f; }' +
+      '.admin-feedback-error { color: #e85d3a; }' +
+      '.admin-feedback-info { color: #6b6560; }' +
+
+      '.admin-user-list {' +
+        'display: flex; flex-direction: column; gap: 0.5rem;' +
+      '}' +
+
+      '.admin-user-row {' +
+        'display: flex; justify-content: space-between; align-items: center;' +
+        'padding: 0.6rem 0.75rem; background: #f8f7f5; border-radius: 10px;' +
+        'gap: 0.5rem;' +
+      '}' +
+
+      '.admin-user-info {' +
+        'display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; flex: 1;' +
+      '}' +
+
+      '.admin-user-email {' +
+        'font-size: 0.8rem; color: #1a3a2a; font-weight: 500;' +
+        'overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' +
+      '}' +
+
+      '.admin-user-perm {' +
+        'font-size: 0.7rem; font-weight: 500;' +
+      '}' +
+      '.admin-perm-full { color: #2d7a4f; }' +
+      '.admin-perm-readonly { color: #b08a2e; }' +
+
+      '.admin-user-actions {' +
+        'display: flex; align-items: center; gap: 0.35rem; flex-shrink: 0;' +
+      '}' +
+
+      '.admin-change-perm {' +
+        'padding: 0.25rem 0.35rem; border: 1px solid #dadce0; border-radius: 6px;' +
+        'font-size: 0.7rem; font-family: "DM Sans", sans-serif;' +
+        'background: #fff; cursor: pointer; outline: none;' +
+      '}' +
+
+      '.admin-remove-btn {' +
+        'background: none; border: none; font-size: 0.85rem; cursor: pointer;' +
+        'padding: 0.15rem 0.3rem; border-radius: 6px; transition: background 0.2s;' +
+        'line-height: 1;' +
+      '}' +
+      '.admin-remove-btn:hover { background: rgba(232,93,58,0.1); }' +
+
       /* Mobile */
       '@media (max-width: 600px) {' +
         '.auth-bar-name { display: none; }' +
         '.auth-card { padding: 2rem 1.5rem; }' +
+        '#admin-panel { top: 3.5rem; right: 0.5rem; left: 0.5rem; }' +
+        '.admin-panel-inner { width: auto; }' +
       '}';
 
     var style = document.createElement('style');
